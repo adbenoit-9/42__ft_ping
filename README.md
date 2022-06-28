@@ -1,2 +1,2 @@
-# 42__ft_ping
-42 - Recoding the ping command.
+# FT_PING (@42Paris)
+Recoding the ping command.
