@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/01 17:39:32 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/01 18:12:59 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_data
     char    *host;
     char    flags[NB_FLAGS + 1];
     int     af;
+    struct addrinfo *addrinfo;
 }               t_data;
 
 extern t_data  g_data;

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:36 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/01 18:01:54 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/01 18:16:04 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,19 @@ int main(int ac, char **av)
     g_data.af = -1;
     bzero(g_data.flags, NB_FLAGS + 1);
     parser(av + 1);
-    if (strchr(dest, '4'))
-        g_data.af = AF_INET;
-    else if (strchr(dest, '6'))
-        g_data.af = AF_INET6;
-    else
-        g_data.af = -1;
-    signal(SIGINT, handle_signal);
     if (strchr(g_data.flags, 'h'))
     {
         print_help();
         exit(0);
     }
+    getaddrinfo(g_data.host, NULL, NULL, &g_data.addrinfo);
+    if (strchr(g_data.flags, '4'))
+        g_data.af = AF_INET;
+    else if (strchr(g_data.flags, '6'))
+        g_data.af = AF_INET6;
+    else
+        g_data.af = g_data.addrinfo->ai_family;
+    signal(SIGINT, handle_signal);
     ret = inet_pton(g_data.af, g_data.host, &buf);
     // ERROR PAS BONNES ATTENTION
     if (ret == 0)
