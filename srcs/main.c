@@ -6,29 +6,47 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:36 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/06/29 17:52:29 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/01 18:01:54 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
 
+t_data  g_data;
+
 int main(int ac, char **av)
 {
-    char    *host;
+    struct in_addr  buf;
+    int             ret;
 
-    host = NULL;
     if (ac == 1)
-        return (ft_strerror(EX_USAGE, host));
-    if (strcmp(av[ac - 1], "localhost") == 0)
-        host = strdup("127.0.0.1");
+        ft_strerror(ERR_USAGE, NULL, 0);
+    g_data.host = NULL;
+    g_data.af = -1;
+    bzero(g_data.flags, NB_FLAGS + 1);
+    parser(av + 1);
+    if (strchr(dest, '4'))
+        g_data.af = AF_INET;
+    else if (strchr(dest, '6'))
+        g_data.af = AF_INET6;
     else
-        host = strdup(av[ac - 1]);  
-    // if (parse(host))
-    //     return (ft_strerror(EX_NOHOST, host));
-    
-    if (!host)
-        return (ft_strerror(ENOMEM, host));
-    printf("PING %s (%s): 56 data bytes\n", av[ac - 1], host);
-    free(host);
+        g_data.af = -1;
+    signal(SIGINT, handle_signal);
+    if (strchr(g_data.flags, 'h'))
+    {
+        print_help();
+        exit(0);
+    }
+    ret = inet_pton(g_data.af, g_data.host, &buf);
+    // ERROR PAS BONNES ATTENTION
+    if (ret == 0)
+        ft_strerror(ERR_AF, g_data.host, 0);
+    else if (ret < 0)
+        ft_strerror(ERR_USAGE, g_data.host, 0);
+    // printf("PING %s (%s): 56 data bytes\n", av[ac - 1], host);
+    while (1)
+    {
+        ft_ping("");
+    }
     return (0);
 }
