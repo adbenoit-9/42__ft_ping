@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:36 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/04 17:54:10 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/04 17:56:22 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	get_adrrinfo(void)
 
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_UNSPEC;
-	hints.ai_socktype = SOCK_RAW; // sock_raw bypass TCP
+	hints.ai_socktype = SOCK_RAW; // sock_raw bypass TCP/IP => setup my 
 	hints.ai_protocol = IPPROTO_ICMP; // IPROTO_ICMPV6 ?
 	hints.ai_flags = 0;
 	ret = getaddrinfo(g_data.host, NULL, &hints, &g_data.addrinfo);
