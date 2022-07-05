@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/04 15:25:39 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/05 19:54:28 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ void	handle_signal(int signum);
 int		ft_ping(void);
 int		parser(char **arg);
 int		print_help(void);
+void	print_addrinfo(struct addrinfo info);
 
 #endif

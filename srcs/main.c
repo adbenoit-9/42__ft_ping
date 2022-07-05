@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:36 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/04 17:56:22 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/05 19:54:20 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,13 @@ static int	get_adrrinfo(void)
 
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_UNSPEC;
-	hints.ai_socktype = SOCK_RAW; // sock_raw bypass TCP/IP => setup my 
+	hints.ai_socktype = SOCK_RAW; // sock_raw bypass TCP/IP 
 	hints.ai_protocol = IPPROTO_ICMP; // IPROTO_ICMPV6 ?
 	hints.ai_flags = 0;
 	ret = getaddrinfo(g_data.host, NULL, &hints, &g_data.addrinfo);
 	if (ret != 0)
 		ft_strerror(ret, g_data.host, 0);
+    print_addrinfo(*g_data.addrinfo);
 	g_data.af = set_af(g_data.flags, *g_data.addrinfo);
 	return (0);
 }
@@ -64,7 +65,8 @@ int			main(int ac, char **av)
 	}
 	get_adrrinfo();
 	signal(SIGINT, handle_signal);
-	ret = inet_pton(g_data.af, g_data.host, &buf);
+    printf("|%s|\n|%s|\n", g_data.addrinfo->ai_canonname, g_data.addrinfo->ai_addr->sa_data);
+	ret = inet_pton(g_data.af, g_data.addrinfo->ai_addr->sa_data, &buf);
 	// ERROR PAS BONNES ATTENTION
 	if (ret == 0)
 		ft_strerror(ERR_AF, g_data.host, 0);
