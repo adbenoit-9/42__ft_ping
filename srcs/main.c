@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:36 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/05 19:54:20 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/06 12:08:44 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ t_data	g_data;
 static int	init_data()
 {
 	g_data.host = NULL;
+	g_data.ip = NULL;
+	g_data.addrinfo = NULL;
 	g_data.af = -1;
 	bzero(g_data.flags, NB_FLAGS + 1);
 	return (0);
@@ -33,8 +35,9 @@ static int	set_af(const char *flags, const struct addrinfo addrinfo)
 
 static int	get_adrrinfo(void)
 {
-	struct addrinfo hints;
-	int				ret;
+	struct addrinfo		hints;
+	struct sockaddr_in	*addr;
+	int					ret;
 
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_UNSPEC;
@@ -43,8 +46,9 @@ static int	get_adrrinfo(void)
 	hints.ai_flags = 0;
 	ret = getaddrinfo(g_data.host, NULL, &hints, &g_data.addrinfo);
 	if (ret != 0)
-		ft_strerror(ret, g_data.host, 0);
-    print_addrinfo(*g_data.addrinfo);
+		ft_strerror(ERR_USAGE, g_data.host, 0);
+	addr = (struct sockaddr_in *)g_data.addrinfo->ai_addr;
+    g_data.ip = inet_ntoa((struct in_addr)addr->sin_addr);
 	g_data.af = set_af(g_data.flags, *g_data.addrinfo);
 	return (0);
 }
@@ -65,9 +69,7 @@ int			main(int ac, char **av)
 	}
 	get_adrrinfo();
 	signal(SIGINT, handle_signal);
-    printf("|%s|\n|%s|\n", g_data.addrinfo->ai_canonname, g_data.addrinfo->ai_addr->sa_data);
-	ret = inet_pton(g_data.af, g_data.addrinfo->ai_addr->sa_data, &buf);
-	// ERROR PAS BONNES ATTENTION
+	ret = inet_pton(g_data.af, g_data.ip, &buf);
 	if (ret == 0)
 		ft_strerror(ERR_AF, g_data.host, 0);
 	else if (ret < 0)

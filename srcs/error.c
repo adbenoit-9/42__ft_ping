@@ -20,7 +20,6 @@ int ft_strerror(int error, char *host, char option)
     }
     else if (error == ENOMEM)
         printf("error: out of memory\n");
-    free(g_data.host);
-    freeaddrinfo(g_data.addrinfo);
+    clean();
     exit(error);
 }

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:20:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/04 15:20:26 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/06 12:06:22 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int ft_ping(void)
 {
-    // printf("PING %s (%s): 56 data bytes\n", av[ac - 1], host);
+    printf("PING %s (%s) 56(84) bytes of data.\n", g_data.host, g_data.ip);
     while (1)
     {
     }

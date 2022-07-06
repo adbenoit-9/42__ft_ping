@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:21:49 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/04 15:27:06 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/06 12:02:26 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 static void	stop_ping(void)
 {
 	printf("\n--- localhost ping statistics ---\n");
-	free(g_data.host);
-	freeaddrinfo(g_data.addrinfo);
+	clean();
 	exit(0);
 }
 

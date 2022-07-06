@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/05 19:54:28 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/06 12:02:11 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 typedef struct	s_data
 {
 	char			*host;
+	char			*ip;
 	char			flags[NB_FLAGS + 1];
 	int				af;
 	struct addrinfo	*addrinfo;
@@ -48,5 +49,6 @@ int		ft_ping(void);
 int		parser(char **arg);
 int		print_help(void);
 void	print_addrinfo(struct addrinfo info);
+void	clean(void);
 
 #endif

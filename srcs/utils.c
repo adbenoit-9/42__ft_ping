@@ -6,13 +6,19 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:35:48 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/05 19:53:12 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/06 12:04:03 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
 
-int	print_help(void)
+void	clean(void)
+{
+    free(g_data.host);
+    freeaddrinfo(g_data.addrinfo);
+}
+
+int		print_help(void)
 {
 	printf("\nUsage\n");
 	printf(" ping [options] <destination>\n");
@@ -27,12 +33,14 @@ int	print_help(void)
 
 void	print_addrinfo(struct addrinfo info)
 {
+	struct sockaddr_in *addr;
+
 	printf("flags: %d\n", info.ai_flags);
     printf("family: %d\n", info.ai_family);
     printf("socktype: %d\n", info.ai_socktype);
     printf("protocol: %d\n", info.ai_protocol);
     printf("addrlen: %u\n", info.ai_addrlen);
-    printf("addr data: %s\n", info.ai_addr->sa_data);
-    printf("addr family: %d\n", info.ai_addr->sa_family);
+	addr = (struct sockaddr_in *)info.ai_addr;
+    printf("addr %s\n", inet_ntoa((struct in_addr)addr->sin_addr));
     printf("canonname: %s\n", info.ai_canonname);
 }
