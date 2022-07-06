@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:35:48 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/06 12:04:03 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/06 17:01:34 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	clean(void)
 {
     free(g_data.host);
-    freeaddrinfo(g_data.addrinfo);
 }
 
 int		print_help(void)
@@ -25,8 +24,7 @@ int		print_help(void)
 	printf("Options:\n");
 	printf("-h                 print help and exit\n");
 	printf("-v                 verbose output\n");
-	printf("-4                 use IPv4\n");
-	printf("-6                 use IPv6\n");
+	printf("-c <count>         stop after <count> replies\n");
 	printf("\n");
 	return (0);
 }
@@ -43,4 +41,20 @@ void	print_addrinfo(struct addrinfo info)
 	addr = (struct sockaddr_in *)info.ai_addr;
     printf("addr %s\n", inet_ntoa((struct in_addr)addr->sin_addr));
     printf("canonname: %s\n", info.ai_canonname);
+}
+
+int		isnumber(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[0] == '-' || str[0] == '+')
+		++i;
+	while (str[i])
+	{
+		if (!isdigit(str[i]))
+			return (0);
+		++i;
+	}
+	return (1);
 }

@@ -6,38 +6,28 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:42:56 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/04 17:36:14 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/06 17:04:35 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
 
-static char	*add_flag(char flag, char *dest)
+static int	flag_value(char flag)
 {
 	size_t	i;
+	int		values[] = {HELP, VERBOSE, COUNT, QUIET};
 
-	if (!strchr(FLAGS, flag))
-		ft_strerror(ERR_OPTION, NULL, flag);
 	i = 0;
-	for (; dest[i]; i++)
-	{
-		if (flag == '4' || flag == '6')
-		{
-			if (strchr(dest, '4') || strchr(dest, '6'))
-				ft_strerror(ERR_OPTION, NULL, flag);
-		}
-		if (dest[i] == flag && flag != '4' && flag != '6')
-			return (dest);
-		else if (dest[i] == flag)
-			ft_strerror(ERR_OPTION, NULL, flag);
-	}
-	dest[i] = flag;
-	return (dest);        
+	for (; FLAGS[i]; i++)
+		if (FLAGS[i] == flag)
+			return (values[i]);
+	return (-1);
 }
 
 int			parser(char **arg)
 {
 	char	*host;
+	int		new_flag;
 	
 	host = NULL;
 	for (size_t i = 0; arg[i]; i++)
@@ -46,18 +36,27 @@ int			parser(char **arg)
 		{
 			for (int j = 1; arg[i][j]; j++)
 			{
-				add_flag(arg[i][j], g_data.flags);
-				if (arg[i][j] == 'h')
+				new_flag = flag_value(arg[i][j]);
+				if (new_flag == -1)
+					ft_perror(ERR_OPTION, NULL, arg[i][j]);
+				g_data.flag |= new_flag;
+				if (new_flag == HELP)
 					return (0);
 			}
+		}
+		else if ((g_data.flag & COUNT) == COUNT && g_data.count == -1)
+		{
+			g_data.count = atoll(arg[i]);
+			if (!isnumber(arg[i]) || g_data.count <= 0)
+				ft_perror(ERR_ARG, arg[i], 0);
 		}
 		else
 			host = arg[i];
 	}
 	if (!host)
-		ft_strerror(ERR_USAGE, NULL, 0);
+		ft_perror(ERR_USAGE, NULL, 0);
 	g_data.host = strdup(host);
 	if (!g_data.host)
-		return (ft_strerror(ENOMEM, NULL, 0));
+		return (ft_perror(ENOMEM, NULL, 0));
 	return (0);
 }
