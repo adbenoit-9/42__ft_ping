@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/06 16:59:05 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/08 14:43:34 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,6 @@ int		print_help(void);
 void	print_addrinfo(struct addrinfo info);
 void	clean(void);
 void	stop_ping(void);
-int		isnumber(char *str);
+int		ft_isnumber(char *str);
 
 #endif

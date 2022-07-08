@@ -11,8 +11,6 @@ int ft_perror(int error, char *arg, char option)
         dprintf(STDERR_FILENO, "ft_ping: %s: Address family for hostname not supported\n", arg);
         error = 2;
     }
-    else if (error == ERR_OPTION && (option == '4' || option == '6'))
-        dprintf(STDERR_FILENO, "ping: only one -4 or -6 option may be specified\n");
     else if (error == ERR_OPTION)
     {
         dprintf(STDERR_FILENO, "ft_ping: invalid option -- %c\n", option);
@@ -25,7 +23,7 @@ int ft_perror(int error, char *arg, char option)
     else if (error == ERR_ARG)
     {
         dprintf(STDERR_FILENO, "ft_ping: invalid agument: '%s'", arg);
-        if (isnumber(arg))
+        if (ft_isnumber(arg))
             dprintf(STDERR_FILENO, ": out of range: 1 <= value <= 9223372036854775807\n");
         else
             dprintf(STDERR_FILENO, "\n");

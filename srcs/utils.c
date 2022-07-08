@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:35:48 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/06 17:01:34 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/08 14:47:49 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	clean(void)
 int		print_help(void)
 {
 	printf("\nUsage\n");
-	printf(" ping [options] <destination>\n");
+	printf(" ./ft_ping [options] <destination>\n");
 	printf("Options:\n");
 	printf("-h                 print help and exit\n");
 	printf("-v                 verbose output\n");
@@ -43,7 +43,7 @@ void	print_addrinfo(struct addrinfo info)
     printf("canonname: %s\n", info.ai_canonname);
 }
 
-int		isnumber(char *str)
+int		ft_isnumber(char *str)
 {
 	int	i;
 

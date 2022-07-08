@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:42:56 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/06 17:04:35 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/08 14:45:52 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,13 @@ int			parser(char **arg)
 	host = NULL;
 	for (size_t i = 0; arg[i]; i++)
 	{
-		if (arg[i][0] == '-')
+		if ((g_data.flag & COUNT) == COUNT && g_data.count == -1)
+		{
+			g_data.count = atoll(arg[i]);
+			if (!ft_isnumber(arg[i]) || g_data.count <= 0)
+				ft_perror(ERR_ARG, arg[i], 0);
+		}
+		else if (arg[i][0] == '-')
 		{
 			for (int j = 1; arg[i][j]; j++)
 			{
@@ -43,12 +49,6 @@ int			parser(char **arg)
 				if (new_flag == HELP)
 					return (0);
 			}
-		}
-		else if ((g_data.flag & COUNT) == COUNT && g_data.count == -1)
-		{
-			g_data.count = atoll(arg[i]);
-			if (!isnumber(arg[i]) || g_data.count <= 0)
-				ft_perror(ERR_ARG, arg[i], 0);
 		}
 		else
 			host = arg[i];
