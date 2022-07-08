@@ -19,7 +19,7 @@ int ft_perror(int error, char *arg, char option)
     else if (error == ENOMEM)
         dprintf(STDERR_FILENO, "ft_ping: out of memory\n");
     else if (error == ERR_SOCK)
-        dprintf(STDERR_FILENO, "ft_ping: socket error\n");
+        dprintf(STDERR_FILENO, "ft_ping: socket failed\n");
     else if (error == ERR_ARG)
     {
         dprintf(STDERR_FILENO, "ft_ping: invalid agument: '%s'", arg);

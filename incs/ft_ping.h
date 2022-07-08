@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/08 14:43:34 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/08 17:56:06 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,30 @@
 # define COUNT 0x20
 # define QUIET 0x10
 
-
 # define PACKET_SIZE 56
 # define HEADER_SIZE 28
+# define ECHO_REQUEST_TYPE 8
+# define ECHO_REQUEST_CODE 0
 
 # define ERR_OPTION 1
 # define ERR_USAGE 2
 # define ERR_AF 3
 # define ERR_SOCK 4
 # define ERR_ARG 5
+
+typedef struct	s_header
+{
+	
+}				t_header;
+
+typedef struct	s_icmp_pack
+{
+	char		type;
+	char		code;
+	char		checksum[2];
+	t_header	header;
+	
+}				t_icmp_pack;
 
 typedef struct	s_data
 {

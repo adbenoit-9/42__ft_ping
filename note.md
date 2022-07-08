@@ -7,3 +7,5 @@
 - Type (8 bits): type de notif du pquet ICMP
 - Code (8 bits): status de la reponse a la requete precedente
 - checksum: 
+
+https://www.geeksforgeeks.org/ping-in-c/
