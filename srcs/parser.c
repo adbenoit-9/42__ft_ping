@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:42:56 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/10 17:32:59 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/10 17:58:34 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,28 @@ static int	flag_value(char flag)
 	return (-1);
 }
 
+static void	set_flag(char *flags)
+{
+	int	new_flag;
+	
+	for (int i = 0; flags[i]; i++)
+	{
+		new_flag = flag_value(flags[i]);
+		if (new_flag == -1)
+			ft_perror(ERR_OPTION, NULL, flags[i]);
+		g_data.flag |= new_flag;
+		if (new_flag == HELP)
+		{
+			print_help();
+			exit(0);
+		}
+	}
+	return ;
+}
+
 int	parser(char **arg)
 {
 	char	*host;
-	int		new_flag;
 
 	host = NULL;
 	for (size_t i = 0; arg[i]; i++)
@@ -39,17 +57,7 @@ int	parser(char **arg)
 				ft_perror(ERR_ARG, arg[i], 0);
 		}
 		else if (arg[i][0] == '-')
-		{
-			for (int j = 1; arg[i][j]; j++)
-			{
-				new_flag = flag_value(arg[i][j]);
-				if (new_flag == -1)
-					ft_perror(ERR_OPTION, NULL, arg[i][j]);
-				g_data.flag |= new_flag;
-				if (new_flag == HELP)
-					return (0);
-			}
-		}
+			set_flag(arg[i] + 1);
 		else
 			host = arg[i];
 	}

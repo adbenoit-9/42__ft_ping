@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:36 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/10 17:30:19 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/10 17:58:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,6 @@ int	main(int ac, char **av)
 		ft_perror(ERR_USAGE, NULL, 0);
 	init_data();
 	parser(av + 1);
-	if ((g_data.flag & HELP) == HELP)
-	{
-		free(g_data.host);
-		return (print_help());
-	}
 	set_ipaddr();
 	signal(SIGINT, handle_signal);
 	ret = inet_pton(AF_INET, g_data.ip, &buf);
