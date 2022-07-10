@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:42:56 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/08 14:45:52 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/10 17:32:59 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ static int	flag_value(char flag)
 	return (-1);
 }
 
-int			parser(char **arg)
+int	parser(char **arg)
 {
 	char	*host;
 	int		new_flag;
-	
+
 	host = NULL;
 	for (size_t i = 0; arg[i]; i++)
 	{

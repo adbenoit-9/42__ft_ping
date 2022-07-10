@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:36 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/06 16:38:37 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/10 17:30:19 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_data	g_data;
 
-static int	init_data()
+static int	init_data(void)
 {
 	g_data.host = NULL;
 	g_data.ip = NULL;
@@ -42,12 +42,12 @@ static int	set_ipaddr(void)
 	if (ret != 0)
 		ft_perror(ERR_USAGE, g_data.host, 0);
 	addr = (struct sockaddr_in *)res->ai_addr;
-    g_data.ip = inet_ntoa((struct in_addr)addr->sin_addr);
-    freeaddrinfo(res);
+	g_data.ip = inet_ntoa((struct in_addr)addr->sin_addr);
+	freeaddrinfo(res);
 	return (0);
 }
 
-int			main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	struct in_addr	buf;
 	int				ret;
@@ -58,7 +58,7 @@ int			main(int ac, char **av)
 	parser(av + 1);
 	if ((g_data.flag & HELP) == HELP)
 	{
-		free(g_data.host);   
+		free(g_data.host);
 		return (print_help());
 	}
 	set_ipaddr();

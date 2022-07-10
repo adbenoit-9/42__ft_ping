@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:35:48 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/08 14:47:49 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/10 17:33:50 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 void	clean(void)
 {
-    free(g_data.host);
+	free(g_data.host);
+	// free(g_data.packet);
 }
 
-int		print_help(void)
+int	print_help(void)
 {
 	printf("\nUsage\n");
 	printf(" ./ft_ping [options] <destination>\n");
@@ -31,19 +32,19 @@ int		print_help(void)
 
 void	print_addrinfo(struct addrinfo info)
 {
-	struct sockaddr_in *addr;
+	struct sockaddr_in	*addr;
 
 	printf("flags: %d\n", info.ai_flags);
-    printf("family: %d\n", info.ai_family);
-    printf("socktype: %d\n", info.ai_socktype);
-    printf("protocol: %d\n", info.ai_protocol);
-    printf("addrlen: %u\n", info.ai_addrlen);
+	printf("family: %d\n", info.ai_family);
+	printf("socktype: %d\n", info.ai_socktype);
+	printf("protocol: %d\n", info.ai_protocol);
+	printf("addrlen: %u\n", info.ai_addrlen);
 	addr = (struct sockaddr_in *)info.ai_addr;
-    printf("addr %s\n", inet_ntoa((struct in_addr)addr->sin_addr));
-    printf("canonname: %s\n", info.ai_canonname);
+	printf("addr %s\n", inet_ntoa((struct in_addr)addr->sin_addr));
+	printf("canonname: %s\n", info.ai_canonname);
 }
 
-int		ft_isnumber(char *str)
+int	ft_isnumber(char *str)
 {
 	int	i;
 
