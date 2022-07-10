@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:52:44 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/10 18:41:52 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/10 19:57:03 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@
 // 	return (ip_header);
 // }
 
-static struct icmphdr	init_icmp_header()
+static struct icmp	init_icmp_header()
 {
-	struct icmphdr	icmp_header;
+	struct icmp	icmphdr;
 
-	memset(&icmp_header, 0, sizeof(struct icmphdr));
-	icmp_header.type = ECHO_REQUEST_TYPE;
-	icmp_header.code = ECHO_REQUEST_CODE;
-	icmp_header.un.echo.id = getpid();
-	icmp_header.un.echo.sequence = 1;
-	icmp_header.checksum = checksum((unsigned short *)&icmp_header, sizeof(struct icmphdr));
-	return (icmp_header);
+	memset(&icmphdr, 0, sizeof(struct icmp));
+	icmphdr.icmp_type = ECHO_REQUEST_TYPE;
+	icmphdr.icmp_code = ECHO_REQUEST_CODE;
+	icmphdr.icmp_id = getpid();
+	icmphdr.icmp_seq = 1;
+	icmphdr.icmp_cksum = checksum((unsigned short *)&icmphdr, sizeof(struct icmp));
+	return (icmphdr);
 }
 
 /* https://book.huihoo.com/iptables-tutorial/x1078.htm */
@@ -54,6 +54,6 @@ t_echo_packet	icmp_echo_packet(void)
 	memset(&packet, 0, sizeof(t_echo_packet));
 	// packet.ip = init_ip_header();
 	packet.icmp = init_icmp_header();
-	printf("%ld\n", sizeof(struct icmphdr));
+	printf("%ld\n", sizeof(struct icmp));
 	return (packet);
 }

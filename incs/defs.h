@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:45:31 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/10 17:59:25 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/10 19:45:20 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 # include <arpa/inet.h>
 # include <ctype.h>
 # include <netinet/ip.h>
-# include <linux/icmp.h>
+// # include <linux/icmp.h>
+# include <netinet/ip_icmp.h>
 # include <stdbool.h>
 
 /*

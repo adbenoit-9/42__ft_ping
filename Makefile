@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/07/10 14:53:17 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/07/10 20:01:32 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ CC		= gcc
 CFLAGS 	= -Wall -Wextra -Werror #-O2 #-fsanitize=address -g3
 IFLAGS 	= -I./incs
 
+HOST	= localhost
 
 # DIRECTORIES
 BUILD 			:= .build
@@ -70,6 +71,9 @@ fclean: clean
 	@echo "$(B_GREY)$(NAME)$(NONE): $(B_YELLOW)Delete$(NONE)"
 
 re: fclean all
+
+run: re
+	@sudo ./$(NAME) $(HOST)
 
 debug:
 	@echo SRC = $(SRC)

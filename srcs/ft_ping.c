@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:20:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/10 18:25:31 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/10 20:07:20 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ int	ft_ping(void)
 	{
 		sendto(sockfd, &g_data.packet, PACKET_SIZE, 0,
 			g_data.sockaddr, sizeof(g_data.sockaddr));
-		perror("");
+		// perror("");
 		ret = recvmsg(sockfd, &mess, 0);
 		printf("%ld\n", ret);
 		perror("");
-		++g_data.packet.icmp.un.echo.sequence;
+		++g_data.packet.icmp.icmp_seq;
 		exit(1);
 	}
 	return (0);
