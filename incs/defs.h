@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:45:31 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/11 02:28:19 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/11 16:38:01 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,22 @@
 # include <netinet/ip_icmp.h>
 # include <stdbool.h>
 
-# define DEBUG 1
+// # define DEBUG 1
 # define TIME_INTERVAL 1
 # define LLONG_MAX 9223372036854775807
 # define send_packet icmp_packet.echo.request
 # define recv_packet icmp_packet.echo.reply
+
+/*
+** -- Color codes --
+*/
+# define S_NONE    "\033[0m"
+# define S_RED     "\033[1;31m"
+# define S_GREEN   "\033[1;32m"
+# define S_YELLOW  "\033[1;33m"
+# define S_BLUE    "\033[1;34m"
+# define S_PURPLE  "\033[1;35m"
+# define S_CYAN    "\033[1;36m"
 
 /*
 ** -- Flags --
@@ -58,29 +69,31 @@
 # define VERSION 4
 
 /*
-** -- Exit code --
+** -- Exit codes --
 */
 # define SUCCESS 0
 # define USAGE_ERR 1
 # define ERROR 2
 
 /*
-** -- Error code --
+** -- Error codes --
 */
 # define NOMEM 0
 # define SOCKERR 1
-# define NOHOST 2
-# define BADHOST 3
-# define BADAF 4
-# define BADARG 5
-# define BADOPT 6
-# define ARGOOR 7
+# define TRANSMERR 2
+# define NOHOST 3
+# define BADHOST 4
+# define BADAF 5
+# define BADARG 6
+# define BADOPT 7
+# define ARGOOR 8
 
 /*
-** -- Error message --
+** -- Error messages --
 */
 # define NOMEM_MSG "ft_ping: out of memory\n"
 # define SOCKERR_MSG "ft_ping: socket error\n"
+# define TRANSMERR_MSG "ft_ping: transmission failed\n"
 # define NOHOST_MSG "ft_ping: usage error: Destination address required\n"
 # define BADHOST_MSG "ft_ping: %s: Name or service not known\n"
 # define BADAF_MSG "ft_ping: %s: Address family for hostname not supported\n"

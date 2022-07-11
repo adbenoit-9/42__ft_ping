@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/07/11 02:44:12 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/07/11 16:53:32 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,13 +74,12 @@ fclean: clean
 
 re: fclean all
 
-run: re
+run: debug
 	@sudo ./$(NAME) $(HOST)
 
-debug:
-	@echo SRC = $(SRC)
-	@echo OBJ = $(OBJ)
-
+debug: CFLAGS += -DDEBUG
+debug: re
+	
 .PHONY: all clean fclean re debug
 
 $(BUILD):

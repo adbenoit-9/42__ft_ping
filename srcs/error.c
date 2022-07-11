@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:27:25 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/11 02:56:53 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/11 16:13:50 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_perror(int error, char *arg, char option)
 {
-    char  *msg[] = {NOMEM_MSG, SOCKERR_MSG, NOHOST_MSG};
+    char  *msg[] = {NOMEM_MSG, SOCKERR_MSG, TRANSMERR_MSG, NOHOST_MSG};
     int   status;
 
     if (error <= NOHOST)

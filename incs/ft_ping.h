@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/11 02:56:53 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/11 14:07:32 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ typedef struct s_icmp_packet
 		} request;
 		struct reply
 		{
-			struct icmp	header;
-			char		data[PACKET_SIZE];
+			struct ip		iphdr;
+			struct icmp		header;
+			char			data[PACKET_SIZE];
 		} reply;
 		
 	} echo;
