@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   reply_icmp_requestc                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/01 14:21:49 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/11 02:38:49 by adbenoit         ###   ########.fr       */
+/*   Created: 2022/07/11 00:31:14 by adbenoit          #+#    #+#             */
+/*   Updated: 2022/07/11 00:31:45 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
 
-void	handle_signal(int signum)
+void    recv_echo_reply(void)
 {
-	if (signum == SIGINT)
-		ping_report();
-	else if (signum == SIGALRM)
-		ping();
+    
 }

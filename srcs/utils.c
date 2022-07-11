@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:35:48 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/10 18:01:53 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/11 02:44:52 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,6 @@ int	print_help(void)
 	printf("-q                 quiet output\n");
 	printf("\n");
 	return (0);
-}
-
-void	print_addrinfo(struct addrinfo info)
-{
-	struct sockaddr_in	*addr;
-
-	printf("flags: %d\n", info.ai_flags);
-	printf("family: %d\n", info.ai_family);
-	printf("socktype: %d\n", info.ai_socktype);
-	printf("protocol: %d\n", info.ai_protocol);
-	printf("addrlen: %u\n", info.ai_addrlen);
-	addr = (struct sockaddr_in *)info.ai_addr;
-	printf("addr %s\n", inet_ntoa((struct in_addr)addr->sin_addr));
-	printf("canonname: %s\n", info.ai_canonname);
 }
 
 int	ft_isnumber(char *str)
@@ -76,4 +62,28 @@ unsigned short	checksum(unsigned short *addr, size_t len)
 		len -= sizeof(short);
 	}
 	return (~sum);
+}
+
+void	print_addrinfo(struct addrinfo info)
+{
+	struct sockaddr_in	*addr;
+
+	printf("flags: %d\n", info.ai_flags);
+	printf("family: %d\n", info.ai_family);
+	printf("socktype: %d\n", info.ai_socktype);
+	printf("protocol: %d\n", info.ai_protocol);
+	printf("addrlen: %u\n", info.ai_addrlen);
+	addr = (struct sockaddr_in *)info.ai_addr;
+	printf("addr %s\n", inet_ntoa((struct in_addr)addr->sin_addr));
+	printf("canonname: %s\n", info.ai_canonname);
+}
+
+void	print_icmp(struct icmp icmphdr)
+{
+	printf("-- ICMP HEADER (size %ld) --\n", sizeof(struct icmp));
+	printf("type: %d\n", icmphdr.icmp_type);
+	printf("code: %d\n", icmphdr.icmp_code);
+	printf("identifier: %d\n", icmphdr.icmp_id);
+	printf("sequence: %d\n", icmphdr.icmp_seq);
+	printf("checksum: %d\n", icmphdr.icmp_cksum);
 }

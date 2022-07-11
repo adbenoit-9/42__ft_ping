@@ -6,41 +6,32 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:27:25 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/10 17:27:51 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/11 01:48:28 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
 
-int	ft_perror(int error, char *arg, char option)
+int	ft_perror(int code_err, char *arg, char option)
 {
-	if (error == ERR_USAGE && !arg)
-		dprintf(STDERR_FILENO, "ft_ping: usage error: Destination address required\n");
-	else if (error == ERR_USAGE)
-		dprintf(STDERR_FILENO, "ft_ping: %s: Name or service not known\n", arg);
-	else if (error == ERR_AF)
-	{
-		dprintf(STDERR_FILENO, "ft_ping: %s: Address family for hostname not supported\n", arg);
-		error = 2;
-	}
-	else if (error == ERR_OPTION)
-	{
-		dprintf(STDERR_FILENO, "ft_ping: invalid option -- %c\n", option);
-		print_help();
-	}
-	else if (error == ENOMEM)
-		dprintf(STDERR_FILENO, "ft_ping: out of memory\n");
-	else if (error == ERR_SOCK)
-		dprintf(STDERR_FILENO, "ft_ping: socket failed\n");
-	else if (error == ERR_ARG)
-	{
-		dprintf(STDERR_FILENO, "ft_ping: invalid agument: '%s'", arg);
-		if (ft_isnumber(arg))
-			dprintf(STDERR_FILENO, ": out of range: 1 <= value <= 9223372036854775807\n");
-		else
-			dprintf(STDERR_FILENO, "\n");
-		error = 1;
-	}
-	clean();
-	exit(error);
+    char  *msg[] = {NOMEM_MSG, SOCKERR_MSG, NOHOST_MSG};
+    int   status;
+
+    if (code_err <= NOHOST)
+      dprintf(STDERR_FILENO, "%s", msg[code_err]);
+    else if (code_err == BADHOST)
+      dprintf(STDERR_FILENO, BADHOST_MSG, arg);
+    else if (code_err == BADAF)
+      dprintf(STDERR_FILENO, BADAF_MSG, arg);
+    else if (code_err == BADARG)
+      dprintf(STDERR_FILENO, BADARG_MSG, arg);
+    else if (code_err == BADOPT)
+    {
+      dprintf(STDERR_FILENO, BADOPT_MSG, option);
+      print_help();
+    }
+    else if (code_err == ARGOOR)
+        dprintf(STDERR_FILENO, ARGOOR_MSG, arg, 1, LLONG_MAX);
+	status = code_err < NOHOST ? USAGE_ERR : ERROR;
+	exit(status);
 }

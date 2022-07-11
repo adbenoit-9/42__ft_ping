@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:42:56 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/10 17:58:34 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/11 01:59:53 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,18 @@ static void	set_flag(char *flags)
 	{
 		new_flag = flag_value(flags[i]);
 		if (new_flag == -1)
-			ft_perror(ERR_OPTION, NULL, flags[i]);
+			ft_perror(BADOPT, NULL, flags[i]);
 		g_data.flag |= new_flag;
 		if (new_flag == HELP)
 		{
 			print_help();
-			exit(0);
+			exit(SUCCESS);
 		}
 	}
 	return ;
 }
 
-int	parser(char **arg)
+bool	parser(char **arg)
 {
 	char	*host;
 
@@ -53,8 +53,10 @@ int	parser(char **arg)
 		if ((g_data.flag & COUNT) == COUNT && g_data.count == -1)
 		{
 			g_data.count = atoll(arg[i]);
-			if (!ft_isnumber(arg[i]) || g_data.count <= 0)
-				ft_perror(ERR_ARG, arg[i], 0);
+			if (!ft_isnumber(arg[i]))
+				ft_perror(BADARG, arg[i], 0);
+			else if (g_data.count <= 0)
+				ft_perror(ARGOOR, arg[i], 0);
 		}
 		else if (arg[i][0] == '-')
 			set_flag(arg[i] + 1);
@@ -62,9 +64,9 @@ int	parser(char **arg)
 			host = arg[i];
 	}
 	if (!host)
-		ft_perror(ERR_USAGE, NULL, 0);
+		ft_perror(NOHOST, NULL, 0);
 	g_data.host = strdup(host);
 	if (!g_data.host)
-		return (ft_perror(ENOMEM, NULL, 0));
-	return (0);
+		ft_perror(NOMEM, NULL, 0);
+	return (SUCCESS);
 }

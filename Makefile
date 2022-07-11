@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/07/10 20:01:32 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/07/11 02:44:12 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,10 +30,12 @@ NAME			:= ft_ping
 SRC				:=	main.c \
 					error.c \
 					signal.c \
-					ft_ping.c \
+					stats.c \
 					parser.c \
 					utils.c \
-					packet.c
+					request.c \
+					response.c \
+					socket.c
 SUB_SRC			:= 
 # SRC				+= $(addprefix {name}, $(SUB_SRC))
 

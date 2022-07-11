@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   socket.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/01 14:21:49 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/11 02:38:49 by adbenoit         ###   ########.fr       */
+/*   Created: 2022/07/11 02:43:41 by adbenoit          #+#    #+#             */
+/*   Updated: 2022/07/11 02:44:04 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
 
-void	handle_signal(int signum)
+void	init_socket(void)
 {
-	if (signum == SIGINT)
-		ping_report();
-	else if (signum == SIGALRM)
-		ping();
+	int				ttl;
+	
+	g_data.sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
+	if (g_data.sockfd == -1)
+		ft_perror(SOCKERR, NULL, 0);
+	printf("PING %s (%s) %d(%d) bytes of data.\n", g_data.host, g_data.ip,
+		PACKET_SIZE, PACKET_SIZE + HEADER_SIZE);
+	ttl = DEFAULT_TTL;
+	setsockopt(g_data.sockfd, IPPROTO_IP, IP_TTL, &ttl, sizeof(ttl));
 }

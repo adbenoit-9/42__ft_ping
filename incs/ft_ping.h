@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/10 19:57:43 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/11 02:46:41 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,49 @@
 
 # include "defs.h"
 
-typedef struct s_echo_packet
+typedef struct s_icmp_packet
 {
-	// struct iphdr	ip;
-	struct icmp	icmp;
-	char		data[DATA_SIZE];
-}				t_echo_packet;
+	union {
+		struct request
+		{
+			struct icmp	header;
+			char		data[PACKET_SIZE];
+		} request;
+		struct reply
+		{
+			struct icmp	header;
+			char		data[PACKET_SIZE];
+		} reply;
+		
+	} echo;
+} t_icmp_packet;
 
-typedef struct s_data
+typedef struct s_ping_data
 {
 	char				*host;
 	char				*ip;
 	int					flag;
+	int					sockfd;
 	long long int		count;
-	t_echo_packet		packet;
+	t_icmp_packet		icmp_packet;
 	struct sockaddr		*sockaddr;
-}				t_data;
+}				t_ping_data;
 
-extern t_data	g_data;
+extern t_ping_data	g_data;
 
-int				ft_perror(int error, char *host, char option);
+int				ft_perror(int code_err, char *arg, char option);
 void			handle_signal(int signum);
-int				ft_ping(void);
-int				parser(char **arg);
+bool			parser(char **arg);
 int				print_help(void);
 void			print_addrinfo(struct addrinfo info);
 void			clean(void);
-void			stop_ping(void);
 int				ft_isnumber(char *str);
-t_echo_packet	icmp_echo_packet(void);
+t_icmp_packet	request_packet(void);
 unsigned short	checksum(unsigned short *addr, size_t len);
+void			print_icmp(struct icmp icmphdr);
+void			ping(void);
+void			ping_report(void);
+void    		recv_echo_reply(void);
+void			init_socket(void);
 
 #endif
