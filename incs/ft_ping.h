@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/11 14:07:32 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/11 23:43:55 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ typedef struct s_icmp_packet
 		{
 			struct icmp	header;
 			char		data[PACKET_SIZE];
-		} request;
+		}	request;
 		struct reply
 		{
 			struct ip		iphdr;
 			struct icmp		header;
 			char			data[PACKET_SIZE];
-		} reply;
+		}	reply;
 		
-	} echo;
+	}	echo;
 } t_icmp_packet;
 
 typedef struct s_ping_data
@@ -39,8 +39,11 @@ typedef struct s_ping_data
 	char				*ip;
 	int					flag;
 	int					sockfd;
+	int					status;
 	long long int		count;
-	t_icmp_packet		icmp_packet;
+	t_icmp_packet		request_packet;
+	t_icmp_packet		reply_packet;
+	char				recv_buf[TOTAL_SIZE];
 	struct sockaddr		*sockaddr;
 }				t_ping_data;
 

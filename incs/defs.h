@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:45:31 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/11 16:38:01 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/11 23:40:49 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,10 @@
 # include <netinet/ip_icmp.h>
 # include <stdbool.h>
 
-// # define DEBUG 1
 # define TIME_INTERVAL 1
 # define LLONG_MAX 9223372036854775807
-# define send_packet icmp_packet.echo.request
-# define recv_packet icmp_packet.echo.reply
+# define send_packet g_data.request_packet.echo.request
+# define recv_packet g_data.reply_packet.echo.reply
 
 /*
 ** -- Color codes --
@@ -58,13 +57,18 @@
 # define QUIET 0x10
 
 /*
+** -- Transmission status --
+*/
+# define WAIT 0
+# define PACKET_SENT 1
+# define STOP 2
+
+/*
 ** -- Packet info --
 */
 # define HEADER_SIZE 28
 # define PACKET_SIZE 56
 # define TOTAL_SIZE PACKET_SIZE + HEADER_SIZE
-# define ECHO_REQUEST_TYPE 8
-# define ECHO_REQUEST_CODE 0
 # define DEFAULT_TTL 64
 # define VERSION 4
 
