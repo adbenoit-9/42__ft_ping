@@ -43,7 +43,7 @@ void    recv_echo_reply(void)
         }
         else {
             printf("%s[Packet received]%s %zd bytes\n", S_YELLOW, S_NONE, len);
-            print_icmp(recv_packet.header);
+            print_icmp(recv_packet.icmphdr);
         }
 #endif
         if (len == -1)

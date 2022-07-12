@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:52:44 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/12 15:38:43 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:49:39 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_packet	request_packet(void)
 {
 	t_packet	packet;
 
-	memset(&packet.echo.request.header, 0, sizeof(struct icmp));
+	bzero(&packet, sizeof(t_packet));
 	packet.echo.request.header.icmp_type = ICMP_ECHO;
 	packet.echo.request.header.icmp_code = 0;
 	packet.echo.request.header.icmp_id = getpid();
@@ -53,5 +53,5 @@ void	ping(void)
     if ((g_data.flag & COUNT) == COUNT && send_packet.header.icmp_seq == g_data.count)
         return (ping_report());
 	++send_packet.header.icmp_seq;
-	// alarm(TIME_INTERVAL);
+	alarm(TIME_INTERVAL);
 }

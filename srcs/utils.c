@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:35:48 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/12 15:36:08 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:46:05 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	clean(void)
 {
 	free(g_data.host);
+	if (g_data.sockfd != -1)
+		close(g_data.sockfd);
 }
 
 int	print_help(void)
@@ -87,6 +89,7 @@ void	print_icmp(struct icmp icmphdr)
 	printf("sequence: %d\n", icmphdr.icmp_seq);
 	printf("checksum: %d\n", icmphdr.icmp_cksum);
 }
+
 void	print_msg(struct msghdr msg)
 {
 	printf("-- MSG HEADER (size %ld) --\n", sizeof(struct msghdr));

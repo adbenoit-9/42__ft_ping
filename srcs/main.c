@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:36 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/12 15:30:14 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:32:12 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static t_ping_data	init_ping_data(void)
 	data.count = -1;
 	data.sockfd = -1;
 	g_data.status = WAIT;
+	g_data.ttl = DEFAULT_TTL;
 	bzero(&data.sockaddr, sizeof(data.sockaddr));
 	return (data);
 }
@@ -61,12 +62,11 @@ int	main(int ac, char **av)
 	init_socket();
 	signal(SIGINT, handle_signal);
 	signal(SIGALRM, handle_signal);
+	printf("PING %s (%s) %d(%d) bytes of data.\n", g_data.host, g_data.ip,
+		PACKET_SIZE, PACKET_SIZE + HEADER_SIZE);
 	g_data.request_packet = request_packet();
+	ping();
 	while (true)
-	{
-		ping();
-		ping();
 		recv_echo_reply();
-	}
 	return (0);
 }
