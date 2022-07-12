@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:35:48 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/11 02:44:52 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/12 15:36:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,12 @@ void	print_icmp(struct icmp icmphdr)
 	printf("identifier: %d\n", icmphdr.icmp_id);
 	printf("sequence: %d\n", icmphdr.icmp_seq);
 	printf("checksum: %d\n", icmphdr.icmp_cksum);
+}
+void	print_msg(struct msghdr msg)
+{
+	printf("-- MSG HEADER (size %ld) --\n", sizeof(struct msghdr));
+	printf("data pointer: %p\n", msg.msg_iov[0].iov_base);
+	printf("data length: %zd\n", msg.msg_iov[0].iov_len);
+	printf("iov array length: %d\n", msg.msg_iovlen);
+	printf("flags: %d\n", msg.msg_flags);
 }

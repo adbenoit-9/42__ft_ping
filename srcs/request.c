@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:52:44 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/11 23:41:11 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/12 15:38:43 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 
 /* https://book.huihoo.com/iptables-tutorial/x1078.htm */
 
-t_icmp_packet	request_packet(void)
+t_packet	request_packet(void)
 {
-	t_icmp_packet	packet;
+	t_packet	packet;
 
 	memset(&packet.echo.request.header, 0, sizeof(struct icmp));
 	packet.echo.request.header.icmp_type = ICMP_ECHO;
@@ -34,10 +34,13 @@ void	ping(void)
 
 	send_packet.header.icmp_cksum = 0;
 	send_packet.header.icmp_cksum = checksum(
-		(unsigned short *)&send_packet.header, sizeof(struct icmp));
-	len = sendto(g_data.sockfd, &g_data.request_packet, TOTAL_SIZE, 0,
-			g_data.sockaddr, sizeof(g_data.sockaddr));
+		(unsigned short *)&send_packet.header, sizeof(send_packet));
+	len = sendto(g_data.sockfd, &g_data.request_packet, sizeof(send_packet), 0,
+			&g_data.sockaddr, sizeof(g_data.sockaddr));
 #ifdef DEBUG
+	printf("%s[ip %s] [length %d] [family %d] [data %s] [fd %d]%s\n",
+		S_BLUE, g_data.ip, g_data.sockaddr.sa_len, g_data.sockaddr.sa_family,
+		g_data.sockaddr.sa_data, g_data.sockfd, S_BLUE);
 	if (len == -1)
 		printf("%s[Transmission failed]%s %s\n", S_RED, S_NONE, strerror(errno));
 	else
@@ -50,5 +53,5 @@ void	ping(void)
     if ((g_data.flag & COUNT) == COUNT && send_packet.header.icmp_seq == g_data.count)
         return (ping_report());
 	++send_packet.header.icmp_seq;
-	alarm(TIME_INTERVAL);
+	// alarm(TIME_INTERVAL);
 }

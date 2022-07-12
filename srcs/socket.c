@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 02:43:41 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/11 02:44:04 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/12 12:48:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ void	init_socket(void)
 	printf("PING %s (%s) %d(%d) bytes of data.\n", g_data.host, g_data.ip,
 		PACKET_SIZE, PACKET_SIZE + HEADER_SIZE);
 	ttl = DEFAULT_TTL;
-	setsockopt(g_data.sockfd, IPPROTO_IP, IP_TTL, &ttl, sizeof(ttl));
+	if (setsockopt(g_data.sockfd, IPPROTO_IP, IP_TTL, &ttl, sizeof(ttl)) == -1)
+        ft_perror(SOCKERR, NULL, 0);
 }

@@ -6,13 +6,13 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/07/11 17:14:25 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/07/12 12:42:54 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # COMPILATION
 CC		= gcc
-CFLAGS 	= -Wall -Wextra -Werror #-O2 #-fsanitize=address -g3
+CFLAGS 	= -Wall -Wextra -Werror -fsanitize=address -g3
 IFLAGS 	= -I./incs
 
 HOST	= localhost

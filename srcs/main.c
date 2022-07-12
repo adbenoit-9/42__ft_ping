@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:36 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/11 23:29:26 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/12 15:30:14 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@ static t_ping_data	init_ping_data(void)
 	t_ping_data	data;
 
 	data.host = NULL;
-	data.ip = NULL;
+	bzero(data.ip, INET_ADDRSTRLEN);
 	data.flag = 0;
 	data.count = -1;
 	data.sockfd = -1;
 	g_data.status = WAIT;
-	memset(&data.sockaddr, 0, sizeof(data.sockaddr));
+	bzero(&data.sockaddr, sizeof(data.sockaddr));
 	return (data);
 }
 
-static int	set_ipaddr(void)
+static int	init_address(void)
 {
 	struct addrinfo		hints;
 	struct addrinfo		*res;
-	struct sockaddr_in	*addr;
+	struct in_addr		src;
 	int					ret;
 
 	memset(&hints, 0, sizeof(hints));
@@ -41,36 +41,32 @@ static int	set_ipaddr(void)
 	hints.ai_protocol = IPPROTO_ICMP;
 	hints.ai_flags = 0;
 	ret = getaddrinfo(g_data.host, NULL, &hints, &res);
-	if (ret != 0)
+	if (ret < 0)
 		ft_perror(BADHOST, g_data.host, 0);
-	addr = (struct sockaddr_in *)res->ai_addr;
-	g_data.ip = inet_ntoa((struct in_addr)addr->sin_addr);
+	memcpy(&g_data.sockaddr, res->ai_addr, sizeof(struct sockaddr));
+	src = ((struct sockaddr_in *)res->ai_addr)->sin_addr;
+	if (!inet_ntop(AF_INET, &src, g_data.ip, INET_ADDRSTRLEN))
+		ft_perror(BADAF, g_data.host, 0);
 	freeaddrinfo(res);
 	return (0);
 }
 
 int	main(int ac, char **av)
 {
-	struct in_addr	buf;
-	int				ret;
-
 	if (ac == 1)
 		ft_perror(NOHOST, NULL, 0);
 	g_data = init_ping_data();
 	parser(av + 1);
-	set_ipaddr();
-	ret = inet_pton(AF_INET, g_data.ip, &buf);
-	if (ret == 0)
-		ft_perror(BADAF, g_data.host, 0);
-	else if (ret < 0)
-		ft_perror(BADHOST, g_data.host, 0);
-	g_data.sockaddr = (struct sockaddr *)&buf;
+	init_address();
 	init_socket();
 	signal(SIGINT, handle_signal);
 	signal(SIGALRM, handle_signal);
 	g_data.request_packet = request_packet();
-    ping();
 	while (true)
+	{
+		ping();
+		ping();
 		recv_echo_reply();
+	}
 	return (0);
 }
