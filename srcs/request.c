@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:52:44 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/12 18:03:04 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/12 19:24:18 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,10 @@ void	ping(void)
 		else if (errno == EWOULDBLOCK)
 			printf("Request timeout for icmp_seq %hu\n", send_packet.header.icmp_seq);
 	}
-	else
+	else {
 		++g_data.state.nsent;
-    if ((g_data.flag & COUNT) == COUNT && send_packet.header.icmp_seq == g_data.count)
+	}
+	if ((g_data.flag & COUNT) == COUNT && send_packet.header.icmp_seq == g_data.count)
         return (ping_report());
 	++send_packet.header.icmp_seq;
 	alarm(TIME_INTERVAL);
