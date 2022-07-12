@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:35:48 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/12 19:21:36 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/12 22:58:05 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,6 @@ void	print_msg(struct msghdr msg)
 	printf("-- MSG HEADER (size %ld) --\n", sizeof(struct msghdr));
 	printf("data pointer: %p\n", msg.msg_iov[0].iov_base);
 	printf("data length: %zd\n", msg.msg_iov[0].iov_len);
-	printf("iov array length: %ld\n", msg.msg_iovlen);
+	printf("iov array length: %ld\n", (size_t)msg.msg_iovlen);
 	printf("flags: %d\n", msg.msg_flags);
 }
