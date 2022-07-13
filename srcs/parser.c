@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:42:56 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 13:55:35 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:55:58 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ bool	parser(char **arg)
 		else
 			host = arg[i];
 	}
+	if ((g_data.flag & COUNT) && g_data.count == -1)
+		fatal_error(NOARG, NULL, 'c');
 	if (!host)
 		fatal_error(NOHOST, NULL, 0);
 	g_data.host = strdup(host);

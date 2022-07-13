@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 17:21:10 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 18:33:19 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static struct msghdr	init_msg(void)
 	iov[0].iov_len = sizeof(R_PACKET);
 	msg.msg_iov = iov;
 	msg.msg_iovlen = 1;
+	msg.msg_flags = MSG_DONTWAIT;
 	return (msg);
 }
 
@@ -48,17 +49,8 @@ double	time_interval(struct timeval start, struct timeval end)
 	return ((double)sec * 1000 + (double)usec / 1000);
 }
 
-bool	recv_echo_reply(struct timeval req_time)
+void	set_time_stats(double time_ms)
 {
-	ssize_t			len;
-	struct msghdr	msg;
-	struct timeval	res_time;
-	double			time_ms;
-
-	msg = init_msg();
-	len = recvmsg(g_data.sockfd, &msg, 0);
-	gettimeofday(&res_time, NULL);
-	time_ms = time_interval(req_time, res_time);
 	if (g_data.stats.nsent == 1)
 	{
 		g_data.stats.min_time = time_ms;
@@ -67,6 +59,20 @@ bool	recv_echo_reply(struct timeval req_time)
 	g_data.stats.min_time = time_ms < g_data.stats.min_time ? time_ms : g_data.stats.min_time;
 	g_data.stats.max_time = time_ms > g_data.stats.max_time ? time_ms : g_data.stats.max_time;
 	g_data.stats.total_time += time_ms;
+}
+
+bool	recv_echo_reply(struct timeval req_time)
+{
+	ssize_t			len;
+	struct msghdr	msg;
+	struct timeval	res_time;
+	double			time_ms;
+
+	msg = init_msg();
+	len = recvmsg(g_data.sockfd, &msg, MSG_DONTWAIT);
+	gettimeofday(&res_time, NULL);
+	time_ms = time_interval(req_time, res_time);
+	set_time_stats(time_ms);
 #ifdef DEBUG
 	if (len == -1) {
 		printf("%s[Reception failed]%s %s\n", S_RED, S_NONE, strerror(errno));
@@ -92,8 +98,8 @@ bool	recv_echo_reply(struct timeval req_time)
 	++g_data.stats.nrecv;
 	if (!(g_data.flag & QUIET))
 	{
-		printf("%zd bytes from %s: icmp_seq=%d ttl=%d time=%.3f ms\n",
-			len, g_data.ip, R_PACKET.icmphdr.icmp_seq,
+		printf("%zd bytes from %s (%s): icmp_seq=%d ttl=%d time=%.3f ms\n",
+			len, g_data.host, g_data.ip, R_PACKET.icmphdr.icmp_seq,
 			R_PACKET.iphdr.ip_ttl, time_ms);
 	}
 	return (true);

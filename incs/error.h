@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 12:51:23 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 14:56:40 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:56:25 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 # define NOHOST ELAST + 2
 # define BADARG ELAST + 3
 # define BADOPT ELAST + 4
-# define ARGOOR ELAST + 5
+# define NOARG ELAST + 5
+# define ARGOOR ELAST + 6
 
 
 /*
@@ -138,7 +139,8 @@
 # define TRANSMERR_MSG "ft_ping: transmission failed\n"
 # define NOHOST_MSG "ft_ping: usage error: Destination address required\n"
 # define BADARG_MSG  "ft_ping: invalid agument: '%s'\n"
-# define BADOPT_MSG "ft_ping: invalid option -- %c\n"
+# define BADOPT_MSG "ft_ping: invalid option -- '%c'\n"
+# define NOARG_MSG "ft_ping: option requires an argument -- '%c'\n"
 # define ARGOOR_MSG  "ft_ping: invalid agument: '%s': out of range: %d <= value <= %ld\n"
 
 #endif
