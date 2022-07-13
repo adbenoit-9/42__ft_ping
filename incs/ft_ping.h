@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 12:18:59 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:09:39 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_PING_H
 
 # include "defs.h"
+# include "error.h"
 
 typedef struct s_packet
 {
@@ -56,7 +57,8 @@ typedef struct s_ping_data
 extern t_ping_data	g_data;
 
 int				fatal_error(int error, char *arg, char option);
-int				ft_perror(char *error);
+int				ft_perror(char *error, char *fct);
+char			*ft_strerror(int error);
 void			handle_signal(int signum);
 bool			parser(char **arg);
 int				print_help(void);

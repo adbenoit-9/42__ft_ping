@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:52:44 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 12:17:19 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:08:04 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,9 @@ void	ping(void)
 		printf("%s[Packet sent]%s %zd bytes\n", S_GREEN, S_NONE, len);
 	print_icmp(S_PACKET.header);
 #endif
-	if (len == -1) {
-		if (errno == ENOTCONN)
-			ft_perror("ft_ping: sendto: Socket is not connected\n");
-	}
-	else {
-		++g_data.state.nsent;
-	}
+	if (len == -1)
+		ft_perror(ft_strerror(errno), "sendto");
+	++g_data.state.nsent;
 	if ((g_data.flag & COUNT) && S_PACKET.header.icmp_seq == g_data.count)
 		return (ping_report());
 	++S_PACKET.header.icmp_seq;

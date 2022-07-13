@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:45:31 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 12:04:55 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:56:20 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,31 +79,5 @@
 # define SUCCESS 0
 # define USAGE_ERR 1
 # define ERROR 2
-
-/*
-** -- Error codes --
-*/
-# define NOMEM 0
-# define SOCKERR 1
-# define TRANSMERR 2
-# define NOHOST 3
-# define BADHOST 4
-# define BADAF 5
-# define BADARG 6
-# define BADOPT 7
-# define ARGOOR 8
-
-/*
-** -- Error messages --
-*/
-# define NOMEM_MSG "ft_ping: out of memory\n"
-# define SOCKERR_MSG "ft_ping: socket error\n"
-# define TRANSMERR_MSG "ft_ping: transmission failed\n"
-# define NOHOST_MSG "ft_ping: usage error: Destination address required\n"
-# define BADHOST_MSG "ft_ping: %s: Name or service not known\n"
-# define BADAF_MSG "ft_ping: %s: Address family for hostname not supported\n"
-# define BADARG_MSG  "ft_ping: invalid agument: '%s'\n"
-# define BADOPT_MSG "ft_ping: invalid option -- %c\n"
-# define ARGOOR_MSG  "ft_ping: invalid agument: '%s': out of range: %d <= value <= %ld\n"
 
 #endif

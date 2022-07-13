@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 12:16:54 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:03:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ void	recv_echo_reply(void)
 #endif
 	if (len == -1) {
 		if (errno == EWOULDBLOCK || errno == EAGAIN)
-			ft_perror("Request timeout\n");
+			ft_perror("Request timeout\n", "recv");
 		else
-			fatal_error(TRANSMERR, NULL, 0);
+			ft_perror(strerror(errno), "recv");
 	}
 	else {
 		++g_data.state.nrecv;
