@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 14:09:39 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:06:24 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,21 @@ typedef struct s_packet
 		{
 			struct ip		iphdr;
 			struct icmp		icmphdr;
-			char			data[PACKET_SIZE - 20];
+			char			data[PACKET_SIZE - 40];
 		}	reply;
 	}	echo;
 }	t_packet;
 
-typedef struct s_state
+typedef struct s_stats
 {
-	size_t				nrecv;
-	size_t				nsent;
-	int					status;	
-}	t_state;
+	long long int		nrecv;
+	long long int		nsent;
+	double				max_time;
+	double				min_time;
+	double				total_time;
+	int					status;
+}	t_stats;
+
 
 typedef struct s_ping_data
 {
@@ -51,7 +55,7 @@ typedef struct s_ping_data
 	uint8_t				pid;
 	t_packet			request_packet;
 	t_packet			reply_packet;
-	t_state				state;
+	t_stats				stats;
 }				t_ping_data;
 
 extern t_ping_data	g_data;
@@ -62,16 +66,17 @@ char			*ft_strerror(int error);
 void			handle_signal(int signum);
 bool			parser(char **arg);
 int				print_help(void);
-void			print_addrinfo(struct addrinfo info);
 void			clean(void);
 int				ft_isnumber(char *str);
 t_packet		request_packet(void);
 unsigned short	checksum(unsigned short *addr, size_t len);
-void			print_icmp(struct icmp icmphdr);
 void			ping(void);
-void			ping_report(void);
-void			recv_echo_reply(void);
+void			stats_report(void);
+bool			recv_echo_reply(void);
 void			init_socket(void);
+void			print_addrinfo(struct addrinfo info);
+void			print_icmp(struct icmp icmphdr);
+void			print_ip(struct ip iphdr);
 void			print_msg(struct msghdr msg);
 
 #endif

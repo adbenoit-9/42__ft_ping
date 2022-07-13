@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 14:03:08 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:30:40 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,12 @@ bool	ckeck_icmphdr(struct icmp icmphdr)
 
 	cksum = icmphdr.icmp_cksum;
 	icmphdr.icmp_cksum = 0;
-	if (icmphdr.icmp_type != ICMP_ECHOREPLY)
-		return (false);
-	else if (icmphdr.icmp_code != 0)
-		return (false);
-	else if (icmphdr.icmp_id != g_data.pid)
-		return (false);
-	else if (checksum((unsigned short *)&icmphdr, sizeof(icmphdr)) != cksum)
-		return (false);
-	else if (icmphdr.icmp_seq != g_data.state.nrecv)
+	if (checksum((unsigned short *)&icmphdr, sizeof(icmphdr)) != cksum)
 		return (false);
 	return (true);
 }
 
-void	recv_echo_reply(void)
+bool	recv_echo_reply(void)
 {
 	ssize_t			len;
 	struct msghdr	msg;
@@ -60,18 +52,27 @@ void	recv_echo_reply(void)
 	}
 	else {
 		printf("%s[Packet received]%s %zd bytes\n", S_YELLOW, S_NONE, len);
+		print_ip(R_PACKET.iphdr);
 		print_icmp(R_PACKET.icmphdr);
 	}
 #endif
 	if (len == -1) {
-		if (errno == EWOULDBLOCK || errno == EAGAIN)
-			ft_perror("Request timeout\n", "recv");
-		else
-			ft_perror(strerror(errno), "recv");
+	// 	if (errno == EWOULDBLOCK || errno == EAGAIN)
+	// 		printf("Request timeout\n");
+	// 	else
+		ft_perror(strerror(errno), "recv");
+		return (false);
 	}
-	else {
-		++g_data.state.nrecv;
-		if (!ckeck_icmphdr(R_PACKET.icmphdr))
-			printf("%spacket corrupted%s\n", S_RED, S_NONE);
+	if (!ckeck_icmphdr(R_PACKET.icmphdr)) {
+		printf("Request timeout\n");
+		return (false);
 	}
+	++g_data.stats.nrecv;
+	if (!(g_data.flag & QUIET))
+	{
+		printf("%zd bytes from %s: icmp_seq=%d ttl=%d time=%.3f ms\n",
+			len, g_data.ip, R_PACKET.icmphdr.icmp_seq,
+			R_PACKET.iphdr.ip_ttl, 0.);
+	}
+	return (true);
 }

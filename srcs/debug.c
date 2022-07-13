@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:54:29 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 11:54:39 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 15:36:56 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,15 @@ void	print_addrinfo(struct addrinfo info)
 	printf("canonname: %s\n", info.ai_canonname);
 }
 
+void	print_ip(struct ip iphdr)
+{
+	printf("-- IP HEADER (size %ld) --\n", sizeof(iphdr));
+	printf("ttl: %d\n", iphdr.ip_ttl);
+}
+
 void	print_icmp(struct icmp icmphdr)
 {
-	printf("-- ICMP HEADER (size %ld) --\n", sizeof(struct icmp));
+	printf("-- ICMP HEADER (size %ld) --\n", sizeof(icmphdr));
 	printf("type: %d\n", icmphdr.icmp_type);
 	printf("code: %d\n", icmphdr.icmp_code);
 	printf("identifier: %d\n", icmphdr.icmp_id);
