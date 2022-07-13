@@ -6,32 +6,47 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:27:25 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 11:46:00 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 12:18:34 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
 
-int	ft_perror(int error, char *arg, char option)
+char	*ft_sterror(int error, char *arg, char option)
 {
-	char	*msg[] = {NOMEM_MSG, SOCKERR_MSG, TRANSMERR_MSG, NOHOST_MSG};
-	int		status;
-
+	static char	str[4096];
+	char		*msg[] = {NOMEM_MSG, SOCKERR_MSG, TRANSMERR_MSG, NOHOST_MSG};
+	
 	if (error <= NOHOST)
-		dprintf(STDERR_FILENO, "%s", msg[error]);
+		sprintf(str, "%s", msg[error]);
 	else if (error == BADHOST)
-		dprintf(STDERR_FILENO, BADHOST_MSG, arg);
+		sprintf(str, BADHOST_MSG, arg);
 	else if (error == BADAF)
-		dprintf(STDERR_FILENO, BADAF_MSG, arg);
+		sprintf(str, BADAF_MSG, arg);
 	else if (error == BADARG)
-		dprintf(STDERR_FILENO, BADARG_MSG, arg);
+		sprintf(str, BADARG_MSG, arg);
 	else if (error == BADOPT)
 	{
-		dprintf(STDERR_FILENO, BADOPT_MSG, option);
+		sprintf(str, BADOPT_MSG, option);
 		print_help();
 	}
 	else if (error == ARGOOR)
-		dprintf(STDERR_FILENO, ARGOOR_MSG, arg, 1, LLONG_MAX);
+		sprintf(str, ARGOOR_MSG, arg, 1, LLONG_MAX);
+	return (str);
+}
+
+int	ft_perror(char *error)
+{
+	dprintf(STDERR_FILENO, "%s", error);
+	return (0);
+}
+
+int	fatal_error(int error, char *arg, char option)
+{
+	int		status;
+
+	ft_perror(ft_sterror(error, arg, option));
+	clean();
 	status = error < NOHOST ? USAGE_ERR : ERROR;
 	exit(status);
 }

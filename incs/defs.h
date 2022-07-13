@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:45:31 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 11:44:55 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 12:04:55 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include <stdbool.h>
 
 # define TIME_INTERVAL 1
+# define TIMEOUT 2
 # define LLONG_MAX 9223372036854775807
 # define S_PACKET g_data.request_packet.echo.request
 # define R_PACKET g_data.reply_packet.echo.reply

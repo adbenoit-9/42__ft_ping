@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:52:44 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 11:50:09 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 12:17:19 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ping(void)
 #endif
 	if (len == -1) {
 		if (errno == ENOTCONN)
-			dprintf(STDERR_FILENO, "ft_ping: sendto: Socket is not connected\n");
+			ft_perror("ft_ping: sendto: Socket is not connected\n");
 	}
 	else {
 		++g_data.state.nsent;

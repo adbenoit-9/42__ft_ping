@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:42:56 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 11:50:27 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 12:08:43 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	set_flag(char *flags)
 	{
 		new_flag = flag_value(flags[i]);
 		if (new_flag == -1)
-			ft_perror(BADOPT, NULL, flags[i]);
+			fatal_error(BADOPT, NULL, flags[i]);
 		g_data.flag |= new_flag;
 		if (new_flag == HELP)
 		{
@@ -54,9 +54,9 @@ bool	parser(char **arg)
 		{
 			g_data.count = atoll(arg[i]);
 			if (!ft_isnumber(arg[i]))
-				ft_perror(BADARG, arg[i], 0);
+				fatal_error(BADARG, arg[i], 0);
 			else if (g_data.count <= 0)
-				ft_perror(ARGOOR, arg[i], 0);
+				fatal_error(ARGOOR, arg[i], 0);
 		}
 		else if (arg[i][0] == '-')
 			set_flag(arg[i] + 1);
@@ -64,9 +64,9 @@ bool	parser(char **arg)
 			host = arg[i];
 	}
 	if (!host)
-		ft_perror(NOHOST, NULL, 0);
+		fatal_error(NOHOST, NULL, 0);
 	g_data.host = strdup(host);
 	if (!g_data.host)
-		ft_perror(NOMEM, NULL, 0);
+		fatal_error(NOMEM, NULL, 0);
 	return (SUCCESS);
 }

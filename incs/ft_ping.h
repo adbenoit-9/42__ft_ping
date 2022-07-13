@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 11:41:19 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 12:18:59 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ typedef struct s_ping_data
 
 extern t_ping_data	g_data;
 
-int				ft_perror(int error, char *arg, char option);
+int				fatal_error(int error, char *arg, char option);
+int				ft_perror(char *error);
 void			handle_signal(int signum);
 bool			parser(char **arg);
 int				print_help(void);

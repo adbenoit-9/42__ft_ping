@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:36 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/12 17:43:19 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 12:08:43 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ static int	init_address(void)
 	hints.ai_flags = 0;
 	ret = getaddrinfo(g_data.host, NULL, &hints, &res);
 	if (ret < 0)
-		ft_perror(BADHOST, g_data.host, 0);
+		fatal_error(BADHOST, g_data.host, 0);
 	memcpy(&g_data.sockaddr, res->ai_addr, sizeof(struct sockaddr));
 	src = ((struct sockaddr_in *)res->ai_addr)->sin_addr;
 	if (!inet_ntop(AF_INET, &src, g_data.ip, INET_ADDRSTRLEN))
-		ft_perror(BADAF, g_data.host, 0);
+		fatal_error(BADAF, g_data.host, 0);
 	freeaddrinfo(res);
 	return (0);
 }
@@ -57,7 +57,7 @@ static int	init_address(void)
 int	main(int ac, char **av)
 {
 	if (ac == 1)
-		ft_perror(NOHOST, NULL, 0);
+		fatal_error(NOHOST, NULL, 0);
 	g_data = init_ping_data();
 	parser(av + 1);
 	init_address();
