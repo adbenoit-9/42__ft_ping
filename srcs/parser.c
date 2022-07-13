@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:42:56 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/11 01:59:53 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 11:50:27 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	flag_value(char flag)
 static void	set_flag(char *flags)
 {
 	int	new_flag;
-	
+
 	for (int i = 0; flags[i]; i++)
 	{
 		new_flag = flag_value(flags[i]);
@@ -50,7 +50,7 @@ bool	parser(char **arg)
 	host = NULL;
 	for (size_t i = 0; arg[i]; i++)
 	{
-		if ((g_data.flag & COUNT) == COUNT && g_data.count == -1)
+		if ((g_data.flag & COUNT) && g_data.count == -1)
 		{
 			g_data.count = atoll(arg[i]);
 			if (!ft_isnumber(arg[i]))

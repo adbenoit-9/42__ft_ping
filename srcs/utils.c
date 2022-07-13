@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:35:48 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/12 22:58:05 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 11:54:26 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,37 +64,4 @@ unsigned short	checksum(unsigned short *addr, size_t len)
 		len -= sizeof(short);
 	}
 	return (~sum);
-}
-
-void	print_addrinfo(struct addrinfo info)
-{
-	struct sockaddr_in	*addr;
-
-	printf("flags: %d\n", info.ai_flags);
-	printf("family: %d\n", info.ai_family);
-	printf("socktype: %d\n", info.ai_socktype);
-	printf("protocol: %d\n", info.ai_protocol);
-	printf("addrlen: %u\n", info.ai_addrlen);
-	addr = (struct sockaddr_in *)info.ai_addr;
-	printf("addr %s\n", inet_ntoa((struct in_addr)addr->sin_addr));
-	printf("canonname: %s\n", info.ai_canonname);
-}
-
-void	print_icmp(struct icmp icmphdr)
-{
-	printf("-- ICMP HEADER (size %ld) --\n", sizeof(struct icmp));
-	printf("type: %d\n", icmphdr.icmp_type);
-	printf("code: %d\n", icmphdr.icmp_code);
-	printf("identifier: %d\n", icmphdr.icmp_id);
-	printf("sequence: %d\n", icmphdr.icmp_seq);
-	printf("checksum: %d\n", icmphdr.icmp_cksum);
-}
-
-void	print_msg(struct msghdr msg)
-{
-	printf("-- MSG HEADER (size %ld) --\n", sizeof(struct msghdr));
-	printf("data pointer: %p\n", msg.msg_iov[0].iov_base);
-	printf("data length: %zd\n", msg.msg_iov[0].iov_len);
-	printf("iov array length: %ld\n", (size_t)msg.msg_iovlen);
-	printf("flags: %d\n", msg.msg_flags);
 }

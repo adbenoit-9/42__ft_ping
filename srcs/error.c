@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:27:25 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/12 18:52:49 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 11:46:00 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_perror(int error, char *arg, char option)
 {
-	char  *msg[] = {NOMEM_MSG, SOCKERR_MSG, TRANSMERR_MSG, NOHOST_MSG};
-	int   status;
+	char	*msg[] = {NOMEM_MSG, SOCKERR_MSG, TRANSMERR_MSG, NOHOST_MSG};
+	int		status;
 
 	if (error <= NOHOST)
 		dprintf(STDERR_FILENO, "%s", msg[error]);
@@ -31,7 +31,7 @@ int	ft_perror(int error, char *arg, char option)
 		print_help();
 	}
 	else if (error == ARGOOR)
-			dprintf(STDERR_FILENO, ARGOOR_MSG, arg, 1, LLONG_MAX);
+		dprintf(STDERR_FILENO, ARGOOR_MSG, arg, 1, LLONG_MAX);
 	status = error < NOHOST ? USAGE_ERR : ERROR;
 	exit(status);
 }

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/12 18:51:40 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 11:41:19 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,18 @@
 
 typedef struct s_packet
 {
-	union {
-		struct request
+	union u_echo {
+		struct s_request
 		{
 			struct icmp	header;
 			char		data[PACKET_SIZE - 20];
 		}	request;
-		struct reply
+		struct s_reply
 		{
 			struct ip		iphdr;
 			struct icmp		icmphdr;
 			char			data[PACKET_SIZE - 20];
 		}	reply;
-		
 	}	echo;
 }	t_packet;
 
@@ -63,12 +62,12 @@ int				print_help(void);
 void			print_addrinfo(struct addrinfo info);
 void			clean(void);
 int				ft_isnumber(char *str);
-t_packet	request_packet(void);
+t_packet		request_packet(void);
 unsigned short	checksum(unsigned short *addr, size_t len);
 void			print_icmp(struct icmp icmphdr);
 void			ping(void);
 void			ping_report(void);
-void    		recv_echo_reply(void);
+void			recv_echo_reply(void);
 void			init_socket(void);
 void			print_msg(struct msghdr msg);
 

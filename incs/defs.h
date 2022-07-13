@@ -6,11 +6,12 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:45:31 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/12 18:50:10 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 11:44:55 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFS_H
+# define DEFS_H
 
 /*
 ** -- Includes --
@@ -32,8 +33,8 @@
 
 # define TIME_INTERVAL 1
 # define LLONG_MAX 9223372036854775807
-# define send_packet g_data.request_packet.echo.request
-# define recv_packet g_data.reply_packet.echo.reply
+# define S_PACKET g_data.request_packet.echo.request
+# define R_PACKET g_data.reply_packet.echo.reply
 
 /*
 ** -- Color codes --
@@ -68,7 +69,6 @@
 */
 # define HEADER_SIZE 28
 # define PACKET_SIZE 56
-# define TOTAL_SIZE PACKET_SIZE + HEADER_SIZE
 # define DEFAULT_TTL 64
 # define VERSION 4
 
