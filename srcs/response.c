@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 16:30:40 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:21:10 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,35 @@ bool	ckeck_icmphdr(struct icmp icmphdr)
 	return (true);
 }
 
-bool	recv_echo_reply(void)
+double	time_interval(struct timeval start, struct timeval end)
+{
+	size_t sec;
+	size_t usec;
+	
+	sec = end.tv_sec - start.tv_sec;
+	usec = end.tv_usec - start.tv_usec;
+	return ((double)sec * 1000 + (double)usec / 1000);
+}
+
+bool	recv_echo_reply(struct timeval req_time)
 {
 	ssize_t			len;
 	struct msghdr	msg;
+	struct timeval	res_time;
+	double			time_ms;
 
 	msg = init_msg();
 	len = recvmsg(g_data.sockfd, &msg, 0);
+	gettimeofday(&res_time, NULL);
+	time_ms = time_interval(req_time, res_time);
+	if (g_data.stats.nsent == 1)
+	{
+		g_data.stats.min_time = time_ms;
+		g_data.stats.max_time = time_ms;
+	}
+	g_data.stats.min_time = time_ms < g_data.stats.min_time ? time_ms : g_data.stats.min_time;
+	g_data.stats.max_time = time_ms > g_data.stats.max_time ? time_ms : g_data.stats.max_time;
+	g_data.stats.total_time += time_ms;
 #ifdef DEBUG
 	if (len == -1) {
 		printf("%s[Reception failed]%s %s\n", S_RED, S_NONE, strerror(errno));
@@ -57,10 +79,10 @@ bool	recv_echo_reply(void)
 	}
 #endif
 	if (len == -1) {
-	// 	if (errno == EWOULDBLOCK || errno == EAGAIN)
-	// 		printf("Request timeout\n");
-	// 	else
-		ft_perror(strerror(errno), "recv");
+		if (errno == EWOULDBLOCK || errno == EAGAIN)
+			printf("Request timeout\n");
+		else
+			ft_perror(strerror(errno), "recv");
 		return (false);
 	}
 	if (!ckeck_icmphdr(R_PACKET.icmphdr)) {
@@ -72,7 +94,7 @@ bool	recv_echo_reply(void)
 	{
 		printf("%zd bytes from %s: icmp_seq=%d ttl=%d time=%.3f ms\n",
 			len, g_data.ip, R_PACKET.icmphdr.icmp_seq,
-			R_PACKET.iphdr.ip_ttl, 0.);
+			R_PACKET.iphdr.ip_ttl, time_ms);
 	}
 	return (true);
 }

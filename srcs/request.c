@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:52:44 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 16:03:28 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:01:11 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_packet	request_packet(void)
 	packet.echo.request.header.icmp_code = 0;
 	packet.echo.request.header.icmp_id = g_data.pid;
 	packet.echo.request.header.icmp_seq = 1;
+	// gettimeofday(&packet.echo.request.time, NULL);
 	return (packet);
 }
 
@@ -50,5 +51,4 @@ void	ping(void)
 	if ((g_data.flag & COUNT) && S_PACKET.header.icmp_seq == g_data.count)
 		return ;
 	++S_PACKET.header.icmp_seq;
-	alarm(TIME_INTERVAL);
 }

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:36 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 16:10:51 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:06:10 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ static int	init_address(void)
 
 int	main(int ac, char **av)
 {
+	struct timeval	req_time;
+
 	if (ac == 1)
 		fatal_error(NOHOST, NULL, 0);
 	g_data = init_ping_data();
@@ -70,12 +72,14 @@ int	main(int ac, char **av)
 	printf("PING %s (%s) %d(%d) bytes of data.\n", g_data.host, g_data.ip,
 		PACKET_SIZE, PACKET_SIZE + HEADER_SIZE);
 	g_data.request_packet = request_packet();
-	ping();
 	while (true)
 	{
+		gettimeofday(&req_time, NULL);
+		ping();
 		if ((g_data.flag & COUNT) && g_data.count == g_data.stats.nrecv)
 			stats_report();
-		recv_echo_reply();
+		recv_echo_reply(req_time);
+		ft_wait(req_time, TIME_INTERVAL);
 	}
 	return (0);
 }

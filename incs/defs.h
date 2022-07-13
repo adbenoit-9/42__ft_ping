@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:45:31 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 14:56:20 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:43:37 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <ctype.h>
 # include <netinet/ip_icmp.h>
 # include <stdbool.h>
+# include <sys/time.h>
 
 # define TIME_INTERVAL 1
 # define TIMEOUT 2

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:54:29 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 15:36:56 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:47:04 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ void	print_icmp(struct icmp icmphdr)
 	printf("identifier: %d\n", icmphdr.icmp_id);
 	printf("sequence: %d\n", icmphdr.icmp_seq);
 	printf("checksum: %d\n", icmphdr.icmp_cksum);
+}
+
+void	print_time(struct timeval time)
+{
+	printf("time: %ld secondes %d microsecondes\n", time.tv_sec, time.tv_usec);
 }
 
 void	print_msg(struct msghdr msg)
