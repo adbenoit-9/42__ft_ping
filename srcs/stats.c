@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:20:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 18:25:15 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/14 16:38:46 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	stats_report(void)
 {
-	double	loss;
+	size_t	loss;
 	
 	g_data.stats.status = STOP;
 	printf("\n--- %s ping statistics ---\n", g_data.host);
 	loss = g_data.stats.nsent - g_data.stats.nrecv;
-	printf("%lld packets transmitted, %lld packets received, %.1f%c packet loss\n",
-		g_data.stats.nsent, g_data.stats.nrecv,
-		(loss / g_data.stats.nsent) * 100., '%');
+	printf("%lld packets transmitted, %lld packets received, %lld%c packet loss, time %d\n",
+		g_data.stats.nsent, g_data.stats.nrecv, (loss / g_data.stats.nsent) * 100,
+		'%', (int)g_data.stats.total_time);
 	if (g_data.stats.nrecv)
 	{
 		printf("rtt min/avg/max/mdev = %.3f/%.3f/%.3f ms\n",
