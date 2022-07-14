@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/14 19:36:10 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/14 20:20:41 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static struct msghdr	init_msg(void)
 	iov[0].iov_len = sizeof(R_PACKET);
 	msg.msg_iov = iov;
 	msg.msg_iovlen = 1;
-	msg.msg_flags = MSG_DONTWAIT;
+	msg.msg_flags = 0;
 	return (msg);
 }
 
@@ -47,7 +47,7 @@ bool	recv_echo_reply(struct timeval req_time)
 	double			time_ms;
 
 	msg = init_msg();
-	len = recvmsg(g_data.sockfd, &msg, MSG_DONTWAIT);
+	len = recvmsg(g_data.sockfd, &msg, 0);
 #ifdef DEBUG
 	if (len == -1) {
 		printf("%s[Reception failed]%s %s\n", S_RED, S_NONE, strerror(errno));
@@ -66,16 +66,13 @@ bool	recv_echo_reply(struct timeval req_time)
 			ft_perror(strerror(errno), "recv");
 		return (false);
 	}
-	else
-	{
-		gettimeofday(&res_time, NULL);
-		time_ms = timeval_to_ms(res_time) - timeval_to_ms(req_time);
-		set_time_stats(time_ms);
-	}
 	if (!ckeck_icmphdr(R_PACKET.icmphdr)) {
 		printf("Request timeout\n");
 		return (false);
 	}
+	gettimeofday(&res_time, NULL);
+	time_ms = timeval_to_ms(res_time) - timeval_to_ms(req_time);
+	set_time_stats(time_ms);
 	++g_data.stats.nrecv;
 	if (!(g_data.flag & QUIET))
 	{
