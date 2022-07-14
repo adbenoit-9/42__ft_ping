@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/14 18:46:10 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/14 19:51:48 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_ping_data
 	int					flag;
 	long long int		count;
 	int					sockfd;
-	unsigned short				pid;
+	uint8_t				pid;
 	t_packet			request_packet;
 	t_packet			reply_packet;
 	t_stats				stats;
