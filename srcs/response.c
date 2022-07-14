@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 18:33:19 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/14 16:25:48 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static struct msghdr	init_msg(void)
 	iov[0].iov_len = sizeof(R_PACKET);
 	msg.msg_iov = iov;
 	msg.msg_iovlen = 1;
-	msg.msg_flags = MSG_DONTWAIT;
+	msg.msg_flags = 0;
 	return (msg);
 }
 
@@ -69,7 +69,7 @@ bool	recv_echo_reply(struct timeval req_time)
 	double			time_ms;
 
 	msg = init_msg();
-	len = recvmsg(g_data.sockfd, &msg, MSG_DONTWAIT);
+	len = recvmsg(g_data.sockfd, &msg, 0);
 	gettimeofday(&res_time, NULL);
 	time_ms = time_interval(req_time, res_time);
 	set_time_stats(time_ms);
