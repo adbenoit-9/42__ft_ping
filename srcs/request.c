@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:52:44 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 18:30:52 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/14 16:21:49 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	ping(void)
 		ft_perror(ft_strerror(errno), "sendto");
 	else
 	{
+		printf("%lld\n", ++g_data.stats.nsent);
 		++g_data.stats.nsent;
 		if ((g_data.flag & COUNT) && S_PACKET.header.icmp_seq == g_data.count)
 			return ;
