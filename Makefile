@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/07/13 14:57:22 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/07/14 16:16:12 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,6 +88,9 @@ run: debug
 
 debug: CFLAGS += -DDEBUG
 debug: re
+
+os: CFLAGS += -DOS
+os: re
 	
 .PHONY: all clean fclean re debug
 
