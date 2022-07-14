@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 02:43:41 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 16:27:51 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/14 18:34:34 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_socket(void)
 	ttl = DEFAULT_TTL;
 	if (setsockopt(g_data.sockfd, IPPROTO_IP, IP_TTL, &ttl, sizeof(ttl)) == -1)
 		fatal_error(errno, "setsockopt", 0);
-	if (setsockopt (g_data.sockfd, SOL_SOCKET, SO_RCVTIMEO, &timeout,
-			sizeof(timeout)) == -1)
-		fatal_error(errno, "setsockopt", 0);
+	// if (setsockopt (g_data.sockfd, SOL_SOCKET, SO_RCVTIMEO, &timeout,
+	// 		sizeof(timeout)) == -1)
+	// 	fatal_error(errno, "setsockopt", 0);
 }
