@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/14 18:36:50 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/14 19:36:10 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ static struct msghdr	init_msg(void)
 
 bool	ckeck_icmphdr(struct icmp icmphdr)
 {
-	uint8_t	cksum;
+	unsigned short	cksum;
 
 	cksum = icmphdr.icmp_cksum;
 	icmphdr.icmp_cksum = 0;
-	if (checksum((uint8_t *)&icmphdr, sizeof(icmphdr)) != cksum)
+	if (checksum((unsigned short *)&icmphdr, sizeof(icmphdr)) != cksum)
 		return (false);
 	return (true);
 }
@@ -48,9 +48,6 @@ bool	recv_echo_reply(struct timeval req_time)
 
 	msg = init_msg();
 	len = recvmsg(g_data.sockfd, &msg, MSG_DONTWAIT);
-	gettimeofday(&res_time, NULL);
-	time_ms = timeval_to_ms(res_time) - timeval_to_ms(req_time);
-	set_time_stats(time_ms);
 #ifdef DEBUG
 	if (len == -1) {
 		printf("%s[Reception failed]%s %s\n", S_RED, S_NONE, strerror(errno));
@@ -68,6 +65,12 @@ bool	recv_echo_reply(struct timeval req_time)
 		else
 			ft_perror(strerror(errno), "recv");
 		return (false);
+	}
+	else
+	{
+		gettimeofday(&res_time, NULL);
+		time_ms = timeval_to_ms(res_time) - timeval_to_ms(req_time);
+		set_time_stats(time_ms);
 	}
 	if (!ckeck_icmphdr(R_PACKET.icmphdr)) {
 		printf("Request timeout\n");

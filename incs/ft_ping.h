@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/14 17:49:43 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/14 18:46:10 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_ping_data
 	int					flag;
 	long long int		count;
 	int					sockfd;
-	uint8_t				pid;
+	unsigned short				pid;
 	t_packet			request_packet;
 	t_packet			reply_packet;
 	t_stats				stats;
@@ -71,7 +71,7 @@ int			print_help(void);
 void		clean(void);
 int			ft_isnumber(char *str);
 t_packet	request_packet(void);
-uint8_t		checksum(uint8_t *addr, size_t len);
+unsigned short		checksum(unsigned short *addr, size_t len);
 void		ping(void);
 void		ping_statistics(void);
 bool		recv_echo_reply(struct timeval req_time);

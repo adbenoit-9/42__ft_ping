@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:35:48 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/14 17:22:58 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/14 18:45:46 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int	ft_isnumber(char *str)
 loop that sums 16-bits (short int) at a time in a 32-bit accumulator.
 https://www.rfc-editor.org/rfc/rfc1071#section-4.1 */
 
-uint8_t	checksum(uint8_t *addr, size_t len)
+unsigned short	checksum(unsigned short *addr, size_t len)
 {
-	uint8_t	sum;
+	unsigned short	sum;
 
 	sum = 0;
 	while (len > 0)
