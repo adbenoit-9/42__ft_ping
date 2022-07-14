@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:52:44 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/14 16:25:15 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/14 18:02:57 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ping(void)
 
 	S_PACKET.header.icmp_cksum = 0;
 	S_PACKET.header.icmp_cksum = checksum(
-			(unsigned short *)&S_PACKET.header, sizeof(S_PACKET));
+			(uint8_t *)&S_PACKET.header, sizeof(S_PACKET));
 	len = sendto(g_data.sockfd, &g_data.request_packet, sizeof(S_PACKET), 0,
 			&g_data.sockaddr, sizeof(g_data.sockaddr));
 #ifdef DEBUG
@@ -46,11 +46,8 @@ void	ping(void)
 #endif
 	if (len == -1)
 		ft_perror(ft_strerror(errno), "sendto");
-	else
-	{
-		++g_data.stats.nsent;
-		if ((g_data.flag & COUNT) && S_PACKET.header.icmp_seq == g_data.count)
-			return ;
-		++S_PACKET.header.icmp_seq;
-	}
+	++g_data.stats.nsent;
+	if ((g_data.flag & COUNT) && S_PACKET.header.icmp_seq == g_data.count)
+		return ;
+	++S_PACKET.header.icmp_seq;
 }

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/14 16:25:48 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/14 18:06:39 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,35 +30,13 @@ static struct msghdr	init_msg(void)
 
 bool	ckeck_icmphdr(struct icmp icmphdr)
 {
-	unsigned short	cksum;
+	uint8_t	cksum;
 
 	cksum = icmphdr.icmp_cksum;
 	icmphdr.icmp_cksum = 0;
-	if (checksum((unsigned short *)&icmphdr, sizeof(icmphdr)) != cksum)
+	if (checksum((uint8_t *)&icmphdr, sizeof(icmphdr)) != cksum)
 		return (false);
 	return (true);
-}
-
-double	time_interval(struct timeval start, struct timeval end)
-{
-	size_t sec;
-	size_t usec;
-	
-	sec = end.tv_sec - start.tv_sec;
-	usec = end.tv_usec - start.tv_usec;
-	return ((double)sec * 1000 + (double)usec / 1000);
-}
-
-void	set_time_stats(double time_ms)
-{
-	if (g_data.stats.nsent == 1)
-	{
-		g_data.stats.min_time = time_ms;
-		g_data.stats.max_time = time_ms;
-	}
-	g_data.stats.min_time = time_ms < g_data.stats.min_time ? time_ms : g_data.stats.min_time;
-	g_data.stats.max_time = time_ms > g_data.stats.max_time ? time_ms : g_data.stats.max_time;
-	g_data.stats.total_time += time_ms;
 }
 
 bool	recv_echo_reply(struct timeval req_time)
@@ -71,7 +49,7 @@ bool	recv_echo_reply(struct timeval req_time)
 	msg = init_msg();
 	len = recvmsg(g_data.sockfd, &msg, 0);
 	gettimeofday(&res_time, NULL);
-	time_ms = time_interval(req_time, res_time);
+	time_ms = timeval_to_ms(res_time) - timeval_to_ms(req_time);
 	set_time_stats(time_ms);
 #ifdef DEBUG
 	if (len == -1) {

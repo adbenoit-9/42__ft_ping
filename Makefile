@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/07/14 16:16:12 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/07/14 18:05:17 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,8 @@ SRC				:=	main.c \
 					request.c \
 					response.c \
 					socket.c \
+					time.c \
+					math.c \
 					debug.c
 SUB_SRC			:= 
 # SRC				+= $(addprefix {name}, $(SUB_SRC))
@@ -87,7 +89,7 @@ run: debug
 	@sudo ./$(NAME) $(HOST)
 
 debug: CFLAGS += -DDEBUG
-debug: re
+debug: os
 
 os: CFLAGS += -DOS
 os: re

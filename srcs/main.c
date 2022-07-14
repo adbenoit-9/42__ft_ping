@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:36 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 18:22:05 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/14 17:46:17 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ static t_ping_data	init_ping_data(void)
 	data.stats.nsent = 0;
 	data.stats.min_time = 0.;
 	data.stats.max_time = 0.;
-	data.stats.total_time = 0.;
+	data.stats.sum_time = 0.;
+	data.stats.sum_square_time = 0.;
+	gettimeofday(&data.stats.begin_time, NULL);
 	data.sockfd = -1;
 	data.pid = getpid();
 	data.stats.status = WAIT;
@@ -75,7 +77,7 @@ int	main(int ac, char **av)
 	while (true)
 	{
 		if ((g_data.flag & COUNT) && g_data.count == g_data.stats.nrecv)
-			stats_report();
+			ping_statistics();
 		gettimeofday(&req_time, NULL);
 		ping();
 		recv_echo_reply(req_time);
