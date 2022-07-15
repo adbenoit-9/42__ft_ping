@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 15:37:49 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 16:07:21 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ bool	recv_echo_reply(struct timeval req_time)
 
 	msg = init_msg();
 	len = -1;
-	while (len == -1 && g_data.status == PENDING)
+	while (len == -1 && (g_data.status == PENDING ||
+			((g_data.flag & COUNT) && g_data.count == g_data.stats.nsent)))
 		len = recvmsg(g_data.sockfd, &msg, MSG_DONTWAIT);
 # ifdef DEBUG
 	if (len == -1) {
@@ -91,7 +92,8 @@ bool	recv_echo_reply(struct timeval req_time)
 
 	msg = init_msg();
 	len = -1;
-	while (len == -1 && g_data.status == PENDING)
+	while (len == -1 && (g_data.status == PENDING ||
+			((g_data.flag & COUNT) && g_data.count == g_data.stats.nsent)))
 		len = recvmsg(g_data.sockfd, &msg, MSG_DONTWAIT);
 # ifdef DEBUG
 	if (len == -1) {

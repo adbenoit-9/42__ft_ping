@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:52:44 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 15:42:26 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:53:25 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	send_echo_request(void)
 		printf("%s[Packet sent]%s %zd bytes\n", S_GREEN, S_NONE, len);
 	print_icmp(S_PACKET.header);
 #endif
+	if (len == -1 && (g_data.flag & VERBOSE))
+		ft_perror(ft_strerror(errno), "sendto");
 	++g_data.stats.nsent;
 }
 

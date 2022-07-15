@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:31:16 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 15:43:37 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 16:06:32 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ void	ping(void)
 			fatal_error(errno, "gettimeofday", 0);
 		send_echo_request();
 		alarm(TIMEOUT);
-		recv_echo_reply(req_time);
+		if (!recv_echo_reply(req_time) && (g_data.flag & VERBOSE) &&
+				!(g_data.flag & QUIET))
+			printf("Request timeout for icmp_seq %lld\n", g_data.stats.nsent - 1); 
 		ft_wait(req_time, TIME_INTERVAL);
 	}
 }
@@ -52,7 +54,7 @@ void	ping(void)
 			fatal_error(errno, "gettimeofday", 0);
 		send_echo_request();
 		alarm(TIMEOUT);
-		if (!recv_echo_reply(req_time))
+		if (!recv_echo_reply(req_time) && !(g_data.flag & QUIET))
 			printf("Request timeout for icmp_seq %lld\n", g_data.stats.nsent - 1); 
 		ft_wait(req_time, TIME_INTERVAL);
 	}
