@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:36 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 19:16:27 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 20:48:50 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,18 @@ static int	init_address(void)
 		fatal_error(errno, g_data.host, 0);
 	freeaddrinfo(res);
 	return (0);
+}
+
+static void	init_socket(void)
+{
+	int				ttl;
+
+	g_data.sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
+	if (g_data.sockfd == -1)
+		fatal_error(errno, "socket", 0);
+	ttl = DEFAULT_TTL;
+	if (setsockopt(g_data.sockfd, IPPROTO_IP, IP_TTL, &ttl, sizeof(ttl)) == -1)
+		fatal_error(errno, "setsockopt", 0);
 }
 
 int	main(int ac, char **av)

@@ -6,13 +6,13 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 17:51:24 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 20:43:57 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 20:54:04 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
 
-double	ft_sqrt(double n)
+static double	ft_sqrt(double n)
 {
 	double	sqrt;
 	double	tmp;

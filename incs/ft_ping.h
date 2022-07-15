@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 20:45:02 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 20:57:41 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,28 +60,36 @@ typedef struct s_ping_data
 
 extern t_ping_data	g_data;
 
-int				fatal_error(int error, char *arg, char option);
-int				ft_perror(char *error, char *fct);
-char			*ft_strerror(int error);
-void			handle_signal(int signum);
-bool			parser(char **arg);
-int				print_usage(void);
 void			clean(void);
-int				ft_isnumber(char *str);
+bool			parser(char **arg);
+void			ping(void);
+void			handle_signal(int signum);
+int				print_usage(void);
+int				print_packet(t_packet packet);
 t_packet		request_packet(void);
-unsigned short	checksum(unsigned short *addr, size_t len);
 void			send_echo_request(void);
-void			ping_statistics(void);
 int				recv_echo_reply(struct timeval req_time);
-void			init_socket(void);
+void			ping_statistics(void);
+
+/* Algorithms */
+unsigned short	checksum(unsigned short *addr, size_t len);
+double			standard_deviation(double sum_xi, double sum_square_xi, int n);
+
+/* Time handler functions */
 void			ft_wait(struct timeval start_time, size_t nb_sec);
 double			tv_to_ms(struct timeval t);
 void			set_time_stats(double time_ms);
-double			standard_deviation(double sum_xi, double sum_square_xi, int n);
-void			ping(void);
-int				print_packet(t_packet packet);
+
+/* Error functions */
+char			*ft_strerror(int error);
+int				ft_perror(char *error, char *fct);
+int				fatal_error(int error, char *arg, char option);
+
+/*  libft functions */
+int				ft_isnumber(char *str);
 char			*ft_strdup(const char *s1);
 
+/* Debug utils functions */
 void			print_addrinfo(struct addrinfo info);
 void			print_icmp(struct icmp icmphdr);
 void			print_ip(struct ip iphdr);

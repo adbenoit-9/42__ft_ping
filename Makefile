@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/07/15 20:46:27 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/07/15 20:51:20 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,12 +35,11 @@ NAME			:= ft_ping
 SRC				:=	main.c \
 					error.c \
 					signal.c \
-					stats.c \
+					statistics.c \
 					parser.c \
 					utils.c \
 					request.c \
-					response.c \
-					socket.c \
+					reply.c \
 					time.c \
 					math.c \
 					ping.c \
