@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:42:56 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/13 17:55:58 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:07:39 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 static int	flag_value(char flag)
 {
-	size_t	i;
 	int		values[] = {HELP, VERBOSE, COUNT, QUIET};
 
-	i = 0;
-	for (; FLAGS[i]; i++)
+	for (size_t i = 0; FLAGS[i]; i++)
 		if (FLAGS[i] == flag)
 			return (values[i]);
 	return (-1);
@@ -50,8 +48,7 @@ bool	parser(char **arg)
 	host = NULL;
 	for (size_t i = 0; arg[i]; i++)
 	{
-		if ((g_data.flag & COUNT) && g_data.count == -1)
-		{
+		if ((g_data.flag & COUNT) && g_data.count == -1) {
 			g_data.count = atoll(arg[i]);
 			if (!ft_isnumber(arg[i]))
 				fatal_error(BADARG, arg[i], 0);

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 12:51:23 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/14 16:14:32 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 13:52:39 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # define BADOPT ELAST + 4
 # define NOARG ELAST + 5
 # define ARGOOR ELAST + 6
-
 
 /*
 ** -- Error messages --

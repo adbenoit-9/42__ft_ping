@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 13:33:42 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:31:48 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define FT_PING_H
 
 # include "defs.h"
-# include "error.h"
 
 typedef struct s_packet
 {
@@ -41,10 +40,8 @@ typedef struct s_stats
 	double				min_time;
 	double				sum_time;
 	double				sum_square_time;
-	int					status;
 	struct timeval		begin_time;
 }	t_stats;
-
 
 typedef struct s_ping_data
 {
@@ -62,29 +59,29 @@ typedef struct s_ping_data
 
 extern t_ping_data	g_data;
 
-int			fatal_error(int error, char *arg, char option);
-int			ft_perror(char *error, char *fct);
-char		*ft_strerror(int error);
-void		handle_signal(int signum);
-bool		parser(char **arg);
-int			print_help(void);
-void		clean(void);
-int			ft_isnumber(char *str);
-t_packet	request_packet(void);
-unsigned short		checksum(unsigned short *addr, size_t len);
-void		ping(void);
-void		ping_statistics(void);
-bool		recv_echo_reply(struct timeval req_time);
-void		init_socket(void);
-void		ft_wait(struct timeval start_time, size_t nb_sec);
-double		tv_to_ms(struct timeval t);
-void		set_time_stats(double time_ms);
-double  	standard_deviation(double sum_xi, double sum_square_xi, int n);
+int				fatal_error(int error, char *arg, char option);
+int				ft_perror(char *error, char *fct);
+char			*ft_strerror(int error);
+void			handle_signal(int signum);
+bool			parser(char **arg);
+int				print_help(void);
+void			clean(void);
+int				ft_isnumber(char *str);
+t_packet		request_packet(void);
+unsigned short	checksum(unsigned short *addr, size_t len);
+void			ping(void);
+void			ping_statistics(void);
+bool			recv_echo_reply(struct timeval req_time);
+void			init_socket(void);
+void			ft_wait(struct timeval start_time, size_t nb_sec);
+double			tv_to_ms(struct timeval t);
+void			set_time_stats(double time_ms);
+double			standard_deviation(double sum_xi, double sum_square_xi, int n);
 
-void		print_addrinfo(struct addrinfo info);
-void		print_icmp(struct icmp icmphdr);
-void		print_ip(struct ip iphdr);
-void		print_msg(struct msghdr msg);
-void		print_time(struct timeval time);
+void			print_addrinfo(struct addrinfo info);
+void			print_icmp(struct icmp icmphdr);
+void			print_ip(struct ip iphdr);
+void			print_msg(struct msghdr msg);
+void			print_time(struct timeval time);
 
 #endif

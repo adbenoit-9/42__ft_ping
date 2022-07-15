@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:20:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 13:49:04 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:31:30 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,10 @@ void	ping_statistics(void)
 	double			sum_time;
 	double			loss_ratio;
 	double			avg;
-	
+
 	if (gettimeofday(&end_time, NULL) == -1)
 		fatal_error(errno, "gettimeofday", 0);
 	sum_time = tv_to_ms(end_time) - tv_to_ms(g_data.stats.begin_time);
-	g_data.stats.status = STOP;
 	printf("\n--- %s ping statistics ---\n", g_data.host);
 	loss_ratio = 0;
 	if (g_data.stats.nsent)
@@ -36,7 +35,8 @@ void	ping_statistics(void)
 		avg = g_data.stats.sum_time / g_data.stats.nrecv;
 		printf("rtt min/avg/max/mdev = %.3f/%.3f/%.3f/%.3f ms\n",
 			g_data.stats.min_time, avg, g_data.stats.max_time,
-			standard_deviation(g_data.stats.sum_time, g_data.stats.sum_square_time, g_data.stats.nrecv));
+			standard_deviation(g_data.stats.sum_time, g_data.stats.sum_square_time,
+				g_data.stats.nrecv));
 	}
 	clean();
 	exit(SUCCESS);
@@ -50,11 +50,10 @@ void	ping_statistics(void)
 	double			sum_time;
 	double			loss_ratio;
 	double			avg;
-	
+
 	if (gettimeofday(&end_time, NULL) == -1)
 		fatal_error(errno, "gettimeofday", 0);
 	sum_time = tv_to_ms(end_time) - tv_to_ms(g_data.stats.begin_time);
-	g_data.stats.status = STOP;
 	printf("\n--- %s ping statistics ---\n", g_data.host);
 	loss_ratio = 0;
 	if (g_data.stats.nsent)
@@ -66,7 +65,8 @@ void	ping_statistics(void)
 		avg = g_data.stats.sum_time / g_data.stats.nrecv;
 		printf("round-trip min/avg/max/stddev = %.3f/%.3f/%.3f/%.3f ms\n",
 			g_data.stats.min_time, avg, g_data.stats.max_time,
-			standard_deviation(g_data.stats.sum_time, g_data.stats.sum_square_time, g_data.stats.nrecv));
+			standard_deviation(g_data.stats.sum_time, g_data.stats.sum_square_time,
+				g_data.stats.nrecv));
 	}
 	clean();
 	exit(SUCCESS);

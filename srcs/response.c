@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 13:46:57 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:10:46 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ bool	recv_echo_reply(struct timeval req_time)
 
 	msg = init_msg();
 	len = recvmsg(g_data.sockfd, &msg, 0);
-#ifdef DEBUG
+# ifdef DEBUG
 	if (len == -1) {
 		printf("%s[Reception failed]%s %s\n", S_RED, S_NONE, strerror(errno));
 		print_msg(msg);
@@ -60,7 +60,7 @@ bool	recv_echo_reply(struct timeval req_time)
 		print_ip(R_PACKET.iphdr);
 		print_icmp(R_PACKET.icmphdr);
 	}
-#endif
+# endif
 	if (len == -1) {
 		if (errno != EWOULDBLOCK && errno != EAGAIN)
 			ft_perror(strerror(errno), "recv");
@@ -94,7 +94,7 @@ bool	recv_echo_reply(struct timeval req_time)
 
 	msg = init_msg();
 	len = recvmsg(g_data.sockfd, &msg, 0);
-#ifdef DEBUG
+# ifdef DEBUG
 	if (len == -1) {
 		printf("%s[Reception failed]%s %s\n", S_RED, S_NONE, strerror(errno));
 		print_msg(msg);
@@ -104,7 +104,7 @@ bool	recv_echo_reply(struct timeval req_time)
 		print_ip(R_PACKET.iphdr);
 		print_icmp(R_PACKET.icmphdr);
 	}
-#endif
+# endif
 	if (len == -1) {
 		if (errno == EWOULDBLOCK || errno == EAGAIN)
 			printf("Request timeout\n");

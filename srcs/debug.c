@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:54:29 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/14 16:17:01 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 13:56:26 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	print_icmp(struct icmp icmphdr)
 
 void	print_time(struct timeval time)
 {
-	printf("time: %ld secondes %ld microsecondes\n", time.tv_sec, (size_t)time.tv_usec);
+	printf("time: %ld secondes %ld microsecondes\n",
+		time.tv_sec, (size_t)time.tv_usec);
 }
 
 void	print_msg(struct msghdr msg)
