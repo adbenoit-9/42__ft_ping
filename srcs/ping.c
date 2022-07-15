@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:31:16 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 16:06:32 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 17:56:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	ping(void)
 			fatal_error(errno, "gettimeofday", 0);
 		send_echo_request();
 		alarm(TIMEOUT);
-		if (!recv_echo_reply(req_time) && (g_data.flag & VERBOSE) &&
-				!(g_data.flag & QUIET))
+		if (recv_echo_reply(req_time) == ETIMEDOUT && (g_data.flag & VERBOSE)
+				&& !(g_data.flag & QUIET))
 			printf("Request timeout for icmp_seq %lld\n", g_data.stats.nsent - 1); 
 		ft_wait(req_time, TIME_INTERVAL);
 	}
@@ -42,6 +42,7 @@ void	ping(void)
 void	ping(void)
 {
 	struct timeval	req_time;
+	int				ret;
 
 	printf("PING %s (%s): %d data bytes\n", g_data.host, g_data.ip, PACKET_SIZE);
 	g_data.request_packet = request_packet();
@@ -54,8 +55,11 @@ void	ping(void)
 			fatal_error(errno, "gettimeofday", 0);
 		send_echo_request();
 		alarm(TIMEOUT);
-		if (!recv_echo_reply(req_time) && !(g_data.flag & QUIET))
+		ret = recv_echo_reply(req_time);
+		if (ret != SUCCESS && !(g_data.flag & QUIET))
 			printf("Request timeout for icmp_seq %lld\n", g_data.stats.nsent - 1); 
+		if (ret == TRANSMERR && !(g_data.flag & QUIET))
+			print_packet(g_data.reply_packet);
 		ft_wait(req_time, TIME_INTERVAL);
 	}
 }

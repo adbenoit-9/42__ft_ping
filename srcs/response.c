@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 16:07:21 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 17:44:44 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ bool	ckeck_icmphdr(struct icmp icmphdr)
 
 #ifndef OS
 
-bool	recv_echo_reply(struct timeval req_time)
+int	recv_echo_reply(struct timeval req_time)
 {
 	ssize_t			len;
 	struct msghdr	msg;
@@ -65,8 +65,10 @@ bool	recv_echo_reply(struct timeval req_time)
 	}
 # endif
 	alarm(0);
-	if (g_data.status == TIMEOUT || !ckeck_icmphdr(R_PACKET.icmphdr))
-		return (false);
+	if (g_data.status == TIMEOUT)
+		return (ETIMEDOUT);
+	if (!ckeck_icmphdr(R_PACKET.icmphdr))
+		return (TRANSMERR);
 	if (gettimeofday(&res_time, NULL) == -1)
 		fatal_error(errno, "gettimeofday", 0);
 	time_ms = tv_to_ms(res_time) - tv_to_ms(req_time);
@@ -78,12 +80,12 @@ bool	recv_echo_reply(struct timeval req_time)
 			len, g_data.host, g_data.ip, R_PACKET.icmphdr.icmp_seq,
 			R_PACKET.iphdr.ip_ttl, time_ms);
 	}
-	return (true);
+	return (SUCCESS);
 }
 
 #else
 
-bool	recv_echo_reply(struct timeval req_time)
+int	recv_echo_reply(struct timeval req_time)
 {
 	ssize_t			len;
 	struct msghdr	msg;
@@ -107,8 +109,10 @@ bool	recv_echo_reply(struct timeval req_time)
 	}
 # endif
 	alarm(0);
-	if (g_data.status == TIMEOUT || !ckeck_icmphdr(R_PACKET.icmphdr))
-		return (false);
+	if (g_data.status == TIMEOUT)
+		return (ETIMEDOUT);
+	if (!ckeck_icmphdr(R_PACKET.icmphdr))
+		return (TRANSMERR);
 	if (gettimeofday(&res_time, NULL) == -1)
 		fatal_error(errno, "gettimeofday", 0);
 	time_ms = tv_to_ms(res_time) - tv_to_ms(req_time);
@@ -120,7 +124,7 @@ bool	recv_echo_reply(struct timeval req_time)
 			len, g_data.ip, R_PACKET.icmphdr.icmp_seq - 1,
 			R_PACKET.iphdr.ip_ttl, time_ms);
 	}
-	return (true);
+	return (SUCCESS);
 }
 
 #endif

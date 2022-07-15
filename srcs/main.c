@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:36 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 15:32:37 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 19:16:27 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	init_address(void)
 	memcpy(&g_data.sockaddr, res->ai_addr, sizeof(struct sockaddr));
 	src = ((struct sockaddr_in *)res->ai_addr)->sin_addr;
 	if (!inet_ntop(AF_INET, &src, g_data.ip, INET_ADDRSTRLEN))
-		fatal_error(ret, g_data.host, 0);
+		fatal_error(errno, g_data.host, 0);
 	freeaddrinfo(res);
 	return (0);
 }
