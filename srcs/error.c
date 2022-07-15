@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:27:25 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 20:41:04 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 21:24:01 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ int	fatal_error(int error, char *arg, char option)
 	}
 	else if (error == ARGOOR)
 		dprintf(STDERR_FILENO, ARGOOR_MSG, arg, 1, LLONG_MAX);
+	else if (error == RESOOR)
+		dprintf(STDERR_FILENO, RESOOR_MSG, arg);
 	else
 		dprintf(STDERR_FILENO, "ft_ping: Unknown error %d", error);
 	clean();

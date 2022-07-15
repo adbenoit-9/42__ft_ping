@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:42:56 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 20:41:04 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 21:27:06 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ bool	parser(char **arg)
 	{
 		if ((g_data.flag & COUNT) && g_data.count == -1) {
 			g_data.count = atoll(arg[i]);
+			if (g_data.count == LLONG_MAX &&
+					ft_strcmp(arg[i], "9223372036854775807"))
+				fatal_error(RESOOR, arg[i], 0);
 			if (!ft_isnumber(arg[i]))
 				fatal_error(BADARG, arg[i], 0);
 			else if (g_data.count <= 0)

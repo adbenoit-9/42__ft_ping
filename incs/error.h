@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 12:51:23 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 15:39:57 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 21:22:10 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@
 # define BADNAME 8
 # define TRANSMERR ELAST + 1
 # define NOHOST ELAST + 2
-# define BADARG ELAST + 3
-# define BADOPT ELAST + 4
-# define NOARG ELAST + 5
-# define ARGOOR ELAST + 6
+# define RESOOR ELAST + 3
+# define BADARG ELAST + 4
+# define BADOPT ELAST + 5
+# define NOARG ELAST + 6
+# define ARGOOR ELAST + 7
 
 /*
 ** -- Error messages --
@@ -35,6 +36,7 @@
 # define BADOPT_MSG "ft_ping: invalid option -- '%c'\n"
 # define NOARG_MSG "ft_ping: option requires an argument -- '%c'\n"
 # define ARGOOR_MSG  "ft_ping: invalid agument: '%s': out of range: %d <= value <= %ld\n"
+# define RESOOR_MSG  "ft_ping: invalid agument: '%s': Numerical result out of range\n"
 
 # ifndef OS
 

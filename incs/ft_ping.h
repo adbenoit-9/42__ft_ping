@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 20:57:41 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 21:28:00 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int				fatal_error(int error, char *arg, char option);
 /*  libft functions */
 int				ft_isnumber(char *str);
 char			*ft_strdup(const char *s1);
+int				ft_strcmp(const char *s1, const char *s2);
 
 /* Debug utils functions */
 void			print_addrinfo(struct addrinfo info);
