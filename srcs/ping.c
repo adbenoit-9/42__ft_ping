@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:31:16 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 20:01:11 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 20:02:31 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	ping(void)
 		send_echo_request();
 		alarm(TIMEOUT);
 		ret = recv_echo_reply(req_time);
-		if (recv_echo_reply(req_time) != SUCCESS && (g_data.flag & VERBOSE)
+		if (ret != SUCCESS && (g_data.flag & VERBOSE)
 				&& !(g_data.flag & QUIET))
 			printf("Request timeout for icmp_seq %lld\n", g_data.stats.nsent - 1); 
-		if (recv_echo_reply(req_time) == TRANSMERR && (g_data.flag & VERBOSE)
+		if (ret == TRANSMERR && (g_data.flag & VERBOSE)
 				&& !(g_data.flag & QUIET))
 			print_packet(g_data.reply_packet);
 		ft_wait(req_time, TIME_INTERVAL);
