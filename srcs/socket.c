@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 02:43:41 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 15:38:06 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 19:34:27 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 void	init_socket(void)
 {
 	int				ttl;
-	struct timeval	timeout;
 
-	timeout.tv_sec = TIMEOUT;
-	timeout.tv_usec = 0;
 	g_data.sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
 	if (g_data.sockfd == -1)
 		fatal_error(errno, "socket", 0);
