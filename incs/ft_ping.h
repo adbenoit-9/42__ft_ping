@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 17:51:10 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 20:45:02 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int				ft_perror(char *error, char *fct);
 char			*ft_strerror(int error);
 void			handle_signal(int signum);
 bool			parser(char **arg);
-int				print_help(void);
+int				print_usage(void);
 void			clean(void);
 int				ft_isnumber(char *str);
 t_packet		request_packet(void);
@@ -80,6 +80,7 @@ void			set_time_stats(double time_ms);
 double			standard_deviation(double sum_xi, double sum_square_xi, int n);
 void			ping(void);
 int				print_packet(t_packet packet);
+char			*ft_strdup(const char *s1);
 
 void			print_addrinfo(struct addrinfo info);
 void			print_icmp(struct icmp icmphdr);

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:27:25 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 15:39:47 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 20:41:04 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,11 @@ int	fatal_error(int error, char *arg, char option)
 		dprintf(STDERR_FILENO, BADARG_MSG, arg);
 	else if (error == BADOPT) {
 		dprintf(STDERR_FILENO, BADOPT_MSG, option);
-		print_help();
+		print_usage();
 	}
 	else if (error == NOARG) {
 		dprintf(STDERR_FILENO, BADOPT_MSG, option);
-		print_help();
+		print_usage();
 	}
 	else if (error == ARGOOR)
 		dprintf(STDERR_FILENO, ARGOOR_MSG, arg, 1, LLONG_MAX);

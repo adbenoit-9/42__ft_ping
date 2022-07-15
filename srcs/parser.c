@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:42:56 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 17:15:33 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 20:41:04 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	set_flag(char *flags)
 		g_data.flag |= new_flag;
 		if (new_flag == HELP)
 		{
-			print_help();
+			print_usage();
 			exit(SUCCESS);
 		}
 	}

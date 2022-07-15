@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:45:31 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 18:36:15 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 20:45:59 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,6 @@
 # include <sys/time.h>
 # include <math.h>
 # include "error.h"
-# include "../libft/inc/libft.h"
-
-# define TIME_INTERVAL 1
-# define TIMEOUT 1
-# define PENDING -1
-# define LLONG_MAX 9223372036854775807
-# define S_PACKET g_data.request_packet.echo.request
-# define R_PACKET g_data.reply_packet.echo.reply
-
-/*
-** -- Color codes --
-*/
-# define S_NONE    "\033[0m"
-# define S_RED     "\033[1;31m"
-# define S_GREEN   "\033[1;32m"
-# define S_YELLOW  "\033[1;33m"
-# define S_BLUE    "\033[1;34m"
-# define S_PURPLE  "\033[1;35m"
-# define S_CYAN    "\033[1;36m"
 
 /*
 ** -- Flags --
@@ -66,13 +47,13 @@
 /*
 ** -- Transmission status --
 */
-# define WAIT 0
-# define PACKET_SENT 1
-# define STOP 2
+# define PENDING -1
 
 /*
-** -- Packet info --
+** -- Request infos --
 */
+# define TIMEOUT 1
+# define TIME_INTERVAL 1
 # define HEADER_SIZE 28
 # define PACKET_SIZE 56
 # define DEFAULT_TTL 3
@@ -84,5 +65,20 @@
 # define SUCCESS 0
 # define USAGE_ERR 1
 # define ERROR 2
+
+/*
+** -- Color codes --
+*/
+# define S_NONE    "\033[0m"
+# define S_RED     "\033[1;31m"
+# define S_GREEN   "\033[1;32m"
+# define S_YELLOW  "\033[1;33m"
+# define S_BLUE    "\033[1;34m"
+# define S_PURPLE  "\033[1;35m"
+# define S_CYAN    "\033[1;36m"
+
+# define LLONG_MAX 9223372036854775807
+# define S_PACKET g_data.request_packet.echo.request
+# define R_PACKET g_data.reply_packet.echo.reply
 
 #endif

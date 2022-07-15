@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 17:51:24 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 14:06:01 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 20:43:57 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,22 @@ double	standard_deviation(double sum_xi, double sum_square_xi, int n)
 
 	mean_xi = sum_xi / n;
 	return (ft_sqrt(sum_square_xi / n - mean_xi * mean_xi));
+}
+
+/* Algorithm computes the checksum with an inner
+loop that sums 16-bits (short int) at a time in a 32-bit accumulator.
+https://www.rfc-editor.org/rfc/rfc1071#section-4.1 */
+
+unsigned short	checksum(unsigned short *addr, size_t len)
+{
+	unsigned short	sum;
+
+	sum = 0;
+	while (len > 0)
+	{
+		sum += *addr;
+		++addr;
+		len -= sizeof(short);
+	}
+	return (~sum);
 }
