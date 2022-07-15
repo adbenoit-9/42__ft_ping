@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:45:31 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 13:54:32 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:27:15 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@
 # include "error.h"
 
 # define TIME_INTERVAL 1
-# define TIMEOUT 2
+# define TIMEOUT 1
+# define PENDING -1
 # define LLONG_MAX 9223372036854775807
 # define S_PACKET g_data.request_packet.echo.request
 # define R_PACKET g_data.reply_packet.echo.reply

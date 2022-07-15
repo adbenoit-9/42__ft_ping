@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 14:10:46 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:37:49 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ bool	recv_echo_reply(struct timeval req_time)
 	double			time_ms;
 
 	msg = init_msg();
-	len = recvmsg(g_data.sockfd, &msg, 0);
+	len = -1;
+	while (len == -1 && g_data.status == PENDING)
+		len = recvmsg(g_data.sockfd, &msg, MSG_DONTWAIT);
 # ifdef DEBUG
 	if (len == -1) {
 		printf("%s[Reception failed]%s %s\n", S_RED, S_NONE, strerror(errno));
@@ -61,14 +63,9 @@ bool	recv_echo_reply(struct timeval req_time)
 		print_icmp(R_PACKET.icmphdr);
 	}
 # endif
-	if (len == -1) {
-		if (errno != EWOULDBLOCK && errno != EAGAIN)
-			ft_perror(strerror(errno), "recv");
+	alarm(0);
+	if (g_data.status == TIMEOUT || !ckeck_icmphdr(R_PACKET.icmphdr))
 		return (false);
-	}
-	if (!ckeck_icmphdr(R_PACKET.icmphdr)) {
-		return (false);
-	}
 	if (gettimeofday(&res_time, NULL) == -1)
 		fatal_error(errno, "gettimeofday", 0);
 	time_ms = tv_to_ms(res_time) - tv_to_ms(req_time);
@@ -93,7 +90,9 @@ bool	recv_echo_reply(struct timeval req_time)
 	double			time_ms;
 
 	msg = init_msg();
-	len = recvmsg(g_data.sockfd, &msg, 0);
+	len = -1;
+	while (len == -1 && g_data.status == PENDING)
+		len = recvmsg(g_data.sockfd, &msg, MSG_DONTWAIT);
 # ifdef DEBUG
 	if (len == -1) {
 		printf("%s[Reception failed]%s %s\n", S_RED, S_NONE, strerror(errno));
@@ -105,17 +104,9 @@ bool	recv_echo_reply(struct timeval req_time)
 		print_icmp(R_PACKET.icmphdr);
 	}
 # endif
-	if (len == -1) {
-		if (errno == EWOULDBLOCK || errno == EAGAIN)
-			printf("Request timeout\n");
-		else
-			ft_perror(strerror(errno), "recv");
+	alarm(0);
+	if (g_data.status == TIMEOUT || !ckeck_icmphdr(R_PACKET.icmphdr))
 		return (false);
-	}
-	if (!ckeck_icmphdr(R_PACKET.icmphdr)) {
-		printf("Request timeout\n");
-		return (false);
-	}
 	if (gettimeofday(&res_time, NULL) == -1)
 		fatal_error(errno, "gettimeofday", 0);
 	time_ms = tv_to_ms(res_time) - tv_to_ms(req_time);
