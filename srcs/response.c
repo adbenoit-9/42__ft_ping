@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/14 20:20:41 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 13:46:57 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,52 @@ bool	ckeck_icmphdr(struct icmp icmphdr)
 	return (true);
 }
 
+#ifndef OS
+
+bool	recv_echo_reply(struct timeval req_time)
+{
+	ssize_t			len;
+	struct msghdr	msg;
+	struct timeval	res_time;
+	double			time_ms;
+
+	msg = init_msg();
+	len = recvmsg(g_data.sockfd, &msg, 0);
+#ifdef DEBUG
+	if (len == -1) {
+		printf("%s[Reception failed]%s %s\n", S_RED, S_NONE, strerror(errno));
+		print_msg(msg);
+	}
+	else {
+		printf("%s[Packet received]%s %zd bytes\n", S_YELLOW, S_NONE, len);
+		print_ip(R_PACKET.iphdr);
+		print_icmp(R_PACKET.icmphdr);
+	}
+#endif
+	if (len == -1) {
+		if (errno != EWOULDBLOCK && errno != EAGAIN)
+			ft_perror(strerror(errno), "recv");
+		return (false);
+	}
+	if (!ckeck_icmphdr(R_PACKET.icmphdr)) {
+		return (false);
+	}
+	if (gettimeofday(&res_time, NULL) == -1)
+		fatal_error(errno, "gettimeofday", 0);
+	time_ms = tv_to_ms(res_time) - tv_to_ms(req_time);
+	set_time_stats(time_ms);
+	++g_data.stats.nrecv;
+	if (!(g_data.flag & QUIET))
+	{
+		printf("%zd bytes from %s (%s): icmp_seq=%d ttl=%d time=%.3f ms\n",
+			len, g_data.host, g_data.ip, R_PACKET.icmphdr.icmp_seq,
+			R_PACKET.iphdr.ip_ttl, time_ms);
+	}
+	return (true);
+}
+
+#else
+
 bool	recv_echo_reply(struct timeval req_time)
 {
 	ssize_t			len;
@@ -70,15 +116,18 @@ bool	recv_echo_reply(struct timeval req_time)
 		printf("Request timeout\n");
 		return (false);
 	}
-	gettimeofday(&res_time, NULL);
-	time_ms = timeval_to_ms(res_time) - timeval_to_ms(req_time);
+	if (gettimeofday(&res_time, NULL) == -1)
+		fatal_error(errno, "gettimeofday", 0);
+	time_ms = tv_to_ms(res_time) - tv_to_ms(req_time);
 	set_time_stats(time_ms);
 	++g_data.stats.nrecv;
 	if (!(g_data.flag & QUIET))
 	{
-		printf("%zd bytes from %s (%s): icmp_seq=%d ttl=%d time=%.3f ms\n",
-			len, g_data.host, g_data.ip, R_PACKET.icmphdr.icmp_seq,
+		printf("%zd bytes from %s: icmp_seq=%d ttl=%d time=%.3f ms\n",
+			len, g_data.ip, R_PACKET.icmphdr.icmp_seq - 1,
 			R_PACKET.iphdr.ip_ttl, time_ms);
 	}
 	return (true);
 }
+
+#endif

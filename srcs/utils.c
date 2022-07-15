@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:35:48 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/14 20:36:45 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 13:31:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,4 @@ unsigned short	checksum(unsigned short *addr, size_t len)
 		len -= sizeof(short);
 	}
 	return (~sum);
-}
-
-void	ft_wait(struct timeval start_time, size_t nb_sec)
-{
-	struct timeval	current_time;
-	size_t			end_time;
-	
-	end_time = start_time.tv_sec + nb_sec;
-	gettimeofday(&current_time, NULL);
-	while ((size_t)current_time.tv_sec < end_time)
-		gettimeofday(&current_time, NULL);
 }

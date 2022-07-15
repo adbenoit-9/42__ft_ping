@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/14 19:51:48 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 13:33:42 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void		ping_statistics(void);
 bool		recv_echo_reply(struct timeval req_time);
 void		init_socket(void);
 void		ft_wait(struct timeval start_time, size_t nb_sec);
-double		timeval_to_ms(struct timeval t);
+double		tv_to_ms(struct timeval t);
 void		set_time_stats(double time_ms);
 double  	standard_deviation(double sum_xi, double sum_square_xi, int n);
 

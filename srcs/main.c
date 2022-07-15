@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:36 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/14 17:46:17 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 13:40:15 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ int	main(int ac, char **av)
 	{
 		if ((g_data.flag & COUNT) && g_data.count == g_data.stats.nrecv)
 			ping_statistics();
-		gettimeofday(&req_time, NULL);
+		if (gettimeofday(&req_time, NULL) == -1)
+            fatal_error(errno, "gettimeofday", 0);
 		ping();
 		recv_echo_reply(req_time);
 		ft_wait(req_time, TIME_INTERVAL);

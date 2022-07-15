@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/07/14 18:05:17 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/07/14 20:59:48 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,11 @@
 CC		= gcc
 CFLAGS 	= -Wall -Wextra -Werror #-fsanitize=address -g3
 IFLAGS 	= -I./incs
+
+UNAME	:= $(shell uname)
+ifeq ($(UNAME), Darwin)
+	CFLAGS += -DOS
+endif
 
 HOST	= localhost
 
@@ -89,11 +94,8 @@ run: debug
 	@sudo ./$(NAME) $(HOST)
 
 debug: CFLAGS += -DDEBUG
-debug: os
+debug: re
 
-os: CFLAGS += -DOS
-os: re
-	
 .PHONY: all clean fclean re debug
 
 $(BUILD):
