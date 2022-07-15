@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 17:44:44 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 19:41:41 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static struct msghdr	init_msg(void)
 	iov[0].iov_len = sizeof(R_PACKET);
 	msg.msg_iov = iov;
 	msg.msg_iovlen = 1;
-	msg.msg_flags = 0;
+	msg.msg_flags = MSG_DONTWAIT;
 	return (msg);
 }
 
