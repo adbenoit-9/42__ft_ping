@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:45:31 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 15:27:15 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 17:22:35 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # include <sys/time.h>
 # include <math.h>
 # include "error.h"
+# include "../libft/inc/libft.h"
 
 # define TIME_INTERVAL 1
 # define TIMEOUT 1

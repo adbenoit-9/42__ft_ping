@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/07/15 15:40:12 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/07/15 17:10:12 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ HOST	= localhost
 
 # DIRECTORIES
 BUILD 			:= .build
+LIB_DIR			:= libft
 SRC_DIR 		:= srcs
 OBJ_DIR 		:= $(BUILD)/obj
 SUB_DIR			:= 
@@ -49,6 +50,7 @@ SUB_SRC			:=
 # SRC				+= $(addprefix {name}, $(SUB_SRC))
 
 OBJ				:= $(SRC:%.c=$(OBJ_DIR)/%.o)
+LIB				:= $(LIB_DIR)/libft.a
 
 
 # COLORS
@@ -67,17 +69,22 @@ B_WHITE 		= \033[1;37m
 # MAKEFILE
 $(NAME): $(OBJ)
 	@printf "$(CL_LINE)"
-	@$(CC) $(CFLAGS) $(OBJ) -o $@
+	@$(CC) $(CFLAGS) $(OBJ) $(LIB) -o $@
 	@echo "[1 / 1] - $(B_MAGENTA)$@"
 	@echo "$(B_GREEN)Compilation done !$(NONE)"
 
-all: $(NAME)
+$(LIB) :
+	@make -C $(LIB_DIR)
+
+all: $(LIB) $(NAME)
 
 clean:
+	@make -C $(LIB_DIR) clean
 	@rm -Rf $(BUILD)
 	@echo "$(B_GREY)$(BUILD)$(NONE): $(B_YELLOW)Delete$(NONE)"
 
 fclean: clean
+	@rm -Rf $(LIB)
 	@rm -Rf $(NAME)
 	@echo "$(B_GREY)$(NAME)$(NONE): $(B_YELLOW)Delete$(NONE)"
 
@@ -104,4 +111,4 @@ $(BUILD):
 
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c ./incs/ft_ping.h | $(BUILD)
 	@printf "$(CL_LINE)Compiling srcs object : $(B_CYAN)$< $(NONE)...\r"
-	@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@ 

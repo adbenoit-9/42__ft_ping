@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:42:56 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 14:07:39 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 17:15:33 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ bool	parser(char **arg)
 		fatal_error(NOARG, NULL, 'c');
 	if (!host)
 		fatal_error(NOHOST, NULL, 0);
-	g_data.host = strdup(host);
+	g_data.host = ft_strdup(host);
 	if (!g_data.host)
 		fatal_error(ENOMEM, NULL, 0);
 	return (SUCCESS);
