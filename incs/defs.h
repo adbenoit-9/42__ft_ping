@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:45:31 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 20:45:59 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 21:04:58 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 # define TIME_INTERVAL 1
 # define HEADER_SIZE 28
 # define PACKET_SIZE 56
-# define DEFAULT_TTL 3
+# define DEFAULT_TTL 64
 # define VERSION 4
 
 /*
