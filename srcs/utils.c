@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:35:48 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 20:06:15 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 20:12:43 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ int	print_packet(t_packet packet)
 			ft_perror(ft_strerror(errno), "inet_ntop");
 		if (!inet_ntop(AF_INET, &R_PACKET.iphdr.ip_dst, dst, INET_ADDRSTRLEN))
 			ft_perror(ft_strerror(errno), "inet_ntop");
-		printf("%d bytes from %s: Time to live exceeded\n",
-			packet.echo.reply.iphdr.ip_len, src);
+		printf("%d bytes from %s: Time to live exceeded\n", PACKET_SIZE - 20, src);
 		printf("Vr HL TOS  Len    ID   off TTL Pro  cks      Src      Dst\n");
 		printf("%2d %2d %3.2d %4d %5d %.4d %3.2d %3.2d %4x %s %2s\n\n",
 			packet.echo.reply.iphdr.ip_v, packet.echo.reply.iphdr.ip_hl,

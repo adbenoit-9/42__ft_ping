@@ -6,15 +6,11 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:52:44 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 16:09:03 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/15 20:17:18 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
-
-/* https://www.rfc-editor.org/rfc/rfc792 */
-
-/* https://book.huihoo.com/iptables-tutorial/x1078.htm */
 
 t_packet	request_packet(void)
 {
@@ -27,8 +23,6 @@ t_packet	request_packet(void)
 	packet.echo.request.header.icmp_seq = 0;
 	return (packet);
 }
-
-#ifndef OS
 
 void	send_echo_request(void)
 {
@@ -51,29 +45,3 @@ void	send_echo_request(void)
 		ft_perror(ft_strerror(errno), "sendto");
 	++g_data.stats.nsent;
 }
-
-#else
-
-void	send_echo_request(void)
-{
-	ssize_t	len;
-
-	++S_PACKET.header.icmp_seq;
-	S_PACKET.header.icmp_cksum = 0;
-	S_PACKET.header.icmp_cksum = checksum(
-			(unsigned short *)&S_PACKET.header, sizeof(S_PACKET));
-	len = sendto(g_data.sockfd, &g_data.request_packet, sizeof(S_PACKET), 0,
-			&g_data.sockaddr, sizeof(g_data.sockaddr));
-# ifdef DEBUG
-	if (len == -1)
-		printf("%s[Transmission failed]%s %s\n", S_RED, S_NONE, strerror(errno));
-	else
-		printf("%s[Packet sent]%s %zd bytes\n", S_GREEN, S_NONE, len);
-	print_icmp(S_PACKET.header);
-# endif
-	if (len == -1)
-		ft_perror(ft_strerror(errno), "sendto");
-	++g_data.stats.nsent;
-}
-
-#endif
