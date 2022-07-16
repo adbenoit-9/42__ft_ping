@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:42:51 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 15:48:38 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 15:49:30 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ int	print_packet(t_packet packet, long long int n)
 		printf("From %s icmp_seq=%lld Time to live exceeded\n", src, n);
 		len = ft_strlen(src);
 		if (g_data.flag & VERBOSE) {
-			printf("%2s %2s %3s %6s %5s %4s %3s %3s %4s %*s %*s\n",
+			printf("%2s %2s %3s %5s %5s %4s %3s %3s %4s %*s %*s\n",
 				"Vr", "HL", "TOS", "Len", "ID", "off", "TTL", "Pro",
 				"cks", len - len / 2, "Src", len, "Dst");
-			printf("%2d %2d %3d %6d %5d %.4d %3.2d %3.2d %4x %s %2s\n\n",
+			printf("%2d %2d %3d %5d %5d %.4d %3.2d %3.2d %4x %s %2s\n\n",
 				packet.echo.reply.iphdr.ip_v, packet.echo.reply.iphdr.ip_hl,
 				packet.echo.reply.iphdr.ip_tos, packet.echo.reply.iphdr.ip_len,
 				packet.echo.reply.iphdr.ip_id, packet.echo.reply.iphdr.ip_off,
