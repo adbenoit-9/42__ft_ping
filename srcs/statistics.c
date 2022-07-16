@@ -6,11 +6,18 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:20:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 20:50:58 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 15:47:13 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
+
+void	clean(void)
+{
+	free(g_data.host);
+	if (g_data.sockfd != -1)
+		close(g_data.sockfd);
+}
 
 void	ping_statistics(void)
 {

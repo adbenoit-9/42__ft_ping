@@ -6,17 +6,20 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:35:48 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 21:27:46 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 15:46:59 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
 
-void	clean(void)
+size_t	ft_strlen(const char *str)
 {
-	free(g_data.host);
-	if (g_data.sockfd != -1)
-		close(g_data.sockfd);
+	size_t	len;
+
+	len = 0;
+	while (str[len])
+		++len;
+	return (len);
 }
 
 static int	ft_isdigit(int c)
@@ -62,10 +65,7 @@ char	*ft_strdup(const char *s1)
 	char	*copy;
 	int		i;
 
-	i = 0;
-	while (s1[i])
-		++i;
-	copy = malloc(sizeof(char) * (i + 1));
+	copy = malloc(sizeof(char) * (ft_strlen(s1) + 1));
 	if (!copy)
 		return (0);
 	i = 0;

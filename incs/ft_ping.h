@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 15:26:16 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 15:46:28 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int				fatal_error(int error, char *arg, char option);
 int				ft_isnumber(char *str);
 char			*ft_strdup(const char *s1);
 int				ft_strcmp(const char *s1, const char *s2);
+size_t			ft_strlen(const char *str);
 
 /* Debug utils functions */
 void			print_addrinfo(struct addrinfo info);
