@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 21:28:00 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 15:26:16 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ bool			parser(char **arg);
 void			ping(void);
 void			handle_signal(int signum);
 int				print_usage(void);
-int				print_packet(t_packet packet);
+int				print_packet(t_packet packet, long long int n);
 t_packet		request_packet(void);
 void			send_echo_request(void);
 int				recv_echo_reply(struct timeval req_time);
