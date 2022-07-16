@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:31:16 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 20:38:58 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 13:12:18 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ping(void)
 			printf("Request timeout for icmp_seq %lld\n",
 				g_data.stats.nsent - 1);
 		}
-		if (ret == TRANSMERR && g_data.flag & VERBOSE && !(g_data.flag & QUIET))
+		if (ret == EP_REPLY && g_data.flag & VERBOSE && !(g_data.flag & QUIET))
 			print_packet(g_data.reply_packet);
 		ft_wait(req_time, TIME_INTERVAL);
 	}

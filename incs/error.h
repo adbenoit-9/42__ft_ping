@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 12:51:23 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 21:44:55 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 13:12:32 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,27 @@
 /*
 ** -- Error codes --
 */
-# define BADAF 5
-# define BADNAME 8
-# define TRANSMERR ELAST + 1
-# define NOHOST ELAST + 2
-# define RESOOR ELAST + 3
-# define BADARG ELAST + 4
-# define BADOPT ELAST + 5
-# define NOARG ELAST + 6
-# define ARGOOR ELAST + 7
+# define EP_FAMILY 5
+# define EP_NONAME 8
+# define EP_REPLY ELAST + 1
+# define EP_NODATA ELAST + 2
+# define EP_RESOOR ELAST + 3
+# define EP_BADARG ELAST + 4
+# define EP_BADOPT ELAST + 5
+# define EP_NOARG ELAST + 6
+# define EP_ARGOOR ELAST + 7
 
 /*
 ** -- Error messages --
 */
 
-# define TRANSMERR_MSG "ft_ping: transmission failed\n"
-# define NOHOST_MSG "ft_ping: usage error: Destination address required\n"
-# define BADARG_MSG  "ft_ping: invalid agument: '%s'\n"
-# define BADOPT_MSG "ft_ping: invalid option -- '%c'\n"
-# define NOARG_MSG "ft_ping: option requires an argument -- '%c'\n"
-# define ARGOOR_MSG  "ft_ping: invalid agument: '%s': out of range: %d <= value <= %ld\n"
-# define RESOOR_MSG  "ft_ping: invalid agument: '%s': Numerical result out of range\n"
+# define EP_REPLY_MSG "ft_ping: data corrupted\n"
+# define EP_NODATA_MSG "ft_ping: usage error: Destination address required\n"
+# define EP_BADARG_MSG  "ft_ping: invalid agument: '%s'\n"
+# define EP_BADOPT_MSG "ft_ping: invalid option -- '%c'\n"
+# define EP_NOARG_MSG "ft_ping: option requires an argument -- '%c'\n"
+# define EP_ARGOOR_MSG  "ft_ping: invalid agument: '%s': out of range: %d <= value <= %ld\n"
+# define EP_RESOOR_MSG  "ft_ping: invalid agument: '%s': Numerical result out of range\n"
 
 # ifndef OS
 
@@ -45,7 +45,7 @@
 #  define ENOENT_MSG "No such file or directory"
 #  define ESRCH_MSG "No such process"
 #  define EINTR_MSG "Interrupted system call"
-#  define BADAF_MSG "Address family for hostname not supported"
+#  define EP_FAMILY_MSG "Address family for hostname not supported"
 #  define ENXIO_MSG "No such device or address"
 #  define E2BIG_MSG "Arg list too long"
 #  define NONAME_MSG "Name or service not known"
@@ -169,7 +169,7 @@
 #  define ENOENT_MSG "No such file or directory"
 #  define ESRCH_MSG "No such process"
 #  define EINTR_MSG "Interrupted system call"
-#  define BADAF_MSG "Address family for hostname not supported"
+#  define EP_FAMILY_MSG "Address family for hostname not supported"
 #  define ENXIO_MSG "Device not configured"
 #  define E2BIG_MSG "Argument list too long"
 #  define NONAME_MSG "Name or service not known"

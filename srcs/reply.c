@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 20:49:54 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 13:12:18 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	recv_echo_reply(struct timeval req_time)
 	if (g_data.status == TIMEOUT)
 		return (ETIMEDOUT);
 	if (!ckeck_icmphdr(R_PACKET.icmphdr))
-		return (TRANSMERR);
+		return (EP_REPLY);
 	if (gettimeofday(&res_time, NULL) == -1)
 		fatal_error(errno, "gettimeofday", 0);
 	time_ms = tv_to_ms(res_time) - tv_to_ms(req_time);

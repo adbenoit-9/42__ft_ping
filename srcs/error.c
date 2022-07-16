@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:27:25 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 21:24:01 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 13:12:18 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 char	*ft_strerror(int error)
 {
 	char	*msg_err[] = {EPERM_MSG, ENOENT_MSG, ESRCH_MSG, EINTR_MSG,
-		BADAF_MSG, ENXIO_MSG, E2BIG_MSG, NONAME_MSG, EBADF_MSG, ECHILD_MSG,
+		EP_FAMILY_MSG, ENXIO_MSG, E2BIG_MSG, NONAME_MSG, EBADF_MSG, ECHILD_MSG,
 		EDEADLK_MSG, ENOMEM_MSG, EACCES_MSG, EFAULT_MSG, EBUSY_MSG, EEXIST_MSG,
 		EXDEV_MSG, ENODEV_MSG, ENOTDIR_MSG, EISDIR_MSG, EINVAL_MSG, ENFILE_MSG,
 		EMFILE_MSG, ENOTTY_MSG, ETXTBSY_MSG, EFBIG_MSG, ENOSPC_MSG, ESPIPE_MSG,
@@ -50,7 +50,7 @@ char	*ft_strerror(int error)
 char	*ft_strerror(int error)
 {
 	char	*msg_err[] = {EPERM_MSG, ENOENT_MSG, ESRCH_MSG, EINTR_MSG,
-		BADAF_MSG, ENXIO_MSG, E2BIG_MSG, NONAME_MSG, EBADF_MSG, ECHILD_MSG,
+		EP_FAMILY_MSG, ENXIO_MSG, E2BIG_MSG, NONAME_MSG, EBADF_MSG, ECHILD_MSG,
 		EAGAIN_MSG, ENOMEM_MSG, EACCES_MSG, EFAULT_MSG, ENOTBLK_MSG, EBUSY_MSG,
 		EEXIST_MSG, EXDEV_MSG, ENODEV_MSG, ENOTDIR_MSG, EISDIR_MSG, EINVAL_MSG,
 		ENFILE_MSG, EMFILE_MSG, ENOTTY_MSG, ETXTBSY_MSG, EFBIG_MSG, ENOSPC_MSG,
@@ -92,30 +92,30 @@ int	ft_perror(char *error, char *fct)
 
 int	fatal_error(int error, char *arg, char option)
 {
-	char		*msg[] = {TRANSMERR_MSG, NOHOST_MSG};
+	char		*msg[] = {EP_REPLY_MSG, EP_NODATA_MSG};
 	int			status;
 
 	if (error <= ELAST)
 		ft_perror(ft_strerror(error), arg);
-	else if (error <= NOHOST)
+	else if (error <= EP_NODATA)
 		dprintf(STDERR_FILENO, "%s", msg[error - ELAST - 1]);
-	else if (error == BADARG)
-		dprintf(STDERR_FILENO, BADARG_MSG, arg);
-	else if (error == BADOPT) {
-		dprintf(STDERR_FILENO, BADOPT_MSG, option);
+	else if (error == EP_BADARG)
+		dprintf(STDERR_FILENO, EP_BADARG_MSG, arg);
+	else if (error == EP_BADOPT) {
+		dprintf(STDERR_FILENO, EP_BADOPT_MSG, option);
 		print_usage();
 	}
-	else if (error == NOARG) {
-		dprintf(STDERR_FILENO, BADOPT_MSG, option);
+	else if (error == EP_NOARG) {
+		dprintf(STDERR_FILENO, EP_BADOPT_MSG, option);
 		print_usage();
 	}
-	else if (error == ARGOOR)
-		dprintf(STDERR_FILENO, ARGOOR_MSG, arg, 1, LLONG_MAX);
-	else if (error == RESOOR)
-		dprintf(STDERR_FILENO, RESOOR_MSG, arg);
+	else if (error == EP_ARGOOR)
+		dprintf(STDERR_FILENO, EP_ARGOOR_MSG, arg, 1, LLONG_MAX);
+	else if (error == EP_RESOOR)
+		dprintf(STDERR_FILENO, EP_RESOOR_MSG, arg);
 	else
 		dprintf(STDERR_FILENO, "ft_ping: Unknown error %d", error);
 	clean();
-	status = (error >= NOHOST) ? USAGE_ERR : ERROR;
+	status = (error >= EP_NODATA) ? USAGE_ERR : ERROR;
 	exit(status);
 }

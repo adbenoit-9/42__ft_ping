@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:36 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 21:45:32 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 13:22:59 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,12 @@ static int	init_address(void)
 	hints.ai_protocol = IPPROTO_ICMP;
 	hints.ai_flags = 0;
 	ret = getaddrinfo(g_data.host, NULL, &hints, &res);
-	if (ret != 0)
-		fatal_error(BADNAME, g_data.host, 0);
+	if (ret == EAI_FAMILY)
+		fatal_error(EP_FAMILY, g_data.host, 0);
+	else if (ret == EAI_NODATA)
+		fatal_error(EP_NODATA, g_data.host, 0);
+	else if (ret != 0)
+		fatal_error(EP_NONAME, g_data.host, 0);
 	memcpy(&g_data.sockaddr, res->ai_addr, sizeof(struct sockaddr));
 	src = ((struct sockaddr_in *)res->ai_addr)->sin_addr;
 	if (!inet_ntop(AF_INET, &src, g_data.ip, INET_ADDRSTRLEN))
@@ -73,7 +77,7 @@ static void	init_socket(void)
 int	main(int ac, char **av)
 {
 	if (ac == 1)
-		fatal_error(NOHOST, NULL, 0);
+		fatal_error(EP_NODATA, NULL, 0);
 	g_data = init_ping_data();
 	parser(av + 1);
 	init_address();
