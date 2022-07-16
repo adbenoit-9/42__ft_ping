@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:45:31 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 16:18:58 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 17:54:34 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # include <math.h>
 # include "error.h"
 
+# define NONE 0
+
 /*
 ** -- Flags --
 */
@@ -49,7 +51,10 @@
 /*
 ** -- Transmission status --
 */
-# define PENDING -1
+# define WAIT_REPLY 0b0001
+# define RTIMEDOUT 0b0010
+# define STOP_SENDING 0b0100
+# define STATUS_ISSET(status_code) (g_data.status & status_code)
 
 /*
 ** -- Request infos --

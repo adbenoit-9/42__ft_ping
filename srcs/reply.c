@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 16:17:10 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 17:53:14 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ int	recv_echo_reply(struct timeval req_time)
 
 	msg = init_msg();
 	len = -1;
-	while (len == -1 && (g_data.status == PENDING ||
-			(FLAG_ISSET(F_COUNT) && g_data.count == g_data.stats.nsent)))
+	while (len == -1 && !STATUS_ISSET(RTIMEDOUT) && STATUS_ISSET(WAIT_REPLY))
 		len = recvmsg(g_data.sockfd, &msg, MSG_DONTWAIT);
 # ifdef DEBUG
 	if (len == -1) {
@@ -63,15 +62,18 @@ int	recv_echo_reply(struct timeval req_time)
 	}
 # endif
 	alarm(0);
-	if (g_data.status == TIMEOUT)
+	if (STATUS_ISSET(RTIMEDOUT))
 		return (ETIMEDOUT);
+	++g_data.stats.nrecv;
+	if (g_data.count == g_data.stats.nrecv)
+		g_data.status &= ~WAIT_REPLY;
 	if (!ckeck_icmphdr(R_PACKET.icmphdr))
 		return (EP_REPLY);
 	if (gettimeofday(&res_time, NULL) == -1)
 		fatal_error(errno, "gettimeofday", 0);
+	++g_data.stats.nrecv_valid;
 	time_ms = tv_to_ms(res_time) - tv_to_ms(req_time);
 	set_time_stats(time_ms);
-	++g_data.stats.nrecv;
 	if (!FLAG_ISSET(F_QUIET))
 	{
 		printf("%zd bytes from %s (%s): icmp_seq=%d ttl=%d time=%.3f ms\n",

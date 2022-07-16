@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 16:10:09 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 17:54:59 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_packet
 typedef struct s_stats
 {
 	long long int		nrecv;
+	long long int		nrecv_valid;
 	long long int		nsent;
 	double				max_time;
 	double				min_time;
@@ -56,7 +57,7 @@ typedef struct s_ping_data
 	t_packet			request_packet;
 	t_packet			reply_packet;
 	t_stats				stats;
-	int					status;
+	short				status;
 }				t_ping_data;
 
 extern t_ping_data	g_data;
