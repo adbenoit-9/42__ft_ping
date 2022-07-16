@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:42:51 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 18:56:04 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 19:20:29 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	print_statistics(void)
 	if (gettimeofday(&end_time, NULL) == -1)
 		fatal_error(errno, "gettimeofday", 0);
 	sum_time = tv_to_ms(end_time) - tv_to_ms(g_data.stats.begin_time);
-	printf("--- %s ping statistics ---\n", g_data.host);
+	printf("\n--- %s ping statistics ---\n", g_data.host);
 	loss_ratio = 0;
 	if (g_data.stats.nsent)
 		loss_ratio = (double)(g_data.stats.nsent - g_data.stats.nrecv) / g_data.stats.nsent;

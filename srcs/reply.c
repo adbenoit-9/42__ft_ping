@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 18:40:43 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 19:24:43 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	recv_echo_reply(struct timeval req_time)
 
 	msg = init_msg();
 	len = -1;
-	while (len == -1 && !STATUS_ISSET(RTIMEDOUT) && STATUS_ISSET(WAIT_REPLY))
+	while (len != 64 && !STATUS_ISSET(RTIMEDOUT) && STATUS_ISSET(WAIT_REPLY))
 		len = recvmsg(g_data.sockfd, &msg, MSG_DONTWAIT);
 # ifdef DEBUG
 	if (len == -1) {

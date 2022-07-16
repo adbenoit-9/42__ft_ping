@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:21:49 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 18:14:24 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 19:20:35 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	handle_signal(int signum)
 {
 	if (signum == SIGINT) {
-		printf("\n");
 		print_statistics();
 	}
 	else if (signum == SIGALRM && !STATUS_ISSET(STOP_SENDING)) {
