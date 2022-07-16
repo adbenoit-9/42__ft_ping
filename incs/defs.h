@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:45:31 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 15:17:51 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:18:58 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,14 @@
 /*
 ** -- Flags --
 */
-# define NB_FLAGS 4
-# define FLAGS "hvcq"
-# define HELP 0x80
-# define VERBOSE 0x40
-# define COUNT 0x20
-# define QUIET 0x10
+# define NB_FLAGS 5
+# define FLAGS "hvcqt"
+# define F_HELP 0x80
+# define F_VERBOSE 0x40
+# define F_COUNT 0x20
+# define F_QUIET 0x10
+# define F_TTL 0x8
+# define FLAG_ISSET(flag_code) (g_data.flag & flag_code)
 
 /*
 ** -- Transmission status --
@@ -56,7 +58,7 @@
 # define TIME_INTERVAL 1
 # define HEADER_SIZE 28
 # define PACKET_SIZE 56
-# define DEFAULT_TTL 6
+# define DEFAULT_TTL 64
 # define VERSION 4
 
 /*

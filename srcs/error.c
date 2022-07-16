@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:27:25 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 13:12:18 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:09:55 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*ft_strerror(int error)
 }
 #endif
 
-int	ft_perror(char *error, char *fct)
+int	ft_perror(const char *error, const char *fct)
 {
 	if (fct)
 		dprintf(STDERR_FILENO, "ft_ping: %s: %s\n", fct, error);
@@ -90,7 +90,7 @@ int	ft_perror(char *error, char *fct)
 	return (0);
 }
 
-int	fatal_error(int error, char *arg, char option)
+int	fatal_error(int error, const char *arg, const char option)
 {
 	char		*msg[] = {EP_REPLY_MSG, EP_NODATA_MSG};
 	int			status;
@@ -109,8 +109,10 @@ int	fatal_error(int error, char *arg, char option)
 		dprintf(STDERR_FILENO, EP_BADOPT_MSG, option);
 		print_usage();
 	}
-	else if (error == EP_ARGOOR)
+	else if (error == EP_ARGOOR && option == 'c')
 		dprintf(STDERR_FILENO, EP_ARGOOR_MSG, arg, 1, LLONG_MAX);
+	else if (error == EP_ARGOOR && option == 't')
+		dprintf(STDERR_FILENO, EP_ARGOOR_MSG, arg, 0, (long int)255);
 	else if (error == EP_RESOOR)
 		dprintf(STDERR_FILENO, EP_RESOOR_MSG, arg);
 	else

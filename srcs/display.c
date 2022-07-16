@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:42:51 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 15:49:30 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:16:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	print_packet(t_packet packet, long long int n)
 			ft_perror(ft_strerror(errno), "inet_ntop");
 		printf("From %s icmp_seq=%lld Time to live exceeded\n", src, n);
 		len = ft_strlen(src);
-		if (g_data.flag & VERBOSE) {
+		if (FLAG_ISSET(F_VERBOSE)) {
 			printf("%2s %2s %3s %5s %5s %4s %3s %3s %4s %*s %*s\n",
 				"Vr", "HL", "TOS", "Len", "ID", "off", "TTL", "Pro",
 				"cks", len - len / 2, "Src", len, "Dst");

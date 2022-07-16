@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:35:48 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 15:46:59 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:10:23 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (s1[i] - s2[i]);
 }
 
-int	ft_isnumber(char *str)
+int	ft_isnumber(const char *str)
 {
 	int	i;
 

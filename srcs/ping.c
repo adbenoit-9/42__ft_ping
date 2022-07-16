@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:31:16 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 15:26:43 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:17:10 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ void	ping(void)
 	while (true)
 	{
 		g_data.status = PENDING;
-		if ((g_data.flag & COUNT) && g_data.count == g_data.stats.nrecv)
+		if (FLAG_ISSET(F_COUNT) && g_data.count == g_data.stats.nrecv)
 			ping_statistics();
 		if (gettimeofday(&req_time, NULL) == -1)
 			fatal_error(errno, "gettimeofday", 0);
-		if (!(g_data.flag & COUNT) || g_data.stats.nsent < g_data.count)
+		if (!FLAG_ISSET(F_COUNT) || g_data.stats.nsent < g_data.count)
 			send_echo_request();
 		alarm(TIMEOUT);
 		ret = recv_echo_reply(req_time);
-		if (ret == TIMEOUT && (g_data.flag & VERBOSE) && !(g_data.flag & QUIET))
+		if (ret == ETIMEDOUT && FLAG_ISSET(F_VERBOSE) && !FLAG_ISSET(F_QUIET))
 			printf("Request timeout for icmp_seq %lld\n", g_data.stats.nsent);
-		else if (ret == EP_REPLY && !(g_data.flag & QUIET))
+		else if (ret == EP_REPLY && !FLAG_ISSET(F_QUIET))
 			print_packet(g_data.reply_packet, g_data.stats.nsent);
 		ft_wait(req_time, TIME_INTERVAL);
 	}

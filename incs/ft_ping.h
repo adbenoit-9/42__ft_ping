@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 15:46:28 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:10:09 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_ping_data
 	struct sockaddr		sockaddr;
 	int					flag;
 	long long int		count;
+	int					ttl;
 	int					sockfd;
 	uint8_t				pid;
 	t_packet			request_packet;
@@ -82,11 +83,11 @@ void			set_time_stats(double time_ms);
 
 /* Error functions */
 char			*ft_strerror(int error);
-int				ft_perror(char *error, char *fct);
-int				fatal_error(int error, char *arg, char option);
+int				ft_perror(const char *error, const char *fct);
+int				fatal_error(int error, const char *arg, const char option);
 
 /*  libft functions */
-int				ft_isnumber(char *str);
+int				ft_isnumber(const char *str);
 char			*ft_strdup(const char *s1);
 int				ft_strcmp(const char *s1, const char *s2);
 size_t			ft_strlen(const char *str);
