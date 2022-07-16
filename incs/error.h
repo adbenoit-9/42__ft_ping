@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 12:51:23 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 13:12:32 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 15:16:36 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@
 # define EP_RESOOR_MSG  "ft_ping: invalid agument: '%s': Numerical result out of range\n"
 
 # ifndef OS
+
+#  ifndef EAI_NODATA
+#   define EAI_NODATA -5
+#  endif
 
 #  define ELAST 121
 #  define EPERM_MSG "Operation not permitted"
