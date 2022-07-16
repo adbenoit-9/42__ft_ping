@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:42:51 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 18:43:08 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 18:56:04 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ int	print_usage(void)
 	printf("\nUsage\n");
 	printf(" ./ft_ping [options] <destination>\n");
 	printf("\nOptions:\n");
-	printf("-h                 print help and exit\n");
-	printf("-v                 verbose output\n");
 	printf("-c <count>         stop after <count> replies\n");
+	printf("-h                 print help and exit\n");
 	printf("-q                 quiet output\n");
+	printf("-t <ttl>           define time to live\n");
+	printf("-v                 verbose output\n");
 	printf("\n");
 	return (0);
 }

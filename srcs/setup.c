@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 18:45:13 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 18:47:02 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 18:55:11 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ void	clear_data(void)
 
 int	setup_address(void)
 {
-	struct addrinfo		hints;
-	struct addrinfo		*res;
-	struct in_addr		src;
-	int					ret;
+	struct addrinfo	hints;
+	struct addrinfo	*res;
+	struct in_addr	src;
+	int				ret;
 
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_INET;
@@ -72,7 +72,7 @@ int	setup_address(void)
 
 void	setup_socket(void)
 {
-	int				ttl;
+	int	ttl;
 
 	g_data.sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
 	if (g_data.sockfd == -1)
