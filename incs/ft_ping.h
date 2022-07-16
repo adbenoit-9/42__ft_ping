@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 17:54:59 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 17:59:13 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,25 @@ typedef struct s_stats
 	struct timeval		begin_time;
 }	t_stats;
 
+typedef	struct s_flag
+{
+	int					isset;
+	long long int		count;
+	int					ttl;
+}				t_flag;
+
 typedef struct s_ping_data
 {
+	short				status;
 	char				*host;
 	char				ip[INET_ADDRSTRLEN];
 	struct sockaddr		sockaddr;
-	int					flag;
-	long long int		count;
-	int					ttl;
+	t_flag				flag;
 	int					sockfd;
 	uint8_t				pid;
 	t_packet			request_packet;
 	t_packet			reply_packet;
 	t_stats				stats;
-	short				status;
 }				t_ping_data;
 
 extern t_ping_data	g_data;

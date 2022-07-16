@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:45:31 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 17:54:34 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 17:59:28 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define F_COUNT 0x20
 # define F_QUIET 0x10
 # define F_TTL 0x8
-# define FLAG_ISSET(flag_code) (g_data.flag & flag_code)
+# define FLAG_ISSET(flag_code) (g_data.flag.isset & flag_code)
 
 /*
 ** -- Transmission status --

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:36 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 17:20:39 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 17:59:49 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static t_ping_data	init_ping_data(void)
 
 	data.host = NULL;
 	bzero(data.ip, INET_ADDRSTRLEN);
-	data.count = -1;
-	data.ttl = -1;
-	data.flag = NONE;
+	data.flag.count = -1;
+	data.flag.ttl = -1;
+	data.flag.isset = NONE;
 	data.status = NONE;
 	data.stats.nrecv = 0;
 	data.stats.nrecv_valid = 0;
@@ -72,7 +72,7 @@ static void	init_socket(void)
 	g_data.sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
 	if (g_data.sockfd == -1)
 		fatal_error(errno, "socket", 0);
-	ttl = FLAG_ISSET(F_TTL) ? g_data.ttl : DEFAULT_TTL;
+	ttl = FLAG_ISSET(F_TTL) ? g_data.flag.ttl : DEFAULT_TTL;
 	if (setsockopt(g_data.sockfd, IPPROTO_IP, IP_TTL, &ttl, sizeof(ttl)) == -1)
 		fatal_error(errno, "setsockopt", 0);
 }

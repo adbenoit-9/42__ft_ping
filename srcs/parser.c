@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:42:56 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 16:17:44 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 18:02:22 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ static void	set_option_value(const char *str)
 		fatal_error(EP_RESOOR, str, 0);
 	if (!ft_isnumber(str))
 		fatal_error(EP_BADARG, str, 0);
-	if (FLAG_ISSET(F_COUNT) && g_data.count == -1) {
-		g_data.count = opt;
-		if (g_data.count <= 0)
+	if (FLAG_ISSET(F_COUNT) && g_data.flag.count == -1) {
+		g_data.flag.count = opt;
+		if (g_data.flag.count <= 0)
 			fatal_error(EP_ARGOOR, str, 'c');
 	}
-	else if (FLAG_ISSET(F_TTL) && g_data.ttl == -1) {
-		g_data.ttl = opt;
-		if (g_data.ttl < 0 || g_data.ttl > 255)
+	else if (FLAG_ISSET(F_TTL) && g_data.flag.ttl == -1) {
+		g_data.flag.ttl = opt;
+		if (g_data.flag.ttl < 0 || g_data.flag.ttl > 255)
 			fatal_error(EP_ARGOOR, str, 't');
 	}
 	return ;
@@ -54,7 +54,7 @@ static int	set_flag(char *flags)
 		new_flag = flag_value(flags[i]);
 		if (new_flag == -1)
 			fatal_error(EP_BADOPT, NULL, flags[i]);
-		g_data.flag |= new_flag;
+		g_data.flag.isset |= new_flag;
 		if (new_flag == F_HELP)
 		{
 			print_usage();
@@ -75,7 +75,8 @@ bool	parser(char **arg)
 	host = NULL;
 	for (size_t i = 0; arg[i]; i++)
 	{
-		if (FLAG_ISSET(F_COUNT) && g_data.count == -1) {
+		if ((FLAG_ISSET(F_COUNT) && g_data.flag.count == -1) ||
+				(FLAG_ISSET(F_TTL) && g_data.flag.ttl == -1)) {
 			set_option_value(arg[i]);
 		}
 		else if (arg[i][0] == '-')
@@ -88,9 +89,11 @@ bool	parser(char **arg)
 			host = arg[i];
 		}
 	}
-	if (FLAG_ISSET(F_COUNT) && g_data.count == -1)
+	if (FLAG_ISSET(F_COUNT) && g_data.flag.count == -1)
 		fatal_error(EP_NOARG, NULL, 'c');
-	if (!host)
+	else if (FLAG_ISSET(F_TTL) && g_data.flag.ttl == -1)
+		fatal_error(EP_NOARG, NULL, 't');
+	else if (!host)
 		fatal_error(EP_NODATA, NULL, 0);
 	g_data.host = ft_strdup(host);
 	if (!g_data.host)
