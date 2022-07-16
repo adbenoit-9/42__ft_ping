@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 18:45:13 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 18:55:11 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 19:31:59 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,17 @@ int	setup_address(void)
 
 void	setup_socket(void)
 {
-	int	ttl;
+	int				ttl;
+	struct timeval	timeout;
 
 	g_data.sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
 	if (g_data.sockfd == -1)
 		fatal_error(errno, "socket", 0);
 	ttl = FLAG_ISSET(F_TTL) ? g_data.flag.ttl : DEFAULT_TTL;
+	timeout.tv_sec = 1;
+	timeout.tv_usec = 0;
 	if (setsockopt(g_data.sockfd, IPPROTO_IP, IP_TTL, &ttl, sizeof(ttl)) == -1)
+		fatal_error(errno, "setsockopt", 0);
+	if (setsockopt(g_data.sockfd, IPPROTO_IP, SO_RCVTIMEO, &timeout, sizeof(timeout)) == -1)
 		fatal_error(errno, "setsockopt", 0);
 }
