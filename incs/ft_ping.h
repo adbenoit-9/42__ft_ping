@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 18:08:41 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 18:48:07 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ typedef struct s_ping_data
 
 extern t_ping_data	g_data;
 
-void			clean(void);
 bool			parser(char **arg);
 void			ping(void);
 void			handle_signal(int signum);
@@ -77,6 +76,12 @@ t_packet		request_packet(void);
 void			send_echo_request(void);
 int				recv_echo_reply(struct timeval req_time);
 void			print_statistics(void);
+
+/* Setup functions */
+t_ping_data		init_ping_data(void);
+void			clear_data(void);
+int				setup_address(void);
+void			setup_socket(void);
 
 /* Algorithms */
 unsigned short	checksum(unsigned short *addr, size_t len);

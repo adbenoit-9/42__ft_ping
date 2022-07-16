@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:27:25 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 16:09:55 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 18:43:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	fatal_error(int error, const char *arg, const char option)
 		dprintf(STDERR_FILENO, EP_RESOOR_MSG, arg);
 	else
 		dprintf(STDERR_FILENO, "ft_ping: Unknown error %d", error);
-	clean();
+	clear_data();
 	status = (error >= EP_NODATA) ? USAGE_ERR : ERROR;
 	exit(status);
 }

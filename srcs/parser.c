@@ -6,13 +6,13 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:42:56 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 18:02:22 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 18:38:02 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
 
-static int	flag_value(char flag)
+static int	get_flag_value(char flag)
 {
 	int		values[] = {F_HELP, F_VERBOSE, F_COUNT, F_QUIET, F_TTL};
 
@@ -51,7 +51,7 @@ static int	set_flag(char *flags)
 
 	for (int i = 0; flags[i]; i++)
 	{
-		new_flag = flag_value(flags[i]);
+		new_flag = get_flag_value(flags[i]);
 		if (new_flag == -1)
 			fatal_error(EP_BADOPT, NULL, flags[i]);
 		g_data.flag.isset |= new_flag;
@@ -67,6 +67,16 @@ static int	set_flag(char *flags)
 	return (0);
 }
 
+static void	check_missing_arg(char *host)
+{
+	if (FLAG_ISSET(F_COUNT) && g_data.flag.count == -1)
+		fatal_error(EP_NOARG, NULL, 'c');
+	else if (FLAG_ISSET(F_TTL) && g_data.flag.ttl == -1)
+		fatal_error(EP_NOARG, NULL, 't');
+	else if (!host)
+		fatal_error(EP_NODATA, NULL, 0);
+}
+
 bool	parser(char **arg)
 {
 	char	*host;
@@ -79,8 +89,7 @@ bool	parser(char **arg)
 				(FLAG_ISSET(F_TTL) && g_data.flag.ttl == -1)) {
 			set_option_value(arg[i]);
 		}
-		else if (arg[i][0] == '-')
-		{
+		else if (arg[i][0] == '-') {
 			ret = set_flag(arg[i] + 1);
 			if (ret && arg[i][ret + 1])
 				set_option_value(arg[i] + ret + 1);
@@ -89,12 +98,7 @@ bool	parser(char **arg)
 			host = arg[i];
 		}
 	}
-	if (FLAG_ISSET(F_COUNT) && g_data.flag.count == -1)
-		fatal_error(EP_NOARG, NULL, 'c');
-	else if (FLAG_ISSET(F_TTL) && g_data.flag.ttl == -1)
-		fatal_error(EP_NOARG, NULL, 't');
-	else if (!host)
-		fatal_error(EP_NODATA, NULL, 0);
+	check_missing_arg(host);
 	g_data.host = ft_strdup(host);
 	if (!g_data.host)
 		fatal_error(ENOMEM, NULL, 0);

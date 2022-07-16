@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/07/16 18:16:37 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/07/16 18:48:27 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRC				:=	main.c \
 					math.c \
 					ping.c \
 					display.c \
+					setup.c \
 					debug.c
 SUB_SRC			:= 
 # SRC				+= $(addprefix {name}, $(SUB_SRC))

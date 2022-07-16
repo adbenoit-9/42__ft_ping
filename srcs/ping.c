@@ -6,17 +6,20 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:31:16 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 18:16:13 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 18:45:35 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
 
-void	clean(void)
+static void	set_status(void)
 {
-	free(g_data.host);
-	if (g_data.sockfd != -1)
-		close(g_data.sockfd);
+	if (g_data.flag.count == g_data.stats.nrecv)
+		g_data.status &= ~WAIT_REPLY;
+	g_data.status &= ~RTIMEDOUT;
+	if (g_data.flag.count == g_data.stats.nsent
+		|| g_data.stats.nsent == LLONG_MAX)
+		g_data.status |= STOP_SENDING;
 }
 
 void	ping(void)
@@ -42,9 +45,7 @@ void	ping(void)
 			print_packet(g_data.reply_packet, g_data.stats.nsent);
 		if (g_data.flag.count == g_data.stats.nrecv + g_data.stats.nerror)
 			break ;
-		g_data.status &= ~RTIMEDOUT;
-		if (g_data.flag.count == g_data.stats.nsent)
-			g_data.status |= STOP_SENDING;
+		set_status();
 		ft_wait(req_time, TIME_INTERVAL);
 	}
 	print_statistics();

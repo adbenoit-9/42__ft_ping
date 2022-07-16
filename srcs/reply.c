@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 18:07:29 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 18:40:43 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ int	recv_echo_reply(struct timeval req_time)
 	alarm(0);
 	if (STATUS_ISSET(RTIMEDOUT))
 		return (ETIMEDOUT);
-	if (g_data.flag.count == g_data.stats.nrecv)
-		g_data.status &= ~WAIT_REPLY;
 	if (!ckeck_icmphdr(R_PACKET.icmphdr)) {
 		++g_data.stats.nerror;
 		return (EP_REPLY);
