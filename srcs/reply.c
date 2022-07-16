@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 19:25:59 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 19:50:10 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static struct msghdr	init_msg(void)
 	iov[0].iov_len = sizeof(R_PACKET);
 	msg.msg_iov = iov;
 	msg.msg_iovlen = 1;
-	msg.msg_flags = 0;
+	msg.msg_flags = MSG_WAITALL;
 	return (msg);
 }
 
@@ -49,7 +49,7 @@ int	recv_echo_reply(struct timeval req_time)
 	msg = init_msg();
 	len = -1;
 	while (len == -1 && !STATUS_ISSET(RTIMEDOUT) && STATUS_ISSET(WAIT_REPLY))
-		len = recvmsg(g_data.sockfd, &msg, 0);
+		len = recvmsg(g_data.sockfd, &msg, MSG_WAITALL);
 # ifdef DEBUG
 	if (len == -1) {
 		printf("%s[Reception failed]%s %s\n", S_RED, S_NONE, strerror(errno));
@@ -76,7 +76,7 @@ int	recv_echo_reply(struct timeval req_time)
 	if (!FLAG_ISSET(F_QUIET))
 	{
 		printf("%zd bytes from %s (%s): icmp_seq=%d ttl=%d time=%.3f ms\n",
-			len, g_data.host, g_data.ip, R_PACKET.icmphdr.icmp_seq,
+			len, g_data.host, g_data.ip, S_PACKET.header.icmp_seq,
 			R_PACKET.iphdr.ip_ttl, time_ms);
 	}
 	return (SUCCESS);
