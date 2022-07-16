@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:42:51 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 15:30:17 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 15:34:00 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	print_packet(t_packet packet, long long int n)
 			ft_perror(ft_strerror(errno), "inet_ntop");
 		printf("From %s icmp_seq=%lld Time to live exceeded\n", src, n);
 		if (g_data.flag & VERBOSE) {
-			printf("Vr HL TOS  Len    ID  off TTL Pro  cks      Src      Dst\n");
-			printf("%2d %2d %3d %4d %5d %.4d %3.2d %3.2d %4x %s %2s\n\n",
+			printf("Vr HL TOS   Len    ID  off TTL Pro  cks      Src      Dst\n");
+			printf("%2d %2d %3d %5d %5d %.4d %3.2d %3.2d %4x %s %2s\n\n",
 				packet.echo.reply.iphdr.ip_v, packet.echo.reply.iphdr.ip_hl,
 				packet.echo.reply.iphdr.ip_tos, packet.echo.reply.iphdr.ip_len,
 				packet.echo.reply.iphdr.ip_id, packet.echo.reply.iphdr.ip_off,
