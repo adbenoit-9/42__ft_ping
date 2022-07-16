@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 12:51:23 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 15:16:36 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 20:02:48 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define EP_BADOPT ELAST + 5
 # define EP_NOARG ELAST + 6
 # define EP_ARGOOR ELAST + 7
+# define EP_MULHOST ELAST + 7
 
 /*
 ** -- Error messages --

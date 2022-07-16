@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:27:25 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 18:43:08 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 20:06:43 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,11 @@ char	*ft_strerror(int error)
 
 int	ft_perror(const char *error, const char *fct)
 {
-	if (fct)
+	if (!error && fct)
+		dprintf(STDERR_FILENO, "ft_ping: %s: unknown error\n", fct);
+	else if (!error)
+		dprintf(STDERR_FILENO, "ft_ping: unknown error\n");
+	else if (fct)
 		dprintf(STDERR_FILENO, "ft_ping: %s: %s\n", fct, error);
 	else
 		dprintf(STDERR_FILENO, "ft_ping: %s\n", error);
@@ -115,6 +119,8 @@ int	fatal_error(int error, const char *arg, const char option)
 		dprintf(STDERR_FILENO, EP_ARGOOR_MSG, arg, 0, (long int)255);
 	else if (error == EP_RESOOR)
 		dprintf(STDERR_FILENO, EP_RESOOR_MSG, arg);
+	else if (error == EP_MULHOST)
+		print_usage();
 	else
 		dprintf(STDERR_FILENO, "ft_ping: Unknown error %d", error);
 	clear_data();
