@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:36 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 17:59:49 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 18:09:38 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_ping_data	init_ping_data(void)
 	data.flag.isset = NONE;
 	data.status = NONE;
 	data.stats.nrecv = 0;
-	data.stats.nrecv_valid = 0;
+	data.stats.nerror = 0;
 	data.stats.nsent = 0;
 	data.stats.min_time = 0.;
 	data.stats.max_time = 0.;

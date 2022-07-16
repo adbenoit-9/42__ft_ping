@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 17:59:13 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 18:08:41 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_packet
 typedef struct s_stats
 {
 	long long int		nrecv;
-	long long int		nrecv_valid;
+	long long int		nerror;
 	long long int		nsent;
 	double				max_time;
 	double				min_time;
@@ -76,7 +76,7 @@ int				print_packet(t_packet packet, long long int n);
 t_packet		request_packet(void);
 void			send_echo_request(void);
 int				recv_echo_reply(struct timeval req_time);
-void			ping_statistics(void);
+void			print_statistics(void);
 
 /* Algorithms */
 unsigned short	checksum(unsigned short *addr, size_t len);

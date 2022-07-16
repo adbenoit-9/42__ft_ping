@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 17:59:40 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 18:07:29 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,15 @@ int	recv_echo_reply(struct timeval req_time)
 	alarm(0);
 	if (STATUS_ISSET(RTIMEDOUT))
 		return (ETIMEDOUT);
-	++g_data.stats.nrecv;
 	if (g_data.flag.count == g_data.stats.nrecv)
 		g_data.status &= ~WAIT_REPLY;
-	if (!ckeck_icmphdr(R_PACKET.icmphdr))
+	if (!ckeck_icmphdr(R_PACKET.icmphdr)) {
+		++g_data.stats.nerror;
 		return (EP_REPLY);
+	}
+	++g_data.stats.nrecv;
 	if (gettimeofday(&res_time, NULL) == -1)
 		fatal_error(errno, "gettimeofday", 0);
-	++g_data.stats.nrecv_valid;
 	time_ms = tv_to_ms(res_time) - tv_to_ms(req_time);
 	set_time_stats(time_ms);
 	if (!FLAG_ISSET(F_QUIET))

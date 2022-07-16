@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:42:51 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 16:16:08 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/16 18:19:59 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,45 @@ int	print_packet(t_packet packet, long long int n)
 		}
 	}
 	return (0);
+}
+
+void	print_rtt(void)
+{
+	double	avg;
+	double	stddev;
+
+	avg = g_data.stats.sum_time / g_data.stats.nrecv;
+	stddev = standard_deviation(g_data.stats.sum_time,
+		g_data.stats.sum_square_time, g_data.stats.nrecv);
+	printf("rtt min/avg/max/mdev = %.3f/%.3f/%.3f/%.3f ms\n",
+		g_data.stats.min_time, avg, g_data.stats.max_time, stddev);
+}
+
+void	print_statistics(void)
+{
+	struct timeval	end_time;
+	double			sum_time;
+	double			loss_ratio;
+
+	if (gettimeofday(&end_time, NULL) == -1)
+		fatal_error(errno, "gettimeofday", 0);
+	sum_time = tv_to_ms(end_time) - tv_to_ms(g_data.stats.begin_time);
+	printf("--- %s ping statistics ---\n", g_data.host);
+	loss_ratio = 0;
+	if (g_data.stats.nsent)
+		loss_ratio = (double)(g_data.stats.nsent - g_data.stats.nrecv) / g_data.stats.nsent;
+	if (!g_data.stats.nerror) {
+		printf("%lld packets transmitted, %lld packets received, %ld%c packet loss, time %dms\n",
+			g_data.stats.nsent, g_data.stats.nrecv, (size_t)(loss_ratio * 100),
+			'%', (int)sum_time);
+	}
+	else {
+		printf("%lld packets transmitted, %lld packets received, +%lld errors, %ld%c packet loss, time %dms\n",
+			g_data.stats.nsent, g_data.stats.nrecv, g_data.stats.nerror,
+			(size_t)(loss_ratio * 100), '%', (int)sum_time);
+	}
+	if (g_data.stats.nrecv)
+		print_rtt();
+	clean();
+	exit(SUCCESS);
 }
