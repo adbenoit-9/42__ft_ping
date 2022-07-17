@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:31:16 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/17 18:28:03 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/17 18:29:56 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static void	ping_output(int code, long long int n)
 	if (!inet_ntop(AF_INET, &R_PACKET.iphdr.ip_dst, dst, INET_ADDRSTRLEN))
 		ft_perror(ft_strerror(errno), "inet_ntop");
 	if (code == SUCCESS) {
-		printf("%d bytes from %s (%s): icmp_seq=%d ttl=%d time=%.3f ms\n",
-			R_PACKET.iphdr.ip_len, g_data.host, src,
+		printf("%zd bytes from %s (%s): icmp_seq=%d ttl=%d time=%.3f ms\n",
+			sizeof(struct s_request), g_data.host, src,
 			R_PACKET.icmphdr.icmp_seq, R_PACKET.iphdr.ip_ttl,
 			g_data.time_ms);
 		return ;

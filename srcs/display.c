@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:42:51 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/17 17:28:57 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/17 18:35:44 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int	print_iphdr(struct ip iphdr)
 		printf("%2s %2s %3s %5s %5s %4s %3s %3s %4s %*s %*s\n",
 			"Vr", "HL", "TOS", "Len", "ID", "off", "TTL", "Pro",
 			"cks", len - len / 2, "Src", len, "Dst");
-		printf("%2d %2d %3d %5d %5d %.4d %3.2d %3.2d %4x %s %2s\n\n",
-			iphdr.ip_v, iphdr.ip_hl, iphdr.ip_tos, iphdr.ip_len,
-			iphdr.ip_id, iphdr.ip_off, iphdr.ip_ttl, iphdr.ip_p,
+		printf("%2d %2d %3d %5d %5x %.4d %3.2d %3.2d %4x %s %2s\n\n",
+			iphdr.ip_v, iphdr.ip_hl, iphdr.ip_tos, BSWAP(iphdr.ip_len),
+			BSWAP(iphdr.ip_id), iphdr.ip_off, iphdr.ip_ttl, iphdr.ip_p,
 			iphdr.ip_sum, src, dst);
 	}
 	return (1);
