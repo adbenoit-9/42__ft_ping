@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:45:31 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/17 16:37:13 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/17 18:12:03 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # include "error.h"
 
 # define NONE 0
+# define BSWAP(n) (((n << 8) & 0xff00) | ((n >> 8) & 0x00ff))
 
 /*
 ** -- Flags --

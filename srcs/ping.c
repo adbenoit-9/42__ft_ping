@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:31:16 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/17 17:41:49 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/17 18:14:31 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ping(void)
 			send_echo_request();
 		alarm(TIMEOUT);
 		ret = recv_echo_reply(req_time);
-		if (!FLAG_ISSET(F_QUIET) && ret != EP_BADID)
+		if (!FLAG_ISSET(F_QUIET) && !STATUS_ISSET(NOT_RECV))
 			ping_output(ret, g_data.stats.nsent);
 		if (g_data.flag.count == g_data.stats.nrecv + g_data.stats.nerror)
 			break ;

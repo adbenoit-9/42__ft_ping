@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/17 17:44:19 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/17 18:22:23 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ static int	ckeck_reply(struct icmp icmphdr)
 	{
 		g_data.status |= NOT_RECV;
 		return (EP_BADID);
+	}
+	else if (icmphdr.icmp_seq != g_data.stats.nsent)
+	{
+		g_data.status |= NOT_RECV;
+		return (EP_BADSEQ);
 	}
 	return (SUCCESS);
 }
