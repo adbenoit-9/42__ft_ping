@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:42:51 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 19:20:29 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/17 17:28:57 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,25 @@ int	print_usage(void)
 	return (0);
 }
 
-int	print_packet(t_packet packet, long long int n)
+int	print_iphdr(struct ip iphdr)
 {
 	char	src[INET_ADDRSTRLEN];
 	char	dst[INET_ADDRSTRLEN];
 	int		len;
 
-	if (sizeof(packet) != sizeof(R_PACKET))
-		return (0);
-	if (!inet_ntop(AF_INET, &R_PACKET.iphdr.ip_src, src, INET_ADDRSTRLEN))
+	if (!inet_ntop(AF_INET, &iphdr.ip_src, src, INET_ADDRSTRLEN))
 		ft_perror(ft_strerror(errno), "inet_ntop");
-	if (!inet_ntop(AF_INET, &R_PACKET.iphdr.ip_dst, dst, INET_ADDRSTRLEN))
+	if (!inet_ntop(AF_INET, &iphdr.ip_dst, dst, INET_ADDRSTRLEN))
 		ft_perror(ft_strerror(errno), "inet_ntop");
-	printf("From %s icmp_seq=%lld Time to live exceeded\n", src, n);
 	len = ft_strlen(src);
 	if (FLAG_ISSET(F_VERBOSE)) {
 		printf("%2s %2s %3s %5s %5s %4s %3s %3s %4s %*s %*s\n",
 			"Vr", "HL", "TOS", "Len", "ID", "off", "TTL", "Pro",
 			"cks", len - len / 2, "Src", len, "Dst");
 		printf("%2d %2d %3d %5d %5d %.4d %3.2d %3.2d %4x %s %2s\n\n",
-			packet.echo.reply.iphdr.ip_v, packet.echo.reply.iphdr.ip_hl,
-			packet.echo.reply.iphdr.ip_tos, packet.echo.reply.iphdr.ip_len,
-			packet.echo.reply.iphdr.ip_id, packet.echo.reply.iphdr.ip_off,
-			packet.echo.reply.iphdr.ip_ttl, packet.echo.reply.iphdr.ip_p,
-			packet.echo.reply.iphdr.ip_sum,
-			src, dst);
+			iphdr.ip_v, iphdr.ip_hl, iphdr.ip_tos, iphdr.ip_len,
+			iphdr.ip_id, iphdr.ip_off, iphdr.ip_ttl, iphdr.ip_p,
+			iphdr.ip_sum, src, dst);
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/17 16:48:51 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/17 17:44:19 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	recv_echo_reply(struct timeval req_time)
 	ssize_t			len;
 	struct msghdr	msg;
 	struct timeval	res_time;
-	double			time_ms;
 	int				ret;
 
 	msg = init_msg();
@@ -62,12 +61,12 @@ int	recv_echo_reply(struct timeval req_time)
 # ifdef DEBUG
 	if (len == -1) {
 		printf("%s[Reception failed]%s %s\n", S_RED, S_NONE, strerror(errno));
-		print_msg(msg);
+		debug_msg(msg);
 	}
 	else {
 		printf("%s[Packet received]%s %zd bytes\n", S_YELLOW, S_NONE, len);
-		print_ip(R_PACKET.iphdr);
-		print_icmp(R_PACKET.icmphdr);
+		debug_ip(R_PACKET.iphdr);
+		debug_icmp(R_PACKET.icmphdr);
 	}
 # endif
 	alarm(0);
@@ -77,13 +76,7 @@ int	recv_echo_reply(struct timeval req_time)
 	++g_data.stats.nrecv;
 	if (gettimeofday(&res_time, NULL) == -1)
 		fatal_error(errno, "gettimeofday", 0);
-	time_ms = tv_to_ms(res_time) - tv_to_ms(req_time);
-	set_time_stats(time_ms);
-	if (!FLAG_ISSET(F_QUIET))
-	{
-		printf("%zd bytes from %s (%s): icmp_seq=%d ttl=%d time=%.3f ms\n",
-			len, g_data.host, g_data.ip, R_PACKET.icmphdr.icmp_seq,
-			R_PACKET.iphdr.ip_ttl, time_ms);
-	}
+	g_data.time_ms = tv_to_ms(res_time) - tv_to_ms(req_time);
+	set_time_stats(g_data.time_ms);
 	return (SUCCESS);
 }

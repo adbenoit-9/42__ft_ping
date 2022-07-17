@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:27:25 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 20:06:43 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/17 17:40:06 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,4 +126,19 @@ int	fatal_error(int error, const char *arg, const char option)
 	clear_data();
 	status = (error >= EP_NODATA) ? USAGE_ERR : ERROR;
 	exit(status);
+}
+
+char	*icmp_strerror(int error)
+{
+	if (error == ICMP_UNREACH)
+		return ("Dest unreachable");
+	else if (error == ICMP_SOURCEQUENCH)
+		return ("Packet lost, slow down");
+	else if (error == ICMP_REDIRECT)
+		return ("Shorter route");
+	else if (error == ICMP_TIMXCEED)
+		return ("Time to live exceeded");
+	else if (error == ICMP_PARAMPROB)
+		return ("IP header bad");
+	return (NULL);
 }

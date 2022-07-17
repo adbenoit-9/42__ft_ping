@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:52:44 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 17:44:33 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/17 17:43:40 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	send_echo_request(void)
 		printf("%s[Transmission failed]%s %s\n", S_RED, S_NONE, strerror(errno));
 	else
 		printf("%s[Packet sent]%s %zd bytes\n", S_GREEN, S_NONE, len);
-	print_icmp(S_PACKET.header);
+	debug_icmp(S_PACKET.header);
 # endif
 	if (len == -1 && FLAG_ISSET(F_VERBOSE))
 		ft_perror(ft_strerror(errno), "sendto");

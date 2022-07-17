@@ -6,13 +6,13 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:54:29 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/15 13:56:26 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/17 17:44:32 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
 
-void	print_addrinfo(struct addrinfo info)
+void	debug_addrinfo(struct addrinfo info)
 {
 	struct sockaddr_in	*addr;
 
@@ -26,13 +26,14 @@ void	print_addrinfo(struct addrinfo info)
 	printf("canonname: %s\n", info.ai_canonname);
 }
 
-void	print_ip(struct ip iphdr)
+void	debug_ip(struct ip iphdr)
 {
 	printf("-- IP HEADER (size %ld) --\n", sizeof(iphdr));
+	printf("id: %d\n", iphdr.ip_id);
 	printf("ttl: %d\n", iphdr.ip_ttl);
 }
 
-void	print_icmp(struct icmp icmphdr)
+void	debug_icmp(struct icmp icmphdr)
 {
 	printf("-- ICMP HEADER (size %ld) --\n", sizeof(icmphdr));
 	printf("type: %d\n", icmphdr.icmp_type);
@@ -42,13 +43,7 @@ void	print_icmp(struct icmp icmphdr)
 	printf("checksum: %d\n", icmphdr.icmp_cksum);
 }
 
-void	print_time(struct timeval time)
-{
-	printf("time: %ld secondes %ld microsecondes\n",
-		time.tv_sec, (size_t)time.tv_usec);
-}
-
-void	print_msg(struct msghdr msg)
+void	debug_msg(struct msghdr msg)
 {
 	printf("-- MSG HEADER (size %ld) --\n", sizeof(struct msghdr));
 	printf("data pointer: %p\n", msg.msg_iov[0].iov_base);

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:31:16 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/17 16:50:54 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/17 17:41:49 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,32 @@ static void	set_status(void)
 	if (g_data.flag.count == g_data.stats.nsent
 		|| g_data.stats.nsent == LLONG_MAX)
 		g_data.status |= STOP_SENDING;
+}
+
+static void	ping_output(int code, long long int n)
+{
+	char	src[INET_ADDRSTRLEN];
+	char	dst[INET_ADDRSTRLEN];
+
+	if (code == ETIMEDOUT && FLAG_ISSET(F_VERBOSE)) {
+		printf("Request timeout for icmp_seq %lld\n", n);
+		return ;
+	}
+	if (!inet_ntop(AF_INET, &R_PACKET.iphdr.ip_src, src, INET_ADDRSTRLEN))
+		ft_perror(ft_strerror(errno), "inet_ntop");
+	if (!inet_ntop(AF_INET, &R_PACKET.iphdr.ip_dst, dst, INET_ADDRSTRLEN))
+		ft_perror(ft_strerror(errno), "inet_ntop");
+	if (code == SUCCESS) {
+		printf("%d bytes from %s (%s): icmp_seq=%d ttl=%d time=%.3f ms\n",
+			R_PACKET.iphdr.ip_len, g_data.host, src,
+			R_PACKET.icmphdr.icmp_seq, R_PACKET.iphdr.ip_ttl,
+			g_data.time_ms);
+		return ;
+	}
+	else {
+		printf("From %s icmp_seq=%lld %s\n", src, n, icmp_strerror(code));
+		print_iphdr(R_PACKET.iphdr);
+	}
 }
 
 void	ping(void)
@@ -39,10 +65,8 @@ void	ping(void)
 			send_echo_request();
 		alarm(TIMEOUT);
 		ret = recv_echo_reply(req_time);
-		if (ret == ETIMEDOUT && FLAG_ISSET(F_VERBOSE) && !FLAG_ISSET(F_QUIET))
-			printf("Request timeout for icmp_seq %lld\n", g_data.stats.nsent);
-		if (ret == ICMP_TIMXCEED && !FLAG_ISSET(F_QUIET))
-			print_packet(g_data.reply_packet, g_data.stats.nsent);
+		if (!FLAG_ISSET(F_QUIET) && ret != EP_BADID)
+			ping_output(ret, g_data.stats.nsent);
 		if (g_data.flag.count == g_data.stats.nrecv + g_data.stats.nerror)
 			break ;
 		set_status();

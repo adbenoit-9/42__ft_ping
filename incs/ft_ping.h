@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/17 15:55:23 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/17 17:44:19 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_ping_data
 	t_flag				flag;
 	int					sockfd;
 	uint8_t				pid;
+	double				time_ms;
 	t_packet			request_packet;
 	t_packet			reply_packet;
 	t_stats				stats;
@@ -70,11 +71,13 @@ extern t_ping_data	g_data;
 bool			parser(char **arg);
 void			ping(void);
 void			handle_signal(int signum);
-int				print_usage(void);
-int				print_packet(t_packet packet, long long int n);
 t_packet		request_packet(void);
 void			send_echo_request(void);
 int				recv_echo_reply(struct timeval req_time);
+
+/* Ping output */
+int				print_usage(void);
+int				print_iphdr(struct ip iphdr);
 void			print_statistics(void);
 
 /* Setup functions */
@@ -96,6 +99,7 @@ void			set_time_stats(double time_ms);
 char			*ft_strerror(int error);
 int				ft_perror(const char *error, const char *fct);
 int				fatal_error(int error, const char *arg, const char option);
+char			*icmp_strerror(int error);
 
 /*  libft functions */
 int				ft_isnumber(const char *str);
@@ -104,10 +108,9 @@ int				ft_strcmp(const char *s1, const char *s2);
 size_t			ft_strlen(const char *str);
 
 /* Debug utils functions */
-void			print_addrinfo(struct addrinfo info);
-void			print_icmp(struct icmp icmphdr);
-void			print_ip(struct ip iphdr);
-void			print_msg(struct msghdr msg);
-void			print_time(struct timeval time);
+void			debug_addrinfo(struct addrinfo info);
+void			debug_icmp(struct icmp icmphdr);
+void			debug_ip(struct ip iphdr);
+void			debug_msg(struct msghdr msg);
 
 #endif
