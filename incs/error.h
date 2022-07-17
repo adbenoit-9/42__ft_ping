@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 12:51:23 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/17 15:58:37 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/17 17:56:02 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,6 +278,13 @@
 #  define EOWNERDEAD_MSG "Previous owner died"
 #  define EQFULL_MSG "Interface output queue is full"
 
+# endif
+
+# ifndef ICMP_ERRORTYPE
+#   define ICMP_ERRORTYPE(type) \
+	((type) == ICMP_UNREACH || (type) == ICMP_SOURCEQUENCH || \
+	(type) == ICMP_REDIRECT || (type) == ICMP_TIMXCEED || \
+	(type) == ICMP_PARAMPROB)
 # endif
 
 #endif
