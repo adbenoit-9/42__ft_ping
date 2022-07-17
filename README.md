@@ -18,34 +18,16 @@ $ ./ft_ping [options] <destination>
 
 ### Options
 
-<p style="margin: 0px; margin-top: 1em; margin-left: 1em">
-    <strong>-c</strong> <ins>count</ins>
-    <div style="margin-left: 3em; margin-top: 0px">
-        Stop after sending count ECHO_REQUEST packets.
-    </div>
-</p>
-<p style="margin: 0px; margin-left: 1em">
-    <strong>-h</strong>
-    <div style="margin-left: 3em; margin-top: 0px">
-        Show help.
-    </div>
-</p>
-<p style="margin: 0px; margin-left: 1em">
-    <strong>-q</strong>
-    <div style="margin-left: 3em; margin-top: 0px">
-        Quiet output. Nothing is displayed except the summary lines at startup time and when finished.
-    </div>
-</p>
-<p style="margin: 0px; margin-left: 1em">
-    <strong>-t</strong> <ins>ttl</ins>
-    <div style="margin-left: 3em; margin-top: 0px">
-        Set the IP Time to Live.
-    </div>
-</p>
-<p style="margin: 0px; margin-left: 1em">
-    <strong>-v</strong>
-    <div style="margin-left: 3em; margin-top: 0px">
-        Verbose output.
-    </div>
+<p style="margin-top: 1em;">
+    <strong>-c</strong> <ins>count</ins><br>
+    Stop after sending count ECHO_REQUEST packets.<br><br>
+    <strong>-h</strong><br>
+    Show help.<br><br>
+    <strong>-q</strong><br>
+    Quiet output. Nothing is displayed except the summary lines at startup time and when finished.<br><br>
+    <strong>-t</strong> <ins>ttl</ins><br>
+    Set the IP Time to Live.<br><br>
+    <strong>-v</strong><br>
+    Verbose output.<br><br>
 </p>
 
