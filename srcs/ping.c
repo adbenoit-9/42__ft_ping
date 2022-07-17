@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:31:16 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 19:20:16 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/17 16:11:54 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,19 @@ void	ping(void)
 	{
 		if (gettimeofday(&req_time, NULL) == -1)
 			fatal_error(errno, "gettimeofday", 0);
-		if (!STATUS_ISSET(STOP_SENDING))
+		if (!STATUS_ISSET(STOP_SENDING) && !STATUS_ISSET(NOT_RECV))
 			send_echo_request();
 		alarm(TIMEOUT);
 		ret = recv_echo_reply(req_time);
 		if (ret == ETIMEDOUT && FLAG_ISSET(F_VERBOSE) && !FLAG_ISSET(F_QUIET))
 			printf("Request timeout for icmp_seq %lld\n", g_data.stats.nsent);
-		else if (ret == EP_REPLY && !FLAG_ISSET(F_QUIET))
+		else if (ret == ICMP_TIMXCEED && !FLAG_ISSET(F_QUIET))
 			print_packet(g_data.reply_packet, g_data.stats.nsent);
 		if (g_data.flag.count == g_data.stats.nrecv + g_data.stats.nerror)
 			break ;
 		set_status();
-		ft_wait(req_time, TIME_INTERVAL);
+		if (!STATUS_ISSET(NOT_RECV))
+			ft_wait(req_time, TIME_INTERVAL);
 	}
 	print_statistics();
 }

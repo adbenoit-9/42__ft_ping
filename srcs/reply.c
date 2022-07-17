@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 19:54:34 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/17 16:13:09 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,22 @@ static struct msghdr	init_msg(void)
 	return (msg);
 }
 
-bool	ckeck_icmphdr(struct icmp icmphdr)
+static int	ckeck_reply(struct icmp icmphdr)
 {
-	unsigned short	cksum;
-
-	cksum = icmphdr.icmp_cksum;
-	icmphdr.icmp_cksum = 0;
-	if (checksum((unsigned short *)&icmphdr, sizeof(icmphdr)) != cksum)
-		return (false);
-	return (true);
+	g_data.status &= ~NOT_RECV;
+	if (STATUS_ISSET(RTIMEDOUT))
+		return (ETIMEDOUT);
+	if (ICMP_ERRORTYPE(icmphdr.icmp_type))
+	{
+		++g_data.stats.nerror;
+		return (icmphdr.icmp_type);
+	}
+	else if (icmphdr.icmp_id != g_data.pid)
+	{
+		g_data.status |= NOT_RECV;
+		return (EP_BADID);
+	}
+	return (SUCCESS);
 }
 
 int	recv_echo_reply(struct timeval req_time)
@@ -45,6 +52,7 @@ int	recv_echo_reply(struct timeval req_time)
 	struct msghdr	msg;
 	struct timeval	res_time;
 	double			time_ms;
+	int				ret;
 
 	msg = init_msg();
 	len = -1;
@@ -62,12 +70,9 @@ int	recv_echo_reply(struct timeval req_time)
 	}
 # endif
 	alarm(0);
-	if (STATUS_ISSET(RTIMEDOUT))
-		return (ETIMEDOUT);
-	if (!ckeck_icmphdr(R_PACKET.icmphdr)) {
-		++g_data.stats.nerror;
-		return (EP_REPLY);
-	}
+	ret = ckeck_reply(R_PACKET.icmphdr);
+	if (ret != SUCCESS)
+		return (ret);
 	++g_data.stats.nrecv;
 	if (gettimeofday(&res_time, NULL) == -1)
 		fatal_error(errno, "gettimeofday", 0);
@@ -76,7 +81,7 @@ int	recv_echo_reply(struct timeval req_time)
 	if (!FLAG_ISSET(F_QUIET))
 	{
 		printf("%zd bytes from %s (%s): icmp_seq=%d ttl=%d time=%.3f ms\n",
-			len, g_data.host, g_data.ip, S_PACKET.header.icmp_seq,
+			len, g_data.host, g_data.ip, R_PACKET.icmphdr.icmp_seq,
 			R_PACKET.iphdr.ip_ttl, time_ms);
 	}
 	return (SUCCESS);

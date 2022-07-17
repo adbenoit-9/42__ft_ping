@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:31:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/16 18:48:07 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/17 15:55:23 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef	struct s_flag
 
 typedef struct s_ping_data
 {
-	short				status;
+	int					status;
 	char				*host;
 	char				ip[INET_ADDRSTRLEN];
 	struct sockaddr		sockaddr;
