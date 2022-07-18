@@ -1,5 +1,5 @@
 # FT_PING (@42Paris)
-Recoding the ping command.
+*Recoding the ping command.*
 
 ## Usage
 
