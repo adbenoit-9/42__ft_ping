@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:31:16 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/18 12:03:09 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/18 12:17:46 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ static void	ping_output(int code, long long int n)
 	char	src[INET_ADDRSTRLEN];
 	char	dst[INET_ADDRSTRLEN];
 
-	if (code == ETIMEDOUT && FLAG_ISSET(F_VERBOSE)) {
-		printf("Request timeout for icmp_seq %lld\n", n);
+	if (code == ETIMEDOUT) {
+		if (FLAG_ISSET(F_VERBOSE))
+			printf("Request timeout for icmp_seq %lld\n", n);
 		return ;
 	}
 	if (!inet_ntop(AF_INET, &R_PACKET.iphdr.ip_src, src, INET_ADDRSTRLEN))
@@ -59,16 +60,12 @@ void	ping(void)
 	g_data.status |= WAIT_REPLY;
 	while (STATUS_ISSET(WAIT_REPLY))
 	{
-		if (!STATUS_ISSET(STOP_SENDING) && !STATUS_ISSET(NOT_RECV)) {
-			if (gettimeofday(&req_time, NULL) == -1)
-				fatal_error(errno, "gettimeofday", 0);
-			send_echo_request();
-		}
-		alarm(TIMEOUT);
+		if (!STATUS_ISSET(STOP_SENDING) && !STATUS_ISSET(NOT_RECV))
+			send_echo_request(&req_time);
 		ret = recv_echo_reply(req_time);
 		if (!FLAG_ISSET(F_QUIET) && !STATUS_ISSET(NOT_RECV))
 			ping_output(ret, g_data.stats.nsent);
-		if (g_data.flag.count == g_data.stats.nrecv + g_data.stats.nerror)
+		if (g_data.flag.count == g_data.stats.nsent)
 			break ;
 		set_status();
 		if (!STATUS_ISSET(NOT_RECV))

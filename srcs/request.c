@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:52:44 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/17 18:22:14 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/18 12:12:25 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_packet	request_packet(void)
 	return (packet);
 }
 
-void	send_echo_request(void)
+void	send_echo_request(struct timeval *timeval)
 {
 	ssize_t	len;
 
@@ -32,6 +32,9 @@ void	send_echo_request(void)
 	S_PACKET.header.icmp_cksum = 0;
 	S_PACKET.header.icmp_cksum = checksum(
 			(unsigned short *)&S_PACKET.header, sizeof(S_PACKET));
+	if (gettimeofday(timeval, NULL) == -1)
+		fatal_error(errno, "gettimeofday", 0);
+	alarm(TIMEOUT);
 	len = sendto(g_data.sockfd, &g_data.request_packet, sizeof(S_PACKET), 0,
 			&g_data.sockaddr, sizeof(g_data.sockaddr));
 # ifdef DEBUG
