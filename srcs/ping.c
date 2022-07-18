@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:31:16 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/17 18:29:56 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/18 12:03:09 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,11 @@ void	ping(void)
 	g_data.status |= WAIT_REPLY;
 	while (STATUS_ISSET(WAIT_REPLY))
 	{
-		if (gettimeofday(&req_time, NULL) == -1)
-			fatal_error(errno, "gettimeofday", 0);
-		if (!STATUS_ISSET(STOP_SENDING) && !STATUS_ISSET(NOT_RECV))
+		if (!STATUS_ISSET(STOP_SENDING) && !STATUS_ISSET(NOT_RECV)) {
+			if (gettimeofday(&req_time, NULL) == -1)
+				fatal_error(errno, "gettimeofday", 0);
 			send_echo_request();
+		}
 		alarm(TIMEOUT);
 		ret = recv_echo_reply(req_time);
 		if (!FLAG_ISSET(F_QUIET) && !STATUS_ISSET(NOT_RECV))
