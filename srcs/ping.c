@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:31:16 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/18 12:17:46 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/18 12:24:53 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	ping(void)
 	{
 		if (!STATUS_ISSET(STOP_SENDING) && !STATUS_ISSET(NOT_RECV))
 			send_echo_request(&req_time);
+		alarm(TIMEOUT);
 		ret = recv_echo_reply(req_time);
 		if (!FLAG_ISSET(F_QUIET) && !STATUS_ISSET(NOT_RECV))
 			ping_output(ret, g_data.stats.nsent);
