@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 17:45:31 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/18 12:13:42 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/18 14:12:19 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@
 # include "error.h"
 
 # define NONE 0
-# define BSWAP(n) (((n << 8) & 0xff00) | ((n >> 8) & 0x00ff))
 
 /*
 ** -- Flags --
@@ -52,10 +51,9 @@
 /*
 ** -- Transmission status --
 */
-# define WAIT_REPLY 0b00000001
-# define RTIMEDOUT 0b00000010
-# define STOP_SENDING 0b00000100
-# define NOT_RECV 0b00001000
+# define WAIT_REPLY 0b0001
+# define RTIMEDOUT 0b0010
+# define STOP_SENDING 0b0100
 # define STATUS_ISSET(status_code) (g_data.status & status_code)
 
 /*

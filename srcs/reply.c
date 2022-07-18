@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:51:15 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/17 18:42:28 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/18 14:10:28 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,17 @@ static struct msghdr	init_msg(void)
 
 static int	ckeck_reply(struct icmp icmphdr)
 {
-	g_data.status &= ~NOT_RECV;
+	g_data.status &= ~WAIT_REPLY;
 	if (STATUS_ISSET(RTIMEDOUT))
 		return (ETIMEDOUT);
-	if (ICMP_ERRORTYPE(icmphdr.icmp_type))
-	{
+	if (ICMP_ERRORTYPE(icmphdr.icmp_type)) {
 		++g_data.stats.nerror;
 		return (icmphdr.icmp_type);
 	}
-	else if (icmphdr.icmp_id != g_data.pid)
-	{
-		g_data.status |= NOT_RECV;
-		return (EP_BADID);
-	}
-	else if (icmphdr.icmp_seq != g_data.stats.nsent)
-	{
-		g_data.status |= NOT_RECV;
-		return (EP_BADSEQ);
+	else if (icmphdr.icmp_id != g_data.pid ||
+		icmphdr.icmp_seq != g_data.stats.nsent) {
+		g_data.status |= WAIT_REPLY;
+		return (EP_BADPACK);
 	}
 	return (SUCCESS);
 }

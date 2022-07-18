@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:52:44 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/18 12:24:26 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/18 14:03:05 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	send_echo_request(struct timeval *timeval)
 			(unsigned short *)&S_PACKET.header, sizeof(S_PACKET));
 	if (gettimeofday(timeval, NULL) == -1)
 		fatal_error(errno, "gettimeofday", 0);
-	// alarm(TIMEOUT);
 	len = sendto(g_data.sockfd, &g_data.request_packet, sizeof(S_PACKET), 0,
 			&g_data.sockaddr, sizeof(g_data.sockaddr));
 # ifdef DEBUG

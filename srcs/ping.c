@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:31:16 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/18 12:24:53 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/18 14:09:02 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static void	set_status(void)
 {
-	if (g_data.flag.count == g_data.stats.nrecv)
-		g_data.status &= ~WAIT_REPLY;
-	g_data.status &= ~RTIMEDOUT;
 	if (g_data.flag.count == g_data.stats.nsent
 		|| g_data.stats.nsent == LLONG_MAX)
 		g_data.status |= STOP_SENDING;
+	if (g_data.flag.count == g_data.stats.nrecv)
+		g_data.status &= ~WAIT_REPLY;
+	g_data.status &= ~RTIMEDOUT;
 }
 
 static void	ping_output(int code, long long int n)
@@ -57,19 +57,18 @@ void	ping(void)
 	printf("PING %s (%s) %d(%d) bytes of data.\n", g_data.host, g_data.ip,
 		PACKET_SIZE, PACKET_SIZE + HEADER_SIZE);
 	g_data.request_packet = request_packet();
-	g_data.status |= WAIT_REPLY;
-	while (STATUS_ISSET(WAIT_REPLY))
+	while (STATUS_ISSET(WAIT_REPLY) || !STATUS_ISSET(STOP_SENDING))
 	{
-		if (!STATUS_ISSET(STOP_SENDING) && !STATUS_ISSET(NOT_RECV))
+		if (!STATUS_ISSET(WAIT_REPLY)) {
 			send_echo_request(&req_time);
+			g_data.status |= WAIT_REPLY;
+		}
 		alarm(TIMEOUT);
 		ret = recv_echo_reply(req_time);
-		if (!FLAG_ISSET(F_QUIET) && !STATUS_ISSET(NOT_RECV))
+		if (!FLAG_ISSET(F_QUIET) && ret != EP_BADPACK)
 			ping_output(ret, g_data.stats.nsent);
-		if (g_data.flag.count == g_data.stats.nsent)
-			break ;
 		set_status();
-		if (!STATUS_ISSET(NOT_RECV))
+		if (!STATUS_ISSET(WAIT_REPLY) && !STATUS_ISSET(STOP_SENDING))
 			ft_wait(req_time, TIME_INTERVAL);
 	}
 	print_statistics();

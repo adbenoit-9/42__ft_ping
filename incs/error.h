@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 12:51:23 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/17 18:00:59 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/07/18 14:11:49 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@
 # define EP_NOARG ELAST + 6
 # define EP_ARGOOR ELAST + 7
 # define EP_MULHOST ELAST + 7
-# define EP_BADID ELAST + 8
-# define EP_BADSEQ ELAST + 9
+# define EP_BADPACK ELAST + 8
 
 /*
 ** -- Error messages --
